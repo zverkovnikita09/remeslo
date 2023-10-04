@@ -1,0 +1,19 @@
+.input {
+  width: 100%;
+
+  &__textField {
+    width: 100%;
+    padding: 17px 20px;
+    border-radius: 10px;
+    border: 1px solid #122533;
+
+    &::-webkit-input-placeholder {
+      color: var(--black-color);
+    }
+
+    &::-moz-placeholder {
+      color: var(--black-color);
+      opacity: 1;
+    }
+  }
+}
