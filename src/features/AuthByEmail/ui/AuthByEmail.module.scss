@@ -8,12 +8,6 @@
     margin-bottom: 16px;
   }
 
-  &__title {
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 135%;
-  }
-
   &__text {
     margin-top: 18px;
     font-size: 14px;
@@ -23,7 +17,7 @@
 
   &__inputGroup {
     width: 100%;
-    margin-top: 32px;
+    margin-block: 32px;
     padding-bottom: 32px;
     border-bottom: 1px solid #ccc;
   }
@@ -31,6 +25,11 @@
   &__link{
     text-align: center;
     margin-top: 16px;
+  }
+
+  &__socialButton {
+    gap: 8px;
+    margin-bottom: 8px;
   }
 }
 

@@ -1,0 +1,27 @@
+.button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  line-height: 135%;
+  border-radius: 10px;
+}
+
+.red {
+  background-color: var(--red-color);
+  color: #fff;
+}
+
+.outline {
+  border: 1px solid #122533;
+}
+
+.size_m {
+  padding: 16px 32px;
+  font-size: 18px;
+}
