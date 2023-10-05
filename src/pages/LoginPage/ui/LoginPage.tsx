@@ -14,7 +14,7 @@ export const LoginPage = () => {
         <GreyText>© 2023 Remeslo</GreyText>
       </div>
       <div className={style.loginPage__image}>
-        <img src={background} alt="Фоновое изображение" />
+        <img src={background} height={832} width={687} alt="Фоновое изображение" />
       </div>
     </Container>
   )

@@ -1,0 +1,25 @@
+.registrationPage {
+  min-height: 100vh;
+  padding-block: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  &__content {
+    padding: 0 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 25px;
+  }
+
+  &__image {
+    height: 100%;
+    display: grid;
+    place-content: center;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}

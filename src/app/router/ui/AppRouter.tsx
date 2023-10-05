@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom"
 import LoginPage from "src/pages/LoginPage"
+import RegistrationPage from "src/pages/RegistrationPage"
 
 export const AppRouter = () => {
   return (
@@ -8,7 +9,7 @@ export const AppRouter = () => {
         <Route path="*" element={<></>} />
       </Route>
       <Route path="login" element={<LoginPage />} />
-      <Route path="registration" element={<></>} />
+      <Route path="registration" element={<RegistrationPage />} />
     </Routes>
   )
 }

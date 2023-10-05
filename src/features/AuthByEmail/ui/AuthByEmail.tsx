@@ -33,22 +33,22 @@ export const AuthByEmail = () => {
         theme={ButtonTheme.OUTLINE}
         className={style.authByEmail__socialButton}
       >
-        <img src={googleIcon} alt="Google" height={24} width={24}/>
+        <img src={googleIcon} alt="Google" height={24} width={24} />
         Войти с помощью Google
       </Button>
       <Button
         theme={ButtonTheme.OUTLINE}
         className={style.authByEmail__socialButton}
       >
-        <img src={vkIcon} alt="VK" width={24} height={24}/>
+        <img src={vkIcon} alt="VK" width={24} height={24} />
         Войти с помощью Vkontakte
       </Button>
-      <Link to='' className={classNames(style.authByEmail__link, {}, [style.textUnderline])}>
+      <Link to='' className={classNames(style.authByEmail__link, {}, ['textUnderline'])}>
         <GreyText>Забыли пароль?</GreyText>
       </Link>
       <GreyText className={style.authByEmail__link}>
         Еще нет аккаунта? &nbsp;
-        <Link to='/registration' className={style.textUnderline}>Зарегестрируйтесь</Link>
+        <Link to='/registration' className='textUnderline'>Зарегестрируйтесь</Link>
       </GreyText>
     </div>
   )
