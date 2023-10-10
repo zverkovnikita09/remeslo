@@ -4,12 +4,14 @@ import { Container } from 'src/shared/ui/Container/Container'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import { Link } from 'react-router-dom'
 import { HeaderProfile } from 'src/widgets/HeaderProfile/ui/HeaderProfile'
+import { SearchInput } from 'src/features/SearchInput'
 
 export const Header = () => {
   return (
     <Container className={style.header}>
       <MainLogo />
       <div className={style.header__rightBlock}>
+        <SearchInput />
         <Link to='' className={style.header__link}>
           <Button
             size={ButtonSize.M}
