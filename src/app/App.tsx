@@ -8,11 +8,11 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    const token = JSON.parse(localStorage.getItem("token") ?? "null")
+    /* const token = JSON.parse(localStorage.getItem("token") ?? "null")
     if (!token) {
       navigate('/login', { state: location })
     }
-    console.log(token);
+    console.log(token); */
   }, [])
 
   return (

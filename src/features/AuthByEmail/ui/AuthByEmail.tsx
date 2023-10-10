@@ -3,8 +3,7 @@ import { Title } from 'src/shared/ui/Title/TItile'
 import style from './AuthByEmail.module.scss'
 import { Link } from 'react-router-dom'
 import { GreyText } from 'src/shared/ui/GreyText/GreyText'
-import { classNames } from 'src/shared/lib/classNames/classNames'
-import { Button, ButtonTheme } from 'src/shared/ui/Button/Button'
+import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import googleIcon from 'src/shared/assets/googleIcon.svg'
 import vkIcon from 'src/shared/assets/vkIcon.svg'
 
@@ -25,12 +24,14 @@ export const AuthByEmail = () => {
         />
         <Button
           theme={ButtonTheme.RED}
+          size={ButtonSize.M}
         >
           Войти
         </Button>
       </div>
       <Button
         theme={ButtonTheme.OUTLINE}
+        size={ButtonSize.M}
         className={style.authByEmail__socialButton}
       >
         <img src={googleIcon} alt="Google" height={24} width={24} />
@@ -38,13 +39,14 @@ export const AuthByEmail = () => {
       </Button>
       <Button
         theme={ButtonTheme.OUTLINE}
+        size={ButtonSize.M}
         className={style.authByEmail__socialButton}
       >
         <img src={vkIcon} alt="VK" width={24} height={24} />
         Войти с помощью Vkontakte
       </Button>
-      <Link to='' className={classNames(style.authByEmail__link, {}, ['textUnderline'])}>
-        <GreyText>Забыли пароль?</GreyText>
+      <Link to='' className={style.authByEmail__link}>
+        <GreyText className='textUnderline'>Забыли пароль?</GreyText>
       </Link>
       <GreyText className={style.authByEmail__link}>
         Еще нет аккаунта? &nbsp;

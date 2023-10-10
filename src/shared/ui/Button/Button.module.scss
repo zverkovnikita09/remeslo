@@ -10,18 +10,51 @@
   font-weight: 600;
   line-height: 135%;
   border-radius: 10px;
+  transition: 0.2s;
 }
 
 .red {
   background-color: var(--red-color);
   color: #fff;
+
+  &:hover,
+  &:focus {
+    background-color: #F99;
+  }
+
+  &:active {
+    background-color: #FF7575;
+  }
+
+  &:disabled {
+    background-color: #9B9B9B;
+  }
 }
 
 .outline {
   border: 1px solid #122533;
+
+  &:disabled {
+    border-color: #9B9B9B;
+    color: #9B9B9B;
+  }
+}
+
+.black {
+  background-color: #122533;
+  color: #fff;
+
+  &:disabled {
+    background-color: #9B9B9B;
+  }
 }
 
 .size_m {
   padding: 16px 32px;
   font-size: 18px;
+}
+
+.size_s {
+  font-size: 12px;
+  padding: 10px 18px;
 }

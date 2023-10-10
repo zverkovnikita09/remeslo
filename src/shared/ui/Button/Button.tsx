@@ -3,6 +3,7 @@ import style from './Button.module.scss'
 import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 
 export enum ButtonSize {
+  PRIMARY = '',
   S = 'size_s',
   M = 'size_m'
 }
@@ -25,7 +26,7 @@ export const Button: FC<ButtonProps> = (props) => {
     type,
     className = '',
     children,
-    size = ButtonSize.M,
+    size = ButtonSize.PRIMARY,
     theme = ButtonTheme.PRIMARY,
     ...otherProps
   } = props;

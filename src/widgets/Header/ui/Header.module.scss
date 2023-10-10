@@ -1,0 +1,11 @@
+.header {
+  margin-top: 38px;
+  display: flex;
+  align-items: center;
+
+  &__rightBlock {
+    margin-left: auto;
+    display: flex;
+    gap: 18px;
+  }
+}

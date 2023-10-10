@@ -1,7 +1,7 @@
 import { Container } from 'src/shared/ui/Container/Container'
 import { MainLogo } from 'src/shared/ui/MainLogo/MainLogo'
 import { GreyText } from 'src/shared/ui/GreyText/GreyText'
-import background from 'src/shared/assets/registration_background.png'
+import background from '../assets/registration_background.png'
 import style from './RegistrationPage.module.scss'
 import { RegisterByEmail } from 'src/features/RegisterByEmail'
 
