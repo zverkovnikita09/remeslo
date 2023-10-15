@@ -5,12 +5,14 @@ import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import { Link } from 'react-router-dom'
 import { HeaderProfile } from 'src/widgets/HeaderProfile/ui/HeaderProfile'
 import { SearchInput } from 'src/features/SearchInput'
+import { Geolocation } from 'src/features/Geolocation'
 
 export const Header = () => {
   return (
     <Container className={style.header}>
       <MainLogo />
       <div className={style.header__rightBlock}>
+        <Geolocation />
         <SearchInput />
         <Link to='' className={style.header__link}>
           <Button

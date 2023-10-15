@@ -1,0 +1,42 @@
+.categories {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 21px 28px;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    height: 307px;
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+
+    /*  &:nth-child(2),
+    &:nth-child(4) {
+      margin-top: 40px;
+    } */
+  }
+
+  &__itemImg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+  }
+
+  &__itemTitle {
+    border-radius: 12px;
+    border: 1px solid #292D32;
+    background: #122533;
+    color: #fff;
+    position: relative;
+    margin-top: auto;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    line-height: 135%
+  }
+}

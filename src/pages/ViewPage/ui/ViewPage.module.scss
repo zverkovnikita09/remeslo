@@ -1,0 +1,42 @@
+.viewPage {
+  margin-top: 105px;
+  display: flex;
+  gap: 32px;
+  padding-bottom: 87px;
+  font-weight: 600;
+
+  &__main {
+    width: 774px;
+  }
+
+  &__mainImage {
+    border-radius: 32px;
+    width: 100%;
+    height: 686px;
+    object-fit: cover;
+  }
+
+  &__title {
+    margin-top: 52px;
+    margin-bottom: 16px;
+  }
+
+  &__greyText {
+    margin-top: 24px;
+    font-weight: 400;
+  }
+
+  &__phoneButton {
+    margin-top: 24px;
+  }
+
+  &__messageButton {
+    margin-top: 12px;
+  }
+
+  &__views {
+    margin-top: 52px;
+    display: flex;
+    gap: 5px;
+  }
+}

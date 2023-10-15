@@ -1,0 +1,13 @@
+.geolocation {
+  display: flex;
+  gap: 4px;
+  font-size: 18px;
+  line-height: 145%;
+  position: relative;
+
+  &__popover {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 35px);
+  }
+}
