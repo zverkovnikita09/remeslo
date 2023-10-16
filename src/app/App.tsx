@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { AppRouter } from "./router"
-import { useNavigate, useLocation } from "react-router-dom"
+// import { useNavigate, useLocation } from "react-router-dom"
 import './styles/global.scss'
 
 function App() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  // const navigate = useNavigate();
+  // const location = useLocation();
 
   useEffect(() => {
     /* const token = JSON.parse(localStorage.getItem("token") ?? "null")
