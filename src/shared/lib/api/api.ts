@@ -12,6 +12,9 @@ interface DataResponse<T> {
 
 export const getData = async <T extends {}> ({ dataFlag, url }:GetDataProps) => {
     const response= await fetch(`https://remeslo.pisateli-studio.ru/${url}`)
+    if (!response.ok) {
+        throw new Error('Something went`s wrong');
+    }
     const data:DataResponse<T> = await response.json();
     return dataFlag ? data.data : data;
 }
