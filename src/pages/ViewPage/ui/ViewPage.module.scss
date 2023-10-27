@@ -17,6 +17,19 @@
     object-fit: cover;
   }
 
+  &__addressBlock{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  &__location{
+    color: var(--red-color);
+    justify-content: flex-end;
+    flex-shrink: 0;
+    width: auto;
+    gap: 5px;
+  }
   &__rightBlock{
     width: 100%;
   }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import style from './Geolocation.module.scss'
 import geoIcon from 'src/shared/assets/location.svg'
 import { GeolocationPopover } from './GeolocationPopover/GeolocationPopover'
+import { GeoIcon } from 'src/shared/ui/GeoIcon/GeoIcon'
 
 export const Geolocation = () => {
   const [city] = useState("Ростов-на-Дону")
@@ -14,7 +15,7 @@ export const Geolocation = () => {
 
   return (
     <div className={style.geolocation}>
-      <img src={geoIcon} alt="Геолокация" />
+      <GeoIcon />
       <p className={style.geolocation__city}>{city}</p>
       {
         isCityPopover &&
