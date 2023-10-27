@@ -10,6 +10,9 @@ import { Link, useParams } from 'react-router-dom'
 import { getData } from 'src/shared/lib/api/api'
 import { phoneFormatter } from 'src/shared/lib/phoneFormatter/phoneFormatter'
 import { useState } from 'react'
+import { GeoIcon } from 'src/shared/ui/GeoIcon/GeoIcon'
+import { TextArea } from 'src/shared/ui/TextArea/TextArea'
+import { viewsCounterFormatter } from 'src/shared/lib/viewsCounterFormatter/viewsCounterFormatter'
 
 const phoneNumber = '8 (999) 999-99-99'
 
@@ -46,9 +49,9 @@ export const ViewPage = () => {
     }),
   })
 
-  const { 
-    title, 
-    price, 
+  const {
+    title,
+    price,
     description,
     published_at,
     all_time_views,
@@ -57,7 +60,7 @@ export const ViewPage = () => {
 
   const [isPhoneShown, setIsPhoneShown] = useState(false);
   const [phoneHref, setPhoneHref] = useState('');
-  
+
   const formattedDate = new Date(published_at).toLocaleString('ru', {
     day: 'numeric',
     month: 'long',
@@ -81,17 +84,23 @@ export const ViewPage = () => {
           Ростовская область, Ростов-на-Дону, Будённовский пр-т,
           28 р-н Ленинский
           <Button className={style.viewPage__location}>
-            <img src={geolocation} alt="Геолокация" />
+            <GeoIcon
+              strokeColor='#FC8080'
+            />
             Показать на карте
           </Button>
         </div>
         <Title className={style.viewPage__title}>Характеристики</Title>
         <div className={style.viewPage__feature}></div>
         <Title className={style.viewPage__title}>Описание</Title>
-        <div className={style.viewPage__description} dangerouslySetInnerHTML={{__html:description}} />
+        <div className={style.viewPage__description} dangerouslySetInnerHTML={{ __html: description }} />
         <Title className={style.viewPage__title}>Написать продавцу</Title>
+        <TextArea 
+          className={style.viewPage__textArea}
+          placeholder='Что вы хотите спросить?'
+        />
         <div className={style.viewPage__views}>
-          {all_time_views} просмотров <GreyText>(+{views_today} сегодня)</GreyText>
+          {viewsCounterFormatter(all_time_views)} <GreyText>(+{views_today} сегодня)</GreyText>
         </div>
       </div>
       <div className={style.viewPage__rightBlock}>
