@@ -12,6 +12,7 @@ import { phoneFormatter } from 'src/shared/lib/phoneFormatter/phoneFormatter'
 import { useState } from 'react'
 import { GeoIcon } from 'src/shared/ui/GeoIcon/GeoIcon'
 import { TextArea } from 'src/shared/ui/TextArea/TextArea'
+import { viewsCounterFormatter } from 'src/shared/lib/viewsCounterFormatter/viewsCounterFormatter'
 
 const phoneNumber = '8 (999) 999-99-99'
 
@@ -99,7 +100,7 @@ export const ViewPage = () => {
           placeholder='Что вы хотите спросить?'
         />
         <div className={style.viewPage__views}>
-          {all_time_views} просмотров <GreyText>(+{views_today} сегодня)</GreyText>
+          {viewsCounterFormatter(all_time_views)} <GreyText>(+{views_today} сегодня)</GreyText>
         </div>
       </div>
       <div className={style.viewPage__rightBlock}>
