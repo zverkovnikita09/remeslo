@@ -1,4 +1,4 @@
-import { FC, InputHTMLAttributes, forwardRef } from 'react'
+import { InputHTMLAttributes, forwardRef } from 'react'
 import style from './Input.module.scss'
 import { classNames } from 'src/shared/lib/classNames/classNames'
 

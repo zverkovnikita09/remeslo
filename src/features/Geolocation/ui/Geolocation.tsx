@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import style from './Geolocation.module.scss'
-import geoIcon from 'src/shared/assets/location.svg'
 import { GeolocationPopover } from './GeolocationPopover/GeolocationPopover'
 import { GeoIcon } from 'src/shared/ui/GeoIcon/GeoIcon'
 

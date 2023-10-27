@@ -4,7 +4,6 @@ import { Title } from 'src/shared/ui/Title/TItile'
 import { GreyText } from 'src/shared/ui/GreyText/GreyText'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import image from '../assets/view.png'
-import geolocation from 'src/shared/assets/location.svg'
 import { useQuery } from 'react-query'
 import { Link, useParams } from 'react-router-dom'
 import { getData } from 'src/shared/lib/api/api'
@@ -41,7 +40,7 @@ export interface TagType {
 
 export const ViewPage = () => {
   const { slug } = useParams();
-  const { isLoading, error, data } = useQuery({
+  const { data } = useQuery({
     queryKey: slug,
     queryFn: () => getData<SingleGoods>({
       url: `api/v1/good/${slug}`,
