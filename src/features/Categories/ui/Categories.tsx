@@ -1,35 +1,31 @@
 import style from './Categories.module.scss'
-import categoryImage from '../assets/category.png'
 import { Link } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { getData } from 'src/shared/lib/api/api'
 
 interface ICategory {
-  imageLink: string
-  title: string
-  href: ''
+  name: string
+  image: string
+  slug: string
 }
 
-const categories: ICategory[] = [
-  { imageLink: '', title: 'Изделия из кожи', href: '' },
-  { imageLink: '', title: 'Изделия из кожи', href: '' },
-  { imageLink: '', title: 'Изделия из кожи', href: '' },
-  { imageLink: '', title: 'Изделия из кожи', href: '' },
-  { imageLink: '', title: 'Изделия из кожи', href: '' },
-  { imageLink: '', title: 'Изделия из кожи', href: '' },
-  { imageLink: '', title: 'Изделия из кожи', href: '' },
-  { imageLink: '', title: 'Изделия из кожи', href: '' },
-  { imageLink: '', title: 'Изделия из кожи', href: '' },
-  { imageLink: '', title: 'Изделия из кожи', href: '' }
-]
-
 export const Categories = () => {
+  const { data: categories } = useQuery({
+    
+    queryFn: () => getData<ICategory[]>({
+      url: `api/v1/tags`,
+      dataFlag: true
+    }),
+  })
+  
   return (
     <div className={style.categories}>
-      {categories?.map(({ title, href }) => {
+      {categories?.map(({ name, slug, image }) => {
         return (
-          <Link to={href} className={style.categories__item}>
-            <img src={categoryImage} alt={title} className={style.categories__itemImg} />
+          <Link to={`/tag/${slug}`} className={style.categories__item}>
+            <img src={image} alt={name} className={style.categories__itemImg} />
             <div className={style.categories__itemTitle}>
-              {title}
+              {name}
             </div>
           </Link>
         )

@@ -55,12 +55,12 @@ export const ViewPage = () => {
     published_at,
     all_time_views,
     views_today
-  } = data as SingleGoods ?? {};
+  } = data ?? {};
 
   const [isPhoneShown, setIsPhoneShown] = useState(false);
   const [phoneHref, setPhoneHref] = useState('');
 
-  const formattedDate = new Date(published_at).toLocaleString('ru', {
+  const formattedDate = new Date(published_at ?? '').toLocaleString('ru', {
     day: 'numeric',
     month: 'long',
     hour: 'numeric',
@@ -92,14 +92,14 @@ export const ViewPage = () => {
         <Title className={style.viewPage__title}>Характеристики</Title>
         <div className={style.viewPage__feature}></div>
         <Title className={style.viewPage__title}>Описание</Title>
-        <div className={style.viewPage__description} dangerouslySetInnerHTML={{ __html: description }} />
+        <div className={style.viewPage__description} dangerouslySetInnerHTML={{ __html: description ?? '' }} />
         <Title className={style.viewPage__title}>Написать продавцу</Title>
         <TextArea 
           className={style.viewPage__textArea}
           placeholder='Что вы хотите спросить?'
         />
         <div className={style.viewPage__views}>
-          {viewsCounterFormatter(all_time_views)} <GreyText>(+{views_today} сегодня)</GreyText>
+          {viewsCounterFormatter(all_time_views ?? 0)} <GreyText>(+{views_today} сегодня)</GreyText>
         </div>
       </div>
       <div className={style.viewPage__rightBlock}>
