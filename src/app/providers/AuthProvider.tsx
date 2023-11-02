@@ -17,7 +17,7 @@ export const AuthContext = createContext<AuthContextProps>({ isFetching: false, 
 export const AuthProvider = ({ children }: IAuthProvider) => {
     const [profileData, setProfileData] = useState({});
     const [isFetching, setIsFetching] = useState(false);
-    const [token, setToken] = useLocalStorage('AuthToken', null);
+    const [token ] = useLocalStorage('AuthToken', null);
 
     useEffect(() => {
         const fetchData = async () => {
