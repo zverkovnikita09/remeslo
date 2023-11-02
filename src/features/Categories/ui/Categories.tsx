@@ -20,9 +20,9 @@ export const Categories = () => {
   
   return (
     <div className={style.categories}>
-      {categories?.map(({ name, slug, image }) => {
+      {categories?.map(({ name, slug, image }, index) => {
         return (
-          <Link to={`/tag/${slug}`} className={style.categories__item}>
+          <Link to={`/tag/${slug}`} key={index} className={style.categories__item}>
             <img src={image} alt={name} className={style.categories__itemImg} />
             <div className={style.categories__itemTitle}>
               {name}

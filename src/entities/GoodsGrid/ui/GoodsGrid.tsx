@@ -18,9 +18,9 @@ interface GoodsGridProps {
 export const GoodsGrid = ({ goods }: GoodsGridProps) => {
   return (
     <div className={style.goodsGrid}>
-      {goods?.map(({ price, published_at, title, slug }) => {
+      {goods?.map(({ price, published_at, title, slug }, index) => {
         return (
-          <div className={style.goodsGrid__item}>
+          <div key={index} className={style.goodsGrid__item}>
             <Link to={`view/${slug}`} className={style.goodsGrid__itemImage}>
               <img src={goodsImage} alt={title} />
             </Link>
