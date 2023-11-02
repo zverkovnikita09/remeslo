@@ -8,7 +8,7 @@ export interface IGoods {
   price: string
   published_at: string
   isFavorite: boolean
-  slug: string
+  id: string
 }
 
 interface GoodsGridProps {
@@ -16,17 +16,24 @@ interface GoodsGridProps {
 }
 
 export const GoodsGrid = ({ goods }: GoodsGridProps) => {
+
   return (
     <div className={style.goodsGrid}>
-      {goods?.map(({ price, published_at, title, slug }, index) => {
+      {goods?.map(({ price, published_at, title, id }, index) => {
+          const formattedDate = new Date(published_at ?? '').toLocaleString('ru', {
+            day: 'numeric',
+            month: 'long',
+            hour: 'numeric',
+            minute: 'numeric'
+          }).replace(' в ', ' ');
         return (
           <div key={index} className={style.goodsGrid__item}>
-            <Link to={`view/${slug}`} className={style.goodsGrid__itemImage}>
+            <Link to={`view/${id}`} className={style.goodsGrid__itemImage}>
               <img src={goodsImage} alt={title} />
             </Link>
-            <Link to={`view/${slug}`} className={style.goodsGrid__itemTitle}>{title}</Link>
+            <Link to={`view/${id}`} className={style.goodsGrid__itemTitle}>{title}</Link>
             <p className={style.goodsGrid__itemPrice}>{price} ₽</p>
-            <p className={style.goodsGrid__itemDate}>{published_at}</p>
+            <p className={style.goodsGrid__itemDate}>{formattedDate}</p>
           </div>
         )
       })}

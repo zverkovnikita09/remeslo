@@ -5,28 +5,17 @@ import { Container } from 'src/shared/ui/Container/Container'
 import { Categories } from 'src/features/Categories'
 import { GoodsGrid, IGoods } from 'src/entities/GoodsGrid'
 import { Filters } from 'src/features/Filters'
-import { useLocalStorage } from 'src/shared/useLocalStorage'
-import { useEffect } from 'react'
-
-const goods: IGoods[] = [
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' },
-  { isFavorite: false, imagePath: '', price: '2200.00', published_at: '1 октября 17:28', title: 'Портмоне', slug: '' }
-]
+import { useQuery } from 'react-query'
+import { getData } from 'src/shared/lib/api/api'
 
 export const MainPage = () => {
+  const { data: goods } = useQuery({
+    queryKey: 'goodsQuery',
+    queryFn: () => getData<IGoods[]>({
+      url: `api/v1/good`,
+      dataFlag: true,
+    }),
+  })
   return (
     <Container className={style.mainPage}>
       <Title className={style.mainPage__categories}>Популярные категории</Title>
@@ -38,12 +27,12 @@ export const MainPage = () => {
         <Title>Рекомендации для вас</Title>
         <Filters />
       </div>
-      <GoodsGrid goods={ goods} />
+      <GoodsGrid goods={goods?.slice(0,5)} />
       <div className={style.mainPage__titleContainer}>
         <Title>Объявления из других городов</Title>
         <Filters />
       </div>
-      <GoodsGrid goods={ goods} />
+      <GoodsGrid goods={goods?.slice(0,10)} />
     </Container>
   )
 }
