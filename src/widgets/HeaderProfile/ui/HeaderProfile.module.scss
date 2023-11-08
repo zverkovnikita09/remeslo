@@ -49,13 +49,13 @@
     grid-template-rows: 0fr;
     overflow: hidden;
     border: 1px solid transparent;
-    transition: grid-template-rows 0.1s linear, padding 0s 0.1s, border-color 0s 0.1s;
+/*     transition: grid-template-rows 0.1s linear, padding 0s 0.1s, border-color 0s 0.1s; */
 
     &.open {
       grid-template-rows: 1fr;
       padding: 24px;
       border-color: var(--dark-grey-color);
-      transition-delay: 0s;
+      /* transition-delay: 0s; */
     }
   }
 

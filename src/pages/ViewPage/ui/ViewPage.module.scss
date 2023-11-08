@@ -17,22 +17,25 @@
     object-fit: cover;
   }
 
-  &__addressBlock{
+  &__addressBlock {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 20px;
   }
-  &__location{
+
+  &__location {
     color: var(--red-color);
     justify-content: flex-end;
     flex-shrink: 0;
     width: auto;
     gap: 5px;
   }
-  &__rightBlock{
+
+  &__rightBlock {
     width: 100%;
   }
+
   &__title {
     margin-top: 52px;
     margin-bottom: 16px;
@@ -57,5 +60,20 @@
     display: flex;
     gap: 5px;
     border-top: 1px solid #ccc;
+  }
+
+  &__sendMessage {
+    width: 223px;
+    margin-top: 16px;
+  }
+
+  &__price {
+    font-size: 32px;
+    font-weight: 700;
+    margin-top: 8px;
+  }
+
+  &__date {
+    margin-top: 8px;
   }
 }

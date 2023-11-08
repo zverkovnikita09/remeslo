@@ -6,8 +6,16 @@ import { GreyText } from 'src/shared/ui/GreyText/GreyText'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import googleIcon from 'src/shared/assets/googleIcon.svg'
 import vkIcon from 'src/shared/assets/vkIcon.svg'
+import { useForm } from 'react-hook-form'
+
+interface EmailAuth {
+  email: string
+  password: string
+}
 
 export const AuthByEmail = () => {
+  const { register, handleSubmit } = useForm<EmailAuth>()
+
   return (
     <div className={style.authByEmail}>
       <Title>Войти</Title>
@@ -16,6 +24,13 @@ export const AuthByEmail = () => {
         <Input
           placeholder='Введите ваш E-mail'
           className={style.authByEmail__input}
+          {...register('email', {
+            required: 'Необходимо заполнить «Email».',
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: 'Значение «E-mail» не является правильным email адресом.'
+            }
+          })}
         />
         <Input
           placeholder='Введите пароль'

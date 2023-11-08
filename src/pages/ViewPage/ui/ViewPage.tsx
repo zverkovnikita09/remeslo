@@ -78,7 +78,7 @@ export const ViewPage = () => {
     <Container className={style.viewPage}>
       <div className={style.viewPage__main}>
         <img src={image} alt={title} className={style.viewPage__mainImage} />
-        <Title className={style.viewPage__title}>Адрес</Title>
+        {/* <Title className={style.viewPage__title}>Адрес</Title>
         <div className={style.viewPage__addressBlock}>
           Ростовская область, Ростов-на-Дону, Будённовский пр-т,
           28 р-н Ленинский
@@ -88,16 +88,23 @@ export const ViewPage = () => {
             />
             Показать на карте
           </Button>
-        </div>
+        </div> */}
         <Title className={style.viewPage__title}>Характеристики</Title>
         <div className={style.viewPage__feature}></div>
         <Title className={style.viewPage__title}>Описание</Title>
         <div className={style.viewPage__description} dangerouslySetInnerHTML={{ __html: description ?? '' }} />
         <Title className={style.viewPage__title}>Написать продавцу</Title>
-        <TextArea 
+        <TextArea
           className={style.viewPage__textArea}
           placeholder='Что вы хотите спросить?'
         />
+        <Button
+          theme={ButtonTheme.RED}
+          size={ButtonSize.M}
+          className={style.viewPage__sendMessage}
+        >
+          Отправить
+        </Button>
         <div className={style.viewPage__views}>
           {viewsCounterFormatter(all_time_views ?? 0)} <GreyText>(+{views_today} сегодня)</GreyText>
         </div>
