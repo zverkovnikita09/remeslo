@@ -10,8 +10,8 @@ import { useContext } from 'react'
 import { AuthContext } from 'src/app/providers/AuthProvider'
 
 export const Header = () => {
-  const { profileData } = useContext(AuthContext);
-  const isAuthed = Boolean(Object.keys(profileData).length);
+  const { user } = useContext(AuthContext);
+  const isAuthed = Boolean(Object.keys(user).length);
 
   return (
     <Container className={style.header}>
@@ -29,7 +29,7 @@ export const Header = () => {
                 Разместить
               </Button>
             </Link>
-            <HeaderProfile />
+            <HeaderProfile profileInfo={user.profile} />
           </>
           :
           <Link to='/login' className={style.header__link}>

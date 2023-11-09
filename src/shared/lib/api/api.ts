@@ -4,6 +4,8 @@ interface GetDataProps {
 
 }
 
+const BASE_URL = 'https://remeslo.pisateli-studio.ru'
+
 export interface DataResponse<T> {
     data: T
     status: 'OK' | 'Not Found' | 'Internal Server Error'
@@ -11,10 +13,25 @@ export interface DataResponse<T> {
 }
 
 export const getData = async <T extends {}> ({ dataFlag, url }:GetDataProps): Promise<T> => {
-    const response= await fetch(`https://remeslo.pisateli-studio.ru/${url}`)
+    const response= await fetch(`${BASE_URL}/${url}`)
     if (!response.ok) {
         throw new Error('Something went`s wrong');
     }
     const data = await response.json();
     return dataFlag ? data.data : data;
 }
+
+export const sendData = async<DataType>(data: DataType, url: string) => {
+    let formData = new FormData();
+    for (let item in data) {
+      formData.append(item, String(data[item]))
+    }
+    const status = await fetch(`${BASE_URL}/${url}`, {
+      body: formData,
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+      }
+    })
+    return status;
+  }

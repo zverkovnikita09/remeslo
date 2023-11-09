@@ -1,49 +1,97 @@
 import { Input } from 'src/shared/ui/Input/Input'
 import { Title } from 'src/shared/ui/Title/TItile'
 import style from './AuthByEmail.module.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { GreyText } from 'src/shared/ui/GreyText/GreyText'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import googleIcon from 'src/shared/assets/googleIcon.svg'
 import vkIcon from 'src/shared/assets/vkIcon.svg'
 import { useForm } from 'react-hook-form'
+import { useState, useContext } from 'react'
+import { sendData } from 'src/shared/lib/api/api'
+import { AuthContext, IUser } from 'src/app/providers/AuthProvider'
 
 interface EmailAuth {
   email: string
   password: string
 }
 
+export interface ResponseUserData {
+  data: {
+    token: string
+    user: IUser
+  }
+}
+
 export const AuthByEmail = () => {
-  const { register, handleSubmit } = useForm<EmailAuth>()
+  const { register, handleSubmit, formState: { errors, touchedFields } } = useForm<EmailAuth>({ mode: 'onBlur' })
+  const [isSending, setIsSending] = useState(false)
+  const { setUserData } = useContext(AuthContext)
+  const navigate = useNavigate();
+
+
+  const onSubmit = async (data: EmailAuth) => {
+
+    try {
+      setIsSending(true);
+      const response = await sendData<EmailAuth>(data, 'api/v1/login')
+      console.log(response);
+      
+      if (!response.ok) {
+        throw new Error("Произошла ошибка при отправке данных");
+      }
+
+      const userData: ResponseUserData = await response.json();
+      setUserData({token: userData.data.token, user: userData.data.user});
+      navigate('/');
+    } catch (error) {
+
+    }
+    finally{
+      setIsSending(false);
+    }
+  }
 
   return (
     <div className={style.authByEmail}>
       <Title>Войти</Title>
       <p className={style.authByEmail__text}>Стань покупателем или начни продавать свое</p>
-      <div className={style.authByEmail__inputGroup}>
+      <form
+        className={style.authByEmail__inputGroup}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <Input
           placeholder='Введите ваш E-mail'
           className={style.authByEmail__input}
           {...register('email', {
-            required: 'Необходимо заполнить «Email».',
+            required: 'Необходимо заполнить email.',
             pattern: {
               value: /\S+@\S+\.\S+/,
-              message: 'Значение «E-mail» не является правильным email адресом.'
+              message: 'Значение поля не является правильным email адресом.'
             }
           })}
+          error={errors.email}
+          touched={touchedFields.email}
         />
         <Input
           placeholder='Введите пароль'
           className={style.authByEmail__input}
           type='password'
+          {...register('password', {
+            required: 'Необходимо заполнить пароль.',
+          })}
+          error={errors.password}
+          touched={touchedFields.password}
         />
         <Button
           theme={ButtonTheme.RED}
           size={ButtonSize.M}
+          type='submit'
+          disabled={isSending}
         >
           Войти
         </Button>
-      </div>
+      </form>
       <Button
         theme={ButtonTheme.OUTLINE}
         size={ButtonSize.M}
