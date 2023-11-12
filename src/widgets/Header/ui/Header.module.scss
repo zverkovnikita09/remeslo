@@ -13,4 +13,9 @@
   &__link {
     width: 178px;
   }
+  &__spinner{
+    display: flex;
+    justify-content: center;
+    width: 200px;
+  }
 }

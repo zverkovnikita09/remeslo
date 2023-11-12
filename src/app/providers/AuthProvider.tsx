@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useLayoutEffect, useState } from "react";
 import { getData } from "src/shared/lib/api/api";
 import { useLocalStorage } from "src/shared/useLocalStorage";
 
@@ -6,9 +6,9 @@ interface IAuthProvider {
     children?: ReactNode
 }
 
-export interface ProfileInfo{
+export interface ProfileInfo {
     firstname: string
-    lastname: string 
+    lastname: string
     avatar: string | null
 }
 
@@ -24,22 +24,29 @@ interface AuthContextProps {
     token: string
     user: IUser
     setUserData: (...args: any) => void
+    logout: () => void
 }
 
-export const AuthContext = createContext<AuthContextProps>({ isFetching: false, token: '', user: {}, setUserData: () => {} })
+export const AuthContext = createContext<AuthContextProps>({
+    isFetching: false,
+    token: '', user: {},
+    setUserData: () => { },
+    logout: () => { }
+})
 
 export const AuthProvider = ({ children }: IAuthProvider) => {
     const [user, setUser] = useState({});
     const [isFetching, setIsFetching] = useState(false);
     const [token, setToken] = useLocalStorage('AuthToken', null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const fetchData = async () => {
             try {
                 setIsFetching(true);
-                const data = await getData({url:'/api/v1/user_profile'});
-                
+                const data = await getData({ url: 'api/v1/user_profile', headers: { Authorization: `Bearer ${token}` }, dataFlag: true });
+
                 setUser(data);
+
             } catch (error) {
                 console.log(error);
             }
@@ -54,13 +61,24 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         }
     }, []);
 
-    const setUserData = ({token, user}:{token: string, user: IUser}) => {
+    const logout = () => {
+        setUser({});
+        setToken('');
+    }
+
+    const setUserData = ({ token, user }: { token: string, user: IUser }) => {
         setToken(token)
         setUser(user)
     }
 
     return (
-        <AuthContext.Provider value={{ isFetching, user, token, setUserData }}>
+        <AuthContext.Provider value={{
+            isFetching,
+            user,
+            token,
+            setUserData,
+            logout
+        }}>
             {children}
         </AuthContext.Provider>
     )

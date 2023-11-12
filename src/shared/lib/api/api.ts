@@ -1,7 +1,7 @@
-interface GetDataProps {
+interface GetDataParams {
     url?: string
     dataFlag?: boolean // флаг для получения данных или респонса
-
+    headers?: Record<string, string>
 }
 
 const BASE_URL = 'https://remeslo.pisateli-studio.ru'
@@ -12,8 +12,10 @@ export interface DataResponse<T> {
     message: string
 }
 
-export const getData = async <T extends {}> ({ dataFlag, url }:GetDataProps): Promise<T> => {
-    const response= await fetch(`${BASE_URL}/${url}`)
+export const getData = async <T extends {}> ({ dataFlag, url, headers = {} }:GetDataParams): Promise<T> => {
+    const response= await fetch(`${BASE_URL}/${url}`, {
+        headers
+    })
     if (!response.ok) {
         throw new Error('Something went`s wrong');
     }

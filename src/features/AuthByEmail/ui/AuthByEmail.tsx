@@ -35,7 +35,6 @@ export const AuthByEmail = () => {
     try {
       setIsSending(true);
       const response = await sendData<EmailAuth>(data, 'api/v1/login')
-      console.log(response);
       
       if (!response.ok) {
         throw new Error("Произошла ошибка при отправке данных");

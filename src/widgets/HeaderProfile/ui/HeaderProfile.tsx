@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { classNames } from 'src/shared/lib/classNames/classNames'
 import { ProfileInfo } from 'src/app/providers/AuthProvider'
+import { Button } from 'src/shared/ui/Button/Button'
 
 interface HeaderProfileProps {
   profileInfo?: ProfileInfo
+  logout?: () => void
 }
 
-export const HeaderProfile = ({profileInfo}: HeaderProfileProps) => {
+export const HeaderProfile = ({ profileInfo, logout }: HeaderProfileProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const listButtonRef = useRef<HTMLParagraphElement>(null)
 
@@ -17,7 +19,7 @@ export const HeaderProfile = ({profileInfo}: HeaderProfileProps) => {
     setIsOpen(pr => !pr)
   }
 
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const closeOutsideClick = useCallback((e: any) => {
     const currentTarget = e.target;
@@ -49,6 +51,7 @@ export const HeaderProfile = ({profileInfo}: HeaderProfileProps) => {
           <Link to='' className={style.headerProfile__link} onClick={toggleList}>Избранное</Link>
           <Link to='' className={style.headerProfile__link} onClick={toggleList}>Уведомления</Link>
           <Link to='' className={style.headerProfile__link} onClick={toggleList}>Настройки</Link>
+          <Button className={style.headerProfile__link} onClick={logout}>Выйти</Button>
         </div>
       </div>
     </div>

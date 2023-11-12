@@ -8,9 +8,10 @@ import { SearchInput } from 'src/features/SearchInput'
 import { Geolocation } from 'src/features/Geolocation'
 import { useContext } from 'react'
 import { AuthContext } from 'src/app/providers/AuthProvider'
+import { Spinner } from 'src/shared/ui/Spinner/Spinner'
 
 export const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user, isFetching, logout } = useContext(AuthContext);
   const isAuthed = Boolean(Object.keys(user).length);
 
   return (
@@ -19,27 +20,31 @@ export const Header = () => {
       <div className={style.header__rightBlock}>
         <Geolocation />
         <SearchInput />
-        {isAuthed ?
-          <>
-            <Link to='' className={style.header__link}>
+        {isFetching ? 
+        <div className={style.header__spinner}>
+          <Spinner />
+        </div> :
+          isAuthed ?
+            <>
+              <Link to='' className={style.header__link}>
+                <Button
+                  size={ButtonSize.M}
+                  theme={ButtonTheme.RED}
+                >
+                  Разместить
+                </Button>
+              </Link>
+              <HeaderProfile profileInfo={user.profile} logout={logout} />
+            </>
+            :
+            <Link to='/login' className={style.header__link}>
               <Button
                 size={ButtonSize.M}
                 theme={ButtonTheme.RED}
               >
-                Разместить
+                Войти
               </Button>
             </Link>
-            <HeaderProfile profileInfo={user.profile} />
-          </>
-          :
-          <Link to='/login' className={style.header__link}>
-            <Button
-              size={ButtonSize.M}
-              theme={ButtonTheme.RED}
-            >
-              Войти
-            </Button>
-          </Link>
         }
       </div>
     </Container>

@@ -20,6 +20,10 @@ export const useLocalStorage = (key: string, initialValue: unknown) => {
     }
 
     function onValueChange(value: unknown) {
+        if (!value) {
+            localStorage.removeItem(key);
+            return;
+        }
         setValue(value);
         localStorage.setItem(key,  JSON.stringify(value))
     }
