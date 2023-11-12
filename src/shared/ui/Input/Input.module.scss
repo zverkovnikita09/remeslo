@@ -19,7 +19,7 @@
   }
 
   &[data-status="success"] {
-    .input {
+    .input__textField {
       border-color: #3c763d;
 
       &:focus {
@@ -30,7 +30,7 @@
   }
 
   &[data-status="error"] {
-    .input {
+    .input__textField {
       border-color: #ff0000;
 
       &:focus {

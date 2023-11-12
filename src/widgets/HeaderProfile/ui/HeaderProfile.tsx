@@ -3,8 +3,15 @@ import photo from '../assets/photo.jpg'
 import { Link } from 'react-router-dom'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { classNames } from 'src/shared/lib/classNames/classNames'
+import { ProfileInfo } from 'src/app/providers/AuthProvider'
+import { Button } from 'src/shared/ui/Button/Button'
 
-export const HeaderProfile = () => {
+interface HeaderProfileProps {
+  profileInfo?: ProfileInfo
+  logout?: () => void
+}
+
+export const HeaderProfile = ({ profileInfo, logout }: HeaderProfileProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const listButtonRef = useRef<HTMLParagraphElement>(null)
 
@@ -12,7 +19,7 @@ export const HeaderProfile = () => {
     setIsOpen(pr => !pr)
   }
 
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const closeOutsideClick = useCallback((e: any) => {
     const currentTarget = e.target;
@@ -35,7 +42,7 @@ export const HeaderProfile = () => {
       <div className={style.headerProfile__imageContainer}>
         <img src={photo} alt="Фото профиля" className={style.headerProfile__image} />
       </div>
-      <p className={style.headerProfile__name} onClick={toggleList} ref={listButtonRef}>Nikita</p>
+      <p className={style.headerProfile__name} onClick={toggleList} ref={listButtonRef}>{profileInfo?.firstname}</p>
       <div className={classNames(style.headerProfile__linksContainer, { [style.open]: isOpen })}>
         <div className={style.headerProfile__linksInner}>
           <Link to='' className={style.headerProfile__link} onClick={toggleList}>Личный кабинет</Link>
@@ -44,6 +51,7 @@ export const HeaderProfile = () => {
           <Link to='' className={style.headerProfile__link} onClick={toggleList}>Избранное</Link>
           <Link to='' className={style.headerProfile__link} onClick={toggleList}>Уведомления</Link>
           <Link to='' className={style.headerProfile__link} onClick={toggleList}>Настройки</Link>
+          <Button className={style.headerProfile__link} onClick={logout}>Выйти</Button>
         </div>
       </div>
     </div>
