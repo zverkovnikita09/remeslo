@@ -55,7 +55,7 @@ export const RegisterByEmail = () => {
   return (
     <div className={style.registerByEmail}>
       {
-        isUserCreated ? <p className={style.registerByEmail__messageText}>На Ваш email отправлено сообщение</p> :
+        isUserCreated ? <p className={style.registerByEmail__messageText}>На указанный Вами email {getValues('email')} отправлено сообщение для подтверждения</p> :
           <>
             <Title>Регистрация</Title>
             <p className={style.registerByEmail__text}>Стань покупателем или начни продавать свое</p>
