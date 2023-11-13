@@ -10,6 +10,11 @@
     overflow: hidden;
     border-radius: 50%;
     box-shadow: 2px 2px 15px var(--dark-grey-color);
+    display: grid;
+    place-content: center;
+    font-size: 22px;
+    color: var(--red-color);
+    font-weight: 700;
   }
 
   &__image {

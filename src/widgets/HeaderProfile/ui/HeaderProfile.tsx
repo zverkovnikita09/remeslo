@@ -19,7 +19,6 @@ export const HeaderProfile = ({ profileInfo, logout }: HeaderProfileProps) => {
     setIsOpen(pr => !pr)
   }
 
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const closeOutsideClick = useCallback((e: any) => {
     const currentTarget = e.target;
@@ -40,7 +39,11 @@ export const HeaderProfile = ({ profileInfo, logout }: HeaderProfileProps) => {
   return (
     <div className={style.headerProfile}>
       <div className={style.headerProfile__imageContainer}>
-        <img src={photo} alt="Фото профиля" className={style.headerProfile__image} />
+        {
+          profileInfo?.avatar ?
+            <img src={photo} alt="Фото профиля" className={style.headerProfile__image} />
+            : `${profileInfo?.firstname[0] ?? ''}${profileInfo?.lastname[0] ?? ''}`
+        }
       </div>
       <p className={style.headerProfile__name} onClick={toggleList} ref={listButtonRef}>{profileInfo?.firstname}</p>
       <div className={classNames(style.headerProfile__linksContainer, { [style.open]: isOpen })}>
