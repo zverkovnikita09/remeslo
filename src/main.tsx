@@ -5,6 +5,7 @@ import { QueryClientProvider, QueryClient } from 'react-query'
 import ErrorBoundary from './app/providers/ErrorBoundary.tsx'
 import { AuthProvider } from './app/providers/AuthProvider.tsx'
 import { NotificationsProvider } from './app/providers/NotificationsProvider.tsx'
+import ScrollToTop from './app/providers/ScrollToTop.tsx'
 
 const queryClient = new QueryClient()
 
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <QueryClientProvider client={queryClient}>
         <NotificationsProvider>
           <AuthProvider>
-            <App />
+            <ScrollToTop>
+              <App />
+            </ScrollToTop>
           </AuthProvider>
         </NotificationsProvider>
       </QueryClientProvider>
