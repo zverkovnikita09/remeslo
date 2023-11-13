@@ -13,7 +13,7 @@ export const Categories = () => {
   const { data: categories } = useQuery({
     queryKey: 'categoriesQuery',
     queryFn: () => getData<ICategory[]>({
-      url: `api/v1/tags`,
+      url: `/api/v1/tags`,
       dataFlag: true
     }),
   })

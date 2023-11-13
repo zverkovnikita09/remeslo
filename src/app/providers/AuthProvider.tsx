@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
         const fetchData = async () => {
             try {
                 setIsFetching(true);
-                const data = await getData({ url: 'api/v1/user_profile', headers: { Authorization: `Bearer ${token}` }, dataFlag: true });
+                const data = await getData({ url: '/api/v1/user_profile', headers: { Authorization: `Bearer ${token}` }, dataFlag: true });
 
                 setUser(data);
 
