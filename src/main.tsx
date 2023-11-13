@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client'
 import App from './app/App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query'
-import ErrorBoundary from './app/providers/ErrorBoundary.tsx'
+import ErrorBoundary from './app/providers/ErrorsBoundary.tsx'
 import { AuthProvider } from './app/providers/AuthProvider.tsx'
 import { NotificationsProvider } from './app/providers/NotificationsProvider.tsx'
 
