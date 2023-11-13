@@ -9,7 +9,6 @@ import { Link, useParams } from 'react-router-dom'
 import { getData } from 'src/shared/lib/api/api'
 import { phoneFormatter } from 'src/shared/lib/phoneFormatter/phoneFormatter'
 import { useState } from 'react'
-import { GeoIcon } from 'src/shared/ui/GeoIcon/GeoIcon'
 import { TextArea } from 'src/shared/ui/TextArea/TextArea'
 import { viewsCounterFormatter } from 'src/shared/lib/viewsCounterFormatter/viewsCounterFormatter'
 
