@@ -1,6 +1,5 @@
 .geolocation {
   display: flex;
-  gap: 4px;
   font-size: 18px;
   line-height: 145%;
   position: relative;
@@ -9,5 +8,11 @@
     position: absolute;
     right: 0;
     top: calc(100% + 35px);
+  }
+  &__button{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 400;
   }
 }

@@ -1,4 +1,4 @@
-import { Title } from 'src/shared/ui/Title/TItile'
+import { Title } from 'src/shared/ui/Title/TItle'
 import style from './MainPage.module.scss'
 import { GreyText } from 'src/shared/ui/GreyText/GreyText'
 import { Container } from 'src/shared/ui/Container/Container'

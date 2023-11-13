@@ -1,5 +1,5 @@
 import { Input } from 'src/shared/ui/Input/Input'
-import { Title } from 'src/shared/ui/Title/TItile'
+import { Title } from 'src/shared/ui/Title/TItle'
 import style from './AuthByEmail.module.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { GreyText } from 'src/shared/ui/GreyText/GreyText'

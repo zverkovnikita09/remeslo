@@ -3,53 +3,23 @@ import style from './Geolocation.module.scss'
 import { GeolocationPopover } from './GeolocationPopover/GeolocationPopover'
 import { GeoIcon } from 'src/shared/ui/GeoIcon/GeoIcon'
 import { useLocalStorage } from 'src/shared/useLocalStorage'
-import { getData } from 'src/shared/lib/api/api'
-
-
-interface cityResponseData{
-  location: {
-    data:{
-      city: string
-    }
-  }
-}
-
-const getUserIp = async () => {
-  const data: { ip: string } = await getData({baseUrl: '', url: 'https://api.ipify.org?format=json&callback=getIP' })
-
-  return data?.ip;
-}
-
-const API_KEY = 'bfb0bf13ebd33709d153118f550bf36c73f78430'
-
-const getUserCity = async (ipAdress: string, token: string) => {
-  const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=";
-
-  const data = await getData<cityResponseData>({
-    baseUrl: '',
-    url: url + ipAdress,
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": "Token " + token
-    }
-  })
-  
-  return data;
-}
+import { getUserCity, getUserIp } from '../lib/api'
+import { GeolocationPopup } from './GeolocationPopup/GeolocationPopup'
+import { Button } from 'src/shared/ui/Button/Button'
 
 export const Geolocation = () => {
   const [city, setCity] = useLocalStorage('city', '');
   const [proposedCity, setProposedCity] = useState('');
   const [isCityPopover, setCityPopover] = useState(false);
-  
+  const [isCityPopup, setCityPopup] = useState(false);
+
 
   useEffect(() => {
     async function getCityWrapper() {
       const userIp = await getUserIp();
-      const userCity = await getUserCity(userIp, API_KEY)
+      const userCity = await getUserCity(userIp)
       setProposedCity(userCity.location.data.city);
-      
+
     }
     getCityWrapper()
   }, [])
@@ -58,24 +28,45 @@ export const Geolocation = () => {
     if (!city && proposedCity) {
       setCityPopover(true)
     }
+    else{
+      setCityPopover(false);
+    }
   }, [city, proposedCity])
 
 
 
   const closePopover = () => {
-    setCityPopover(false)
+    setCityPopover(false);
+  }
+
+  const openPopup = () => {
+
+    setCityPopup(true);
+  }
+  const closePopup = () => {
+    setCityPopup(false);
   }
 
   return (
     <div className={style.geolocation}>
-      {
-        city ?       
-        <>
-        <GeoIcon />
-        {city}
-        </> :
-        'Выбрать город'
-      }
+      <GeolocationPopup
+        isActive={isCityPopup}
+        closePopup={closePopup}
+        setCity={setCity}
+      />
+      <Button
+        className={style.geolocation__button}
+        onClick={openPopup}
+      >
+        {
+          city ?
+            <>
+              <GeoIcon />
+              {city}
+            </> :
+            'Выбрать город'
+        }
+      </Button>
 
       {
         isCityPopover &&

@@ -1,4 +1,4 @@
-import { Title } from 'src/shared/ui/Title/TItile'
+import { Title } from 'src/shared/ui/Title/TItle'
 import { Input } from 'src/shared/ui/Input/Input'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import googleIcon from 'src/shared/assets/googleIcon.svg'
