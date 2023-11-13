@@ -12,7 +12,7 @@ export const MainPage = () => {
   const { data: goods } = useQuery({
     queryKey: 'goodsQuery',
     queryFn: () => getData<IGoods[]>({
-      url: `api/v1/good`,
+      url: `/api/v1/good`,
       dataFlag: true,
     }),
   })

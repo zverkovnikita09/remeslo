@@ -42,7 +42,7 @@ export const ViewPage = () => {
   const { data } = useQuery({
     queryKey: slug,
     queryFn: () => getData<SingleGoods>({
-      url: `api/v1/good/${slug}`,
+      url: `/api/v1/good/${slug}`,
       dataFlag: true
     }),
   })
