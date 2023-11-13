@@ -2,14 +2,20 @@ import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import style from './GeolocationPopover.module.scss'
 import { CloseButton } from 'src/shared/ui/CloseButton/CloseButton'
 import { classNames } from 'src/shared/lib/classNames/classNames'
+import { useCallback } from 'react'
 
 interface GeolocationPopoverProps {
-  region: string
+  city: string
   className?: string
   onClose?: () => void
+  setCity?: (proposedCity: string) => void
 }
 
-export const GeolocationPopover = ({ region, className = '', onClose }: GeolocationPopoverProps) => {
+export const GeolocationPopover = ({ city, className = '', onClose, setCity }: GeolocationPopoverProps) => {
+  const handleSetCity = useCallback(()=>{
+    setCity?.(city)
+    onClose?.()
+  }, [])
   return (
     <div className={classNames(style.geolocationPopover, {}, [className])}>
       <CloseButton
@@ -17,7 +23,7 @@ export const GeolocationPopover = ({ region, className = '', onClose }: Geolocat
         onClick={onClose}
       />
       <p className={style.geolocationPopover__text}>
-        Ваш регион <br /> {region}
+        Ваш регион <br /> {city}
       </p>
       <div className={style.geolocationPopover__buttonContainer}>
         <Button
@@ -29,7 +35,7 @@ export const GeolocationPopover = ({ region, className = '', onClose }: Geolocat
         <Button
           theme={ButtonTheme.BLACK}
           size={ButtonSize.S}
-          onClick={onClose}
+          onClick={handleSetCity}
         >
           Верно
         </Button>
