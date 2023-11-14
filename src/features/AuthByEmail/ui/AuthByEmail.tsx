@@ -107,7 +107,7 @@ export const AuthByEmail = () => {
         <img src={vkIcon} alt="VK" width={24} height={24} />
         Войти с помощью Vkontakte
       </Button>
-      <Link to='' className={style.authByEmail__link}>
+      <Link to='reset-password' className={style.authByEmail__link}>
         <GreyText className='textUnderline'>Забыли пароль?</GreyText>
       </Link>
       <GreyText className={style.authByEmail__link}>
