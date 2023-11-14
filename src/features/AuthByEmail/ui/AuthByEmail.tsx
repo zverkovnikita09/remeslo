@@ -1,5 +1,5 @@
 import { Input } from 'src/shared/ui/Input/Input'
-import { Title } from 'src/shared/ui/Title/TItile'
+import { Title } from 'src/shared/ui/Title/TItle'
 import style from './AuthByEmail.module.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import { GreyText } from 'src/shared/ui/GreyText/GreyText'
@@ -107,7 +107,7 @@ export const AuthByEmail = () => {
         <img src={vkIcon} alt="VK" width={24} height={24} />
         Войти с помощью Vkontakte
       </Button>
-      <Link to='' className={style.authByEmail__link}>
+      <Link to='reset-password' className={style.authByEmail__link}>
         <GreyText className='textUnderline'>Забыли пароль?</GreyText>
       </Link>
       <GreyText className={style.authByEmail__link}>

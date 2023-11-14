@@ -1,6 +1,6 @@
 import { Popup } from 'src/shared/ui/Popup/Popup'
 import style from './FiltersPopup.module.scss'
-import { Title } from 'src/shared/ui/Title/TItile'
+import { Title, TitleSize } from 'src/shared/ui/Title/TItle'
 import { CloseButton } from 'src/shared/ui/CloseButton/CloseButton'
 import { Input } from 'src/shared/ui/Input/Input'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
@@ -15,7 +15,7 @@ export const FiltersPopup = ({ closePopup, isActive }: FiltersPopupProps) => {
     <Popup isActive={isActive} closePopup={closePopup}>
       <div className={style.filtersPopup}>
         <CloseButton className={style.filtersPopup__close} />
-        <Title>Настройки</Title>
+        <Title size={TitleSize.S}>Настройки</Title>
         <p className={style.filtersPopup__sectionTitle}>Категории</p>
         <div className={style.filtersPopup__categories}>
 

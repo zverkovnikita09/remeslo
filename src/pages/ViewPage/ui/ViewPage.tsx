@@ -1,6 +1,6 @@
 import { Container } from 'src/shared/ui/Container/Container'
 import style from './ViewPage.module.scss'
-import { Title } from 'src/shared/ui/Title/TItile'
+import { Title } from 'src/shared/ui/Title/TItle'
 import { GreyText } from 'src/shared/ui/GreyText/GreyText'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import image from '../assets/view.png'
