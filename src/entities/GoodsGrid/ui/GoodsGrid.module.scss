@@ -3,6 +3,10 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 32px;
 
+  &__item{
+    position: relative;
+  }
+
   &__itemImage {
     display: block;
     width: 100%;
@@ -36,5 +40,11 @@
     line-height: 145%;
     color: #9B9B9B;
     margin-top: 8px;
+  }
+  
+  &__favoriteButton{
+    position: absolute;
+    top: 14px;
+    right: 14px;
   }
 }
