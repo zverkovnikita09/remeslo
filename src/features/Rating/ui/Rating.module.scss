@@ -1,0 +1,16 @@
+.rating {
+    &__numeric {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background-color: #fff;
+        border-radius: 24px;
+        padding: 2px 8px;
+
+        & span {
+            color: var(--black-color);
+            font-size: 18px;
+            line-height: 145%;
+        }
+    }
+}
