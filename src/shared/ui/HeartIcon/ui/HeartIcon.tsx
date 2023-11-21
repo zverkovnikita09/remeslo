@@ -1,6 +1,3 @@
-import { Button } from "../../Button/Button"
-import style from './HeartIcon.module.scss'
-
 interface HeartIconProps {
     iconWidth?: number
     iconHeight?: number

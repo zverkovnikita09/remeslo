@@ -41,6 +41,12 @@
     color: #9B9B9B;
     margin-top: 8px;
   }
+
+  &__rating{
+    position: absolute;
+    top: 12px;
+    left: 14px;
+  }
   
   &__favoriteButton{
     position: absolute;
