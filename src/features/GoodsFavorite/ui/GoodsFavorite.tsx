@@ -1,6 +1,6 @@
 import { classNames } from "src/shared/lib/classNames/classNames"
 import { Button } from "src/shared/ui/Button/Button"
-import { HeartIcon } from "src/shared/ui/FavoriteButton"
+import { HeartIcon } from "src/shared/ui/HeartIcon"
 import style from './GoodsFavorite.module.scss'
 import { useState } from 'react'
 
