@@ -2,16 +2,16 @@ import { Rating as MaterialRating } from "@mui/material";
 import style from './Rating.module.scss'
 import { StarIcon } from "src/shared/ui/StarIcon";
 import { classNames } from "src/shared/lib/classNames/classNames";
-/* import { styled } from '@mui/material/styles'; */
+import { styled } from '@mui/material/styles';
 
-/* const StyledRating = styled(MaterialRating)({
+const StyledRating = styled(MaterialRating)({
     '& .MuiRating-iconFilled': {
-      color: '#FCAC38',
+        color: '#FCAC38',
     },
     '& .MuiRating-iconHover': {
-      color: '#FCAC38',
+        color: '#FCAC38',
     },
-  }); */
+});
 
 export enum RatingType {
     Numeric = 'numeric',
@@ -22,15 +22,15 @@ export enum RatingType {
 interface RatingProps {
     type?: RatingType
     className?: string
-    overall_rating?: string
+    overall_rating: number
 }
 
-export const Rating = ({className = '', type = RatingType.Readonly, overall_rating='0,0'}:RatingProps) => {
+export const Rating = ({ className = '', type = RatingType.Readonly, overall_rating }: RatingProps) => {
 
     if (type === RatingType.Editable) {
         return (
-            <MaterialRating 
-            
+            <MaterialRating
+
             />
         )
     }
@@ -38,15 +38,19 @@ export const Rating = ({className = '', type = RatingType.Readonly, overall_rati
     if (type === RatingType.Numeric) {
         return (
             <div className={classNames(style.rating__numeric, {}, [className])}>
-                <StarIcon fillColor="#FCAC38"/>
+                <StarIcon fillColor="#FCAC38" />
                 <span>{overall_rating}</span>
             </div>
         )
     }
 
     return (
-        <MaterialRating 
-        
+        <MaterialRating
+            name="read-only"
+            value={overall_rating}
+            icon={<StarIcon fillColor="#FCAC38" />}
+            emptyIcon={<StarIcon fillColor="transparent" />}
+            readOnly
         />
     )
 

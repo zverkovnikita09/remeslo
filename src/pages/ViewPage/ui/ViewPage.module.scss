@@ -41,6 +41,21 @@
     margin-bottom: 16px;
   }
 
+  &__rating {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__reviews {
+    width: auto;
+    color: var(--red-color);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 135%;
+  }
+
   &__greyText {
     margin-top: 24px;
     font-weight: 400;
@@ -76,4 +91,5 @@
   &__date {
     margin-top: 8px;
   }
+
 }
