@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 import { GoodsFavorite } from 'src/features/GoodsFavorite/ui'
 import { Rating, RatingType } from 'src/features/Rating/ui/Rating'
 
-
-
 export interface IGoods {
   imagePath: string
   title: string
@@ -13,7 +11,7 @@ export interface IGoods {
   published_at: string
   isFavorite: boolean
   id: string
-  overall_rating: string
+  overall_rating: number
 }
 
 interface GoodsGridProps {

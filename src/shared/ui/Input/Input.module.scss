@@ -20,7 +20,7 @@
 
   &[data-status="success"] {
     .input__textField {
-      border-color: #3c763d;
+      border-color: var(--success-color);
 
       &:focus {
         border-color: #2b542c;
@@ -31,7 +31,7 @@
 
   &[data-status="error"] {
     .input__textField {
-      border-color: #ff0000;
+      border-color: var(--error-color);
 
       &:focus {
         box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 6px #ce8483;
@@ -40,7 +40,7 @@
   }
 
   &__helpBlock {
-    color: #ff0000;
+    color: var(--error-color);
     margin-top: 5px;
   }
 }

@@ -1,10 +1,10 @@
 import style from './HeaderProfile.module.scss'
-import photo from '../assets/photo.jpg'
 import { Link } from 'react-router-dom'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { classNames } from 'src/shared/lib/classNames/classNames'
 import { ProfileInfo } from 'src/app/providers/AuthProvider'
 import { Button } from 'src/shared/ui/Button/Button'
+import { UserPhoto } from 'src/shared/ui/UserPhoto/UserPhoto'
 
 interface HeaderProfileProps {
   profileInfo?: ProfileInfo
@@ -38,13 +38,7 @@ export const HeaderProfile = ({ profileInfo, logout }: HeaderProfileProps) => {
 
   return (
     <div className={style.headerProfile}>
-      <div className={style.headerProfile__imageContainer}>
-        {
-          profileInfo?.avatar ?
-            <img src={photo} alt="Фото профиля" className={style.headerProfile__image} />
-            : `${profileInfo?.firstname[0] ?? ''}${profileInfo?.lastname[0] ?? ''}`
-        }
-      </div>
+      <UserPhoto profileInfo={profileInfo} />
       <p className={style.headerProfile__name} onClick={toggleList} ref={listButtonRef}>{profileInfo?.firstname}</p>
       <div className={classNames(style.headerProfile__linksContainer, { [style.open]: isOpen })}>
         <div className={style.headerProfile__linksInner}>
