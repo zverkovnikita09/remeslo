@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form'
 import { useState, useContext } from 'react'
 import { sendData } from 'src/shared/lib/api/api'
 import { AuthContext, IUser } from 'src/app/providers/AuthProvider'
+import { NotificationType, NotificationsContext } from 'src/app/providers/NotificationsProvider'
 
 interface EmailAuth {
   email: string
@@ -24,6 +25,7 @@ export interface ResponseUserData {
 }
 
 export const AuthByEmail = () => {
+  const { addNotification } = useContext(NotificationsContext);
   const { register, handleSubmit, formState: { errors, touchedFields } } = useForm<EmailAuth>({ mode: 'onBlur' })
   const [isSending, setIsSending] = useState(false)
   const { setUserData } = useContext(AuthContext)
@@ -44,7 +46,13 @@ export const AuthByEmail = () => {
       setUserData({ token: userData.data.token, user: userData.data.user });
       navigate('/');
     } catch (error) {
+      if (error instanceof Error) {
+        addNotification(`${error.message}`, NotificationType.Error)
+      }
 
+      if (typeof error === 'string') {
+        addNotification(`${error}`, NotificationType.Error)
+      }
     }
     finally {
       setIsSending(false);

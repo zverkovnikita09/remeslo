@@ -3,10 +3,11 @@ import style from './ResetPassword.module.scss'
 import { Input } from 'src/shared/ui/Input/Input'
 import { useForm } from 'react-hook-form'
 import { sendData } from 'src/shared/lib/api/api'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import { BackButton } from 'src/shared/ui/BackButton'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { NotificationType, NotificationsContext } from 'src/app/providers/NotificationsProvider'
 
 
 interface ChangePassword {
@@ -28,31 +29,39 @@ export const ResetPassword = () => {
     const [isSending, setIsSending] = useState(false)
     const [params] = useSearchParams()
     const navigate = useNavigate();
+    const { addNotification } = useContext(NotificationsContext);
 
     const token = params.get('pass_reset_token') || ''
     const email = params.get('email') || ''
 
     const onSubmit = async (data: ChangePassword) => {
-        
+
         try {
             setIsSending(true);
-            
-            const response = await sendData<ChangePassword>({...data, token, email}, 'api/v1/password/reset')
+
+            const response = await sendData<ChangePassword>({ ...data, token, email }, 'api/v1/password/reset')
 
             if (!response.ok) {
                 throw new Error("Произошла ошибка при отправке данных");
             }
 
             navigate('/');
-            
+
         } catch (error) {
+            if (error instanceof Error) {
+                addNotification(`${error.message}`, NotificationType.Error)
+            }
+
+            if (typeof error === 'string') {
+                addNotification(`${error}`, NotificationType.Error)
+            }
 
         }
         finally {
             setIsSending(false);
         }
     }
-    
+
     return (
         <div className={style.resetPassword}>
             <Title className={style.resetPassword__title}>Установите новый пароль</Title>

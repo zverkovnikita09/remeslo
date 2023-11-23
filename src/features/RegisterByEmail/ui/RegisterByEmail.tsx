@@ -7,8 +7,9 @@ import { Link } from 'react-router-dom'
 import { GreyText } from 'src/shared/ui/GreyText/GreyText'
 import style from './RegisterByEmail.module.scss'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { sendData } from 'src/shared/lib/api/api'
+import { NotificationType, NotificationsContext } from 'src/app/providers/NotificationsProvider'
 
 
 
@@ -27,7 +28,7 @@ export const RegisterByEmail = () => {
     formState: { errors, touchedFields },
     getValues,
   } = useForm<EmailRegistration>({ mode: 'onBlur' });
-
+  const { addNotification } = useContext(NotificationsContext);
   const [isSending, setIsSending] = useState(false);
   const [isUserCreated, setUserCreated] = useState(false);
 
@@ -35,7 +36,7 @@ export const RegisterByEmail = () => {
     try {
       setIsSending(true);
       const response = await sendData<EmailRegistration>(data, 'api/v1/registration/email')
-      
+
       if (!response.ok) {
         throw new Error("Произошла ошибка при отправке данных");
       }
@@ -43,8 +44,13 @@ export const RegisterByEmail = () => {
       setUserCreated(true);
 
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        addNotification(`${error.message}`, NotificationType.Error)
+      }
 
+      if (typeof error === 'string') {
+        addNotification(`${error}`, NotificationType.Error)
+      }
     }
     finally {
       setIsSending(false);

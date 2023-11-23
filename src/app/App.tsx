@@ -1,22 +1,12 @@
-import { useEffect } from "react";
+import { Notifications } from "src/features/Notifications"
 import { AppRouter } from "./router"
-// import { useNavigate, useLocation } from "react-router-dom"
 import './styles/global.scss'
 
 function App() {
-  // const navigate = useNavigate();
-  // const location = useLocation();
-
-  useEffect(() => {
-    /* const token = JSON.parse(localStorage.getItem("token") ?? "null")
-    if (!token) {
-      navigate('/login', { state: location })
-    }
-    console.log(token); */
-  }, [])
 
   return (
     <div className='app'>
+      <Notifications timeout={5000} />
       <AppRouter />
     </div>
   )
