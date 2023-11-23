@@ -2,16 +2,6 @@ import { Rating as MaterialRating } from "@mui/material";
 import style from './Rating.module.scss'
 import { StarIcon } from "src/shared/ui/StarIcon";
 import { classNames } from "src/shared/lib/classNames/classNames";
-import { styled } from '@mui/material/styles';
-
-const StyledRating = styled(MaterialRating)({
-    '& .MuiRating-iconFilled': {
-        color: '#FCAC38',
-    },
-    '& .MuiRating-iconHover': {
-        color: '#FCAC38',
-    },
-});
 
 export enum RatingType {
     Numeric = 'numeric',

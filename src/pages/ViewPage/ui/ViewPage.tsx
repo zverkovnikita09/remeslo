@@ -13,7 +13,6 @@ import { TextArea } from 'src/shared/ui/TextArea/TextArea'
 import { labelsCounterFormatter } from 'src/shared/lib/labelsCounterFormatter/labelsCounterFormatter'
 import { IUser } from 'src/app/providers/AuthProvider'
 import { Rating } from 'src/features/Rating'
-import { UserPhoto } from 'src/shared/ui/UserPhoto/UserPhoto'
 import { VendorProfile } from 'src/features/VendorProfile'
 
 const phoneNumber = '8 (999) 999-99-99'
@@ -75,14 +74,8 @@ export const ViewPage = () => {
     views_today,
     store,
     overall_rating,
-    marks
+    /* marks */
   } = data ?? {};
-  /*   console.log(data);
-  
-    console.log(marks);
-    
-    console.log(store); */
-
 
   const [isPhoneShown, setIsPhoneShown] = useState(false);
   const [phoneHref, setPhoneHref] = useState('');
