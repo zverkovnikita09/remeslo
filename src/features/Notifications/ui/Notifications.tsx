@@ -11,7 +11,6 @@ interface NotificationsProps {
 export const Notifications = ({ timeout = 2000 }: NotificationsProps) => {
     const { notifications, removeNotification } = useContext(NotificationsContext);
     const [currentNotification, setCurrentNotification] = useState<INotification | null>(null);
-    console.log(notifications);
 
     useEffect(() => {
         let timeoutId;
