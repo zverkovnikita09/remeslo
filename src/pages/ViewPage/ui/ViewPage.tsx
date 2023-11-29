@@ -15,7 +15,7 @@ import { IUser } from 'src/app/providers/AuthProvider'
 import { Rating } from 'src/features/Rating'
 import { VendorProfile } from 'src/features/VendorProfile'
 
-const phoneNumber = '8 (999) 999-99-99'
+
 
 export interface SingleGoods {
   all_time_views: number
@@ -74,7 +74,7 @@ export const ViewPage = () => {
     views_today,
     store,
     overall_rating,
-    /* marks */
+    marks,
   } = data ?? {};
 
   const [isPhoneShown, setIsPhoneShown] = useState(false);
@@ -87,10 +87,17 @@ export const ViewPage = () => {
     minute: 'numeric'
   }).replace(' в ', ' ');
 
-  const handlePhoneClick = () => {
+  const phoneNumber = store?.phone_number ?? ''
+
+  const handlePhoneClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (!isPhoneShown) {
       setIsPhoneShown(true);
-      setPhoneHref(`tel:${phoneNumber}`)
+      setPhoneHref(`tel:${phoneNumber}`);
+      
+    }
+    else{
+      window.location.href = `tel:${phoneNumber}`;
     }
   }
 
@@ -132,14 +139,16 @@ export const ViewPage = () => {
         <Title>{title}</Title>
         <div className={style.viewPage__rating}>
           <Rating overall_rating={overall_rating ?? 0}></Rating>
-          <Button className={style.viewPage__reviews}>{/* {marks || 'нет'} */ labelsCounterFormatter(2, ['Отзыв', 'Отзыва', 'Отзывов'])}</Button>
+          <Button className={style.viewPage__reviews}>
+            {marks ? labelsCounterFormatter(marks, ['Отзыв', 'Отзыва', 'Отзывов']) : 'нет отзывов'}
+          </Button>
         </div>
         <GreyText className={style.viewPage__greyText}>Цена:</GreyText>
         <p className={style.viewPage__price}>{price} ₽</p>
         <GreyText className={style.viewPage__greyText}>Опубликовано</GreyText>
         <p className={style.viewPage__date}>{formattedDate}</p>
         <Link to={'/'} className={style.viewPage__vendor}>
-          <VendorProfile store={store as StoreType}/>
+          <VendorProfile store={store as StoreType} />
         </Link>
         <Link to={phoneHref}>
           <Button
