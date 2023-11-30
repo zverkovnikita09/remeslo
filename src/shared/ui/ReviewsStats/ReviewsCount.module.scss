@@ -1,0 +1,36 @@
+.reviewsCount{
+    display: grid;
+    gap: 8px;
+
+    &__group{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    &__starsTitle{
+        color: var(--secondary-light-gray, #CCC);
+        font-size: 14px;
+        line-height: 135%;
+        flex: 0 1 70px;
+    }
+    &__groupBar{
+      flex: 1 1 auto;
+      border-radius: 4px;
+      background: var(--light-grey-color);
+      height: 6px;
+    }
+    &__groupBarFilled{
+      border-radius: 4px;
+      background: #FCAC38;
+      height: 100%;
+      width: 0%;
+    }
+    &__starsCount{
+        flex: 0 1 12px;
+        text-align: center;
+        color: var(--dark-grey-color);
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 135%;
+    }
+  }
