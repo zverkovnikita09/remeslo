@@ -1,0 +1,25 @@
+.overallRating {
+    &__stars {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    &__numericValue {
+        color: var(--dark-grey-color);
+        text-align: center;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 135%;
+    }
+
+    &__ratingInfo {
+        display: grid;
+        gap: 12px;
+    }
+
+    &__marks {
+        font-weight: 600;
+        line-height: 135%;
+    }
+}
