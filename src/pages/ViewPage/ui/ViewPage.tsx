@@ -14,6 +14,7 @@ import { labelsCounterFormatter } from 'src/shared/lib/labelsCounterFormatter/la
 import { IUser } from 'src/app/providers/AuthProvider'
 import { Rating } from 'src/features/Rating'
 import { VendorProfile } from 'src/features/VendorProfile'
+import { Reviews } from 'src/features/Reviews'
 
 
 
@@ -78,7 +79,6 @@ export const ViewPage = () => {
   } = data ?? {};
 
   const [isPhoneShown, setIsPhoneShown] = useState(false);
-  const [phoneHref, setPhoneHref] = useState('');
 
   const formattedDate = new Date(published_at ?? '').toLocaleString('ru', {
     day: 'numeric',
@@ -93,11 +93,12 @@ export const ViewPage = () => {
     e.preventDefault();
     if (!isPhoneShown) {
       setIsPhoneShown(true);
-      setPhoneHref(`tel:${phoneNumber}`);
-      
     }
-    else{
-      window.location.href = `tel:${phoneNumber}`;
+    else {
+      const link = document.createElement('a');
+      link.setAttribute('href', `tel:${phoneNumber}`);
+      link.click();
+      link.remove();
     }
   }
 
@@ -139,9 +140,10 @@ export const ViewPage = () => {
         <Title>{title}</Title>
         <div className={style.viewPage__rating}>
           <Rating overall_rating={overall_rating ?? 0}></Rating>
-          <Button className={style.viewPage__reviews}>
-            {marks ? labelsCounterFormatter(marks, ['Отзыв', 'Отзыва', 'Отзывов']) : 'нет отзывов'}
-          </Button>
+          <div className={style.viewPage__reviews}>
+            <Reviews marks={marks} overall_rating={overall_rating} />
+
+          </div>
         </div>
         <GreyText className={style.viewPage__greyText}>Цена:</GreyText>
         <p className={style.viewPage__price}>{price} ₽</p>
@@ -150,7 +152,6 @@ export const ViewPage = () => {
         <Link to={'/'} className={style.viewPage__vendor}>
           <VendorProfile store={store as StoreType} />
         </Link>
-        <Link to={phoneHref}>
           <Button
             className={style.viewPage__phoneButton}
             theme={ButtonTheme.RED}
@@ -159,7 +160,6 @@ export const ViewPage = () => {
           >
             Позвонить {phoneFormatter(phoneNumber, isPhoneShown)}
           </Button>
-        </Link>
         <Button
           className={style.viewPage__messageButton}
           theme={ButtonTheme.OUTLINE}
