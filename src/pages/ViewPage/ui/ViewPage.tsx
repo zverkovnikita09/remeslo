@@ -149,7 +149,7 @@ export const ViewPage = () => {
         <p className={style.viewPage__price}>{price} ₽</p>
         <GreyText className={style.viewPage__greyText}>Опубликовано</GreyText>
         <p className={style.viewPage__date}>{formattedDate}</p>
-        <Link to={'/'} className={style.viewPage__vendor}>
+        <Link to={`/main/profile/${store?.id}`} className={style.viewPage__vendor}>
           <VendorProfile store={store as StoreType} />
         </Link>
           <Button

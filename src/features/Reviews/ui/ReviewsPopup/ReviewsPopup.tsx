@@ -6,6 +6,7 @@ import { Button } from 'src/shared/ui/Button/Button'
 import { OverallRating } from 'src/shared/ui/OverallRating/OverallRating'
 import { ReviewsCount } from 'src/shared/ui/ReviewsStats/ReviewsCount'
 import { GoodEstimaions } from '../Reviews'
+import { ReviewsList } from 'src/shared/ui/ReviewsList/ReviewsList'
 
 interface ReviewsPopupProps {
   isActive: boolean
@@ -32,6 +33,9 @@ export const ReviewsPopup = ({ marks, overall_rating, closePopup, isActive, data
         </div>
         <div className={style.reviewsPopup__reviewStats}>
           <ReviewsCount stats={dataEstimations} />
+        </div>
+        <div className={style.reviewsPopup__reviews}>
+          <ReviewsList reviews={dataEstimations} />
         </div>
 
       </div>

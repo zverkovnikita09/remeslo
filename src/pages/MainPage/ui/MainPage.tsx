@@ -9,7 +9,7 @@ import { useQuery } from 'react-query'
 import { getData } from 'src/shared/lib/api/api'
 
 export const MainPage = () => {
-  const { data: goods } = useQuery({
+  const { data: goods, isLoading } = useQuery({
     queryKey: 'goodsQuery',
     queryFn: () => getData<IGoods[]>({
       url: `/api/v1/good`,
@@ -27,12 +27,12 @@ export const MainPage = () => {
         <Title>Рекомендации для вас</Title>
         <Filters />
       </div>
-      <GoodsGrid goods={goods?.slice(0,5)} />
+      <GoodsGrid goods={goods?.slice(0,10)} isLoading={isLoading} />
       <div className={style.mainPage__titleContainer}>
         <Title>Объявления из других городов</Title>
         <Filters />
       </div>
-      <GoodsGrid goods={goods?.slice(0,10)} />
+      <GoodsGrid goods={goods?.slice(5,15)} isLoading={isLoading} />
     </Container>
   )
 }
