@@ -8,12 +8,11 @@ interface ReviewsListProps {
 }
 
 export const ReviewsList = ({ reviews }: ReviewsListProps) => {
-
     return (
         <div className={style.reviewsList}>
             <div className={style.reviewsList__sort}>Сначала новые</div>
             <div className={style.reviewsList__reviews}>
-                {reviews?.map(({ estimation, user }, index) => {
+                {reviews?.map(({ estimation, user, review, files}, index) => {
                     return (
                         <div key={index} className={style.reviewsList__item}>
                             <div className={style.reviewsList__itemHeading}>
@@ -48,21 +47,28 @@ export const ReviewsList = ({ reviews }: ReviewsListProps) => {
                                         Комментарий
                                     </div>
                                     <div className={style.reviewsList__infoContent}>
-                                        Очень лаконичная и стильная ваза, рекомендую
+                                        {review}
                                     </div>
                                 </div>
-                                <div className={style.reviewsList__itemInfo}>
-                                    <div className={style.reviewsList__infoTitle}>
-                                        Фотографии
-                                    </div>
-                                    <div className={style.reviewsList__infoContent}>
-                                        <div className={style.reviewsList__imagesContainer}>
-                                            <div className={style.reviewsList__imageItem}>
-                                                <img src="" alt="" />
+                                {files.length ?
+                                    <div className={style.reviewsList__itemInfo}>
+                                        <div className={style.reviewsList__infoTitle}>
+                                            Фотографии
+                                        </div>
+                                        <div className={style.reviewsList__infoContent}>
+                                            <div className={style.reviewsList__imagesContainer}>
+                                                {files.map((file, index) => (
+                                                    <div key={index} className={style.reviewsList__imageItem}>
+                                                        <img src={file.path} alt="Отзыв пользователя" />
+                                                    </div>
+                                                ))}
+
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                    : ''
+                                }
+
 
                             </div>
                         </div>
