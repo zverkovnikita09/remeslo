@@ -9,6 +9,11 @@
     width: 239px;
   }
 
+  &__itemArchived{
+    filter: grayscale(1);
+    color: #9B9B9B;
+  }
+
   &__itemImage {
     display: grid;
     place-content: center;
@@ -47,6 +52,7 @@
     font-weight: 600;
     line-height: 135%;
     margin-top: 8px;
+    color: inherit;
   }
 
   &__itemDate {

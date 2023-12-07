@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import { GoodsFavorite } from 'src/features/GoodsFavorite/ui'
 import { Rating, RatingType } from 'src/features/Rating/ui/Rating'
 import { GoodsSkeleton } from './GoodsSkeleton/GoodsSkeleton'
+import { classNames } from 'src/shared/lib/classNames/classNames'
 
 export interface IGoods {
-  imagePath: string
+  files?: { path: string }[] 
   title: string
   price: string
   published_at: string
@@ -18,16 +19,17 @@ export interface IGoods {
 interface GoodsGridProps {
   goods?: IGoods[]
   isLoading?: boolean
+  isArchived?: boolean
 }
 
-export const GoodsGrid = ({ goods, isLoading = false }: GoodsGridProps) => {
+export const GoodsGrid = ({ goods, isLoading = false, isArchived = false }: GoodsGridProps) => {
   if (isLoading) {
     return <GoodsSkeleton />
   }
 
   return (
     <div className={style.goodsGrid}>
-      {goods?.map(({ price, published_at, title, id, overall_rating, imagePath }, index) => {
+      {goods?.map(({ price, published_at, title, id, overall_rating, files }, index) => {
         const formattedDate = new Date(published_at ?? '').toLocaleString('ru', {
           day: 'numeric',
           month: 'long',
@@ -35,11 +37,11 @@ export const GoodsGrid = ({ goods, isLoading = false }: GoodsGridProps) => {
           minute: 'numeric'
         }).replace(' в ', ' ');
         return (
-          <div key={index} className={style.goodsGrid__item}>
+          <div key={index} className={classNames(style.goodsGrid__item, {[style.goodsGrid__itemArchived]: isArchived})}>
             <Link to={`/main/view/${id}`} className={style.goodsGrid__itemImage}>
               <img
-                src={imagePath ? imagePath : templateLogo}
-                className={imagePath ? '' : style.templateLogo}
+                src={files?.length ? files[0].path : templateLogo}
+                className={files?.length ? '' : style.templateLogo}
                 alt={title}
               />
             </Link>

@@ -8,7 +8,7 @@ import { Layout } from "src/widgets/Layout"
 import { ResetPassword } from "src/features/ResetPassword"
 import { RestorePassword } from "src/features/RestorePassword"
 import ProfilePage from "src/pages/ProfilePage"
-import { VendorGoods } from "src/features/VendorGoods"
+
 
 export const AppRouter = () => {
   return (
@@ -17,10 +17,8 @@ export const AppRouter = () => {
         <Route index element={<Navigate to="/main" />} />
         <Route path="/main" element={<Layout />}>
           <Route index element={<MainPage />} />
-          <Route path="profile/:slug" element={<ProfilePage />}>
-            <Route index element={<VendorGoods />} />
-            <Route path="complete" element={<VendorGoods />} />
-          </Route>
+          <Route path="profile/:slug" element={<ProfilePage />} />
+          <Route path="profile/:slug/complete" element={<ProfilePage />} />
           <Route path="view/:slug" element={<ViewPage />} />
           <Route path="*" element={<></>} />
         </Route>

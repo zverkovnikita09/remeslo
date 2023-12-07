@@ -3,7 +3,6 @@ import style from './ViewPage.module.scss'
 import { Title } from 'src/shared/ui/Title/TItle'
 import { GreyText } from 'src/shared/ui/GreyText/GreyText'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
-import image from '../assets/view.png'
 import { useQuery } from 'react-query'
 import { Link, useParams } from 'react-router-dom'
 import { getData } from 'src/shared/lib/api/api'
@@ -15,13 +14,22 @@ import { IUser } from 'src/app/providers/AuthProvider'
 import { Rating } from 'src/features/Rating'
 import { VendorProfile } from 'src/features/VendorProfile'
 import { Reviews } from 'src/features/Reviews'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Thumbs } from 'swiper/modules'
+import { Swiper as SwiperType } from 'swiper/types';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
+import { classNames } from 'src/shared/lib/classNames/classNames'
+
+
 
 
 
 export interface SingleGoods {
   all_time_views: number
   description: string
-  file: { path: string }[] | null
+  files: { path: string }[] | null
   id: string
   marks: number
   moderate: number
@@ -70,6 +78,7 @@ export const ViewPage = () => {
     title,
     price,
     description,
+    files,
     published_at,
     all_time_views,
     views_today,
@@ -101,11 +110,46 @@ export const ViewPage = () => {
       link.remove();
     }
   }
+  const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType>();
+  const [activeThumbSlide, setActiveThumbSlide] = useState(0);
+  const [mainSwiper, setMainSwiper] = useState<SwiperType>();
+  
+
 
   return (
     <Container className={style.viewPage}>
       <div className={style.viewPage__main}>
-        <img src={image} alt={title} className={style.viewPage__mainImage} />
+        <div className={style.viewPage__sliderGallery}>
+          <Swiper className={style.viewPage__bigSlider}
+            spaceBetween={50}
+            slidesPerView={1}
+            thumbs={{ swiper: thumbsSwiper }}
+            onSwiper={setMainSwiper}
+            onSlideChange={() => setActiveThumbSlide(mainSwiper?.activeIndex ?? 0)}
+            modules={[Thumbs]}
+          >
+            {files?.map((img) => (
+
+              <SwiperSlide className={style.viewPage__bigItem}>
+                <img src={img.path} alt={title} className={style.viewPage__mainImage} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          <Swiper className={style.viewPage__smallSlider}
+            spaceBetween={12}
+            slidesPerView={4.5}
+            onSwiper={setThumbsSwiper}
+            modules={[Thumbs]}
+          >
+            {files?.map((img, index) => (
+              <SwiperSlide className={classNames(style.viewPage__smallItem, { [style.activeItem]: activeThumbSlide === index })}>
+                <img src={img.path} alt={title} className={style.viewPage__mainImage} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+
         <Title className={style.viewPage__title}>Адрес</Title>
         <div className={style.viewPage__addressBlock}>
           {store?.address}
@@ -152,14 +196,14 @@ export const ViewPage = () => {
         <Link to={`/main/profile/${store?.id}`} className={style.viewPage__vendor}>
           <VendorProfile store={store as StoreType} />
         </Link>
-          <Button
-            className={style.viewPage__phoneButton}
-            theme={ButtonTheme.RED}
-            size={ButtonSize.M}
-            onClick={handlePhoneClick}
-          >
-            Позвонить {phoneFormatter(phoneNumber, isPhoneShown)}
-          </Button>
+        <Button
+          className={style.viewPage__phoneButton}
+          theme={ButtonTheme.RED}
+          size={ButtonSize.M}
+          onClick={handlePhoneClick}
+        >
+          Позвонить {phoneFormatter(phoneNumber, isPhoneShown)}
+        </Button>
         <Button
           className={style.viewPage__messageButton}
           theme={ButtonTheme.OUTLINE}
