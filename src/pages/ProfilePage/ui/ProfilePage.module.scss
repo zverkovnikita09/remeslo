@@ -1,0 +1,47 @@
+.profilePage {
+    margin-top: 72px;
+    padding-bottom: 90px;
+
+    &__heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__toggler {
+        display: flex;
+        gap: 32px;
+    }
+
+    &__link {
+        color: var(--dark-grey-color);
+        text-align: center;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 135%;
+    }
+
+    &__activeLink {
+        color: var(--red-color)
+    }
+    &__content{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 32px;
+        gap: 32px;
+    }
+    &__vendorProfile{
+        width: max-content;
+        max-width: 100%;
+    }
+    &__vendorGoods{
+        display: grid;
+        place-content: center;
+        max-width: 781px;
+        width: 100%;
+        min-height: 434px;
+    }
+    &__goodsArchive{
+        backdrop-filter: grayscale(1);
+    }
+}

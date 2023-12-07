@@ -1,0 +1,27 @@
+.goodsSkeleton {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 32px;
+
+    &__item {
+        position: relative;
+        width: 239px;
+    }
+
+    &__info {
+        display: grid;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+    &__image {
+        display: grid;
+        place-content: center;
+        border-radius: 32px;
+
+        img {
+            opacity: 0.5;
+        }
+    }
+}

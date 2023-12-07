@@ -25,7 +25,7 @@ export const Reviews = ({marks, overall_rating}: ReviewsProps) => {
 
   const { slug } = useParams();
   const { data: dataEstimations } = useQuery({
-    queryKey: 'goodEstimations',
+    queryKey: ['goodEstimations', slug],
     queryFn: () => getData<GoodEstimaions[]>({
       url: `/api/v1/mark?markable_id=${slug}`,
       dataFlag: true
