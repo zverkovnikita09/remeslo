@@ -18,6 +18,8 @@ export interface GoodEstimaions {
   id: string
   user: IUser
   profile: ProfileInfo
+  review: string
+  files: { path: string }[]
 }
 
 export const Reviews = ({marks, overall_rating}: ReviewsProps) => {

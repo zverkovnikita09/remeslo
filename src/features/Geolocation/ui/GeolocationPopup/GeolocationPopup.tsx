@@ -30,9 +30,10 @@ export const GeolocationPopup = ({ closePopup, isActive, setCity }: GeolocationP
                 <CloseButton className={style.geolocationPopup__close} />
                 <Title size={TitleSize.S}>Выберите город</Title>
                 <Input placeholder='Ваш город' />
-                {cities.map(({ city, region }) => {
+                {cities.map(({ city, region }, index) => {
                     return (
                         <Button
+                            key={index}
                             className={style.geolocationPopup__item}
                             onClick={() => chooseCity(city)}
                         >

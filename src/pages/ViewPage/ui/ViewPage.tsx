@@ -38,7 +38,7 @@ export interface SingleGoods {
   price_old: number
   publish: number
   published_at: string
-  store: StoreType
+  store_id: string
   tags: TagType[]
   title: string
   views_today: number
@@ -62,6 +62,7 @@ export interface TagType {
   name: string
   slug: string
   image: string
+  subcategories: []
 }
 
 export const ViewPage = () => {
@@ -82,10 +83,20 @@ export const ViewPage = () => {
     published_at,
     all_time_views,
     views_today,
-    store,
+    store_id,
     overall_rating,
     marks,
   } = data ?? {};
+
+  const { data: store } = useQuery({
+    queryKey: ['storeInfo', store_id],
+    queryFn: () => getData<StoreType>({
+      url: `/api/v1/store/${store_id}`,
+      dataFlag: true,
+
+    }),
+    enabled: !!store_id,
+  })
 
   const [isPhoneShown, setIsPhoneShown] = useState(false);
 
@@ -113,7 +124,7 @@ export const ViewPage = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType>();
   const [activeThumbSlide, setActiveThumbSlide] = useState(0);
   const [mainSwiper, setMainSwiper] = useState<SwiperType>();
-  
+
 
 
   return (
@@ -128,14 +139,13 @@ export const ViewPage = () => {
             onSlideChange={() => setActiveThumbSlide(mainSwiper?.activeIndex ?? 0)}
             modules={[Thumbs]}
           >
-            {files?.map((img) => (
+            {files?.map((img, index) => (
 
-              <SwiperSlide className={style.viewPage__bigItem}>
+              <SwiperSlide key={index} className={style.viewPage__bigItem}>
                 <img src={img.path} alt={title} className={style.viewPage__mainImage} />
               </SwiperSlide>
             ))}
           </Swiper>
-
           <Swiper className={style.viewPage__smallSlider}
             spaceBetween={12}
             slidesPerView={4.5}
@@ -143,7 +153,7 @@ export const ViewPage = () => {
             modules={[Thumbs]}
           >
             {files?.map((img, index) => (
-              <SwiperSlide className={classNames(style.viewPage__smallItem, { [style.activeItem]: activeThumbSlide === index })}>
+              <SwiperSlide key={index} className={classNames(style.viewPage__smallItem, { [style.activeItem]: activeThumbSlide === index })}>
                 <img src={img.path} alt={title} className={style.viewPage__mainImage} />
               </SwiperSlide>
             ))}
@@ -181,7 +191,10 @@ export const ViewPage = () => {
         </div>
       </div>
       <div className={style.viewPage__rightBlock}>
-        <Title>{title}</Title>
+        <div className={style.viewPage__heading}>
+          <Title>{title}</Title>
+          
+        </div>
         <div className={style.viewPage__rating}>
           <Rating overall_rating={overall_rating ?? 0}></Rating>
           <div className={style.viewPage__reviews}>
