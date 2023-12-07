@@ -12,7 +12,8 @@ export enum ButtonTheme {
   PRIMARY = '',
   RED = 'red',
   OUTLINE = 'outline',
-  BLACK = 'black'
+  BLACK = 'black',
+  GREY = 'grey',
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

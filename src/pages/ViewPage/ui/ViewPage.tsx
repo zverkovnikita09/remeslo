@@ -21,6 +21,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { classNames } from 'src/shared/lib/classNames/classNames'
+import { ShareButton } from 'src/features/ShareButton'
 
 
 
@@ -193,7 +194,7 @@ export const ViewPage = () => {
       <div className={style.viewPage__rightBlock}>
         <div className={style.viewPage__heading}>
           <Title>{title}</Title>
-          
+          <ShareButton />
         </div>
         <div className={style.viewPage__rating}>
           <Rating overall_rating={overall_rating ?? 0}></Rating>
@@ -223,6 +224,13 @@ export const ViewPage = () => {
           size={ButtonSize.M}
         >
           Написать сообщение
+        </Button>
+        <Button
+          className={style.viewPage__reviewButton}
+          theme={ButtonTheme.GREY}
+          size={ButtonSize.M}
+        >
+          Оставить отзыв
         </Button>
       </div>
     </Container>
