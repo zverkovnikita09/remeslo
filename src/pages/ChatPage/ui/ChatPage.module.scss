@@ -1,0 +1,46 @@
+.chatPage {
+    margin-top: 72px;
+    padding-bottom: 70px;
+    display: flex;
+
+    &__dialogs {
+        width: 45%;
+
+        border-right: 1px solid var(--secondary-light-gray, #CCC);
+    }
+
+    &__chat {
+        width: 55%;
+
+    }
+
+    &__dialogsHeading {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        justify-content: space-between;
+        padding: 0 24px 24px 24px;
+        border-bottom: 1px solid var(--secondary-light-gray, #CCC);
+        height: 67px;
+    }
+    &__dialogsWrapper{
+        padding: 32px;
+    }
+    &__chatHeading {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        justify-content: space-between;
+        padding: 0 24px 12px 24px;
+        border-bottom: 1px solid var(--secondary-light-gray, #CCC);
+        height: 67px;
+    }
+
+    &__chatCount {
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 135%;
+        color: #ccc;
+    }
+}

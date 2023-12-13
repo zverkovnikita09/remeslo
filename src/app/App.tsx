@@ -6,7 +6,7 @@ function App() {
 
   return (
     <div className='app'>
-      <Notifications timeout={5000} />
+      <Notifications timeout={2500} />
       <AppRouter />
     </div>
   )

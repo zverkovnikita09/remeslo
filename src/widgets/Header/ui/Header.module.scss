@@ -12,6 +12,9 @@
 
   &__link {
     width: 178px;
+    button{
+      width: 100%;
+    }
   }
   &__spinner{
     display: flex;

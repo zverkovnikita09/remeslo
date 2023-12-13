@@ -5,9 +5,10 @@ import { GoodsFavorite } from 'src/features/GoodsFavorite/ui'
 import { Rating, RatingType } from 'src/features/Rating/ui/Rating'
 import { GoodsSkeleton } from './GoodsSkeleton/GoodsSkeleton'
 import { classNames } from 'src/shared/lib/classNames/classNames'
+import { IBreadcrumb } from 'src/features/Breadcrumbs/ui/Breadcrumbs'
 
 export interface IGoods {
-  files?: { path: string }[] 
+  files?: { path: string }[]
   title: string
   price: string
   published_at: string
@@ -20,9 +21,10 @@ interface GoodsGridProps {
   goods?: IGoods[]
   isLoading?: boolean
   isArchived?: boolean
+  categoryState?: IBreadcrumb[]
 }
 
-export const GoodsGrid = ({ goods, isLoading = false, isArchived = false }: GoodsGridProps) => {
+export const GoodsGrid = ({ goods, isLoading = false, isArchived = false, categoryState = [] }: GoodsGridProps) => {
   if (isLoading) {
     return <GoodsSkeleton />
   }
@@ -37,15 +39,26 @@ export const GoodsGrid = ({ goods, isLoading = false, isArchived = false }: Good
           minute: 'numeric'
         }).replace(' в ', ' ');
         return (
-          <div key={index} className={classNames(style.goodsGrid__item, {[style.goodsGrid__itemArchived]: isArchived})}>
-            <Link to={`/main/view/${id}`} className={style.goodsGrid__itemImage}>
+          <div key={index} className={classNames(style.goodsGrid__item, { [style.goodsGrid__itemArchived]: isArchived })}>
+            <Link
+              to={`/main/view/${id}`}
+              className={style.goodsGrid__itemImage}
+              state={categoryState}
+            >
+
               <img
                 src={files?.length ? files[0].path : templateLogo}
                 className={files?.length ? '' : style.templateLogo}
                 alt={title}
               />
             </Link>
-            <Link to={`/main/view/${id}`} className={style.goodsGrid__itemTitle}>{title}</Link>
+            <Link
+              to={`/main/view/${id}`}
+              className={style.goodsGrid__itemTitle}
+              state={categoryState}
+            >
+              {title}
+            </Link>
             <p className={style.goodsGrid__itemPrice}>{price} ₽</p>
             <p className={style.goodsGrid__itemDate}>{formattedDate}</p>
             <GoodsFavorite className={style.goodsGrid__favoriteButton} />

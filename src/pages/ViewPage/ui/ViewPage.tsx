@@ -4,10 +4,10 @@ import { Title } from 'src/shared/ui/Title/TItle'
 import { GreyText } from 'src/shared/ui/GreyText/GreyText'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import { useQuery } from 'react-query'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { getData } from 'src/shared/lib/api/api'
 import { phoneFormatter } from 'src/shared/lib/phoneFormatter/phoneFormatter'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { TextArea } from 'src/shared/ui/TextArea/TextArea'
 import { labelsCounterFormatter } from 'src/shared/lib/labelsCounterFormatter/labelsCounterFormatter'
 import { IUser } from 'src/app/providers/AuthProvider'
@@ -22,6 +22,9 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import { classNames } from 'src/shared/lib/classNames/classNames'
 import { ShareButton } from 'src/features/ShareButton'
+import { Breadcrumbs } from 'src/features/Breadcrumbs'
+import { IBreadcrumb } from 'src/features/Breadcrumbs/ui/Breadcrumbs'
+
 
 
 
@@ -125,113 +128,122 @@ export const ViewPage = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType>();
   const [activeThumbSlide, setActiveThumbSlide] = useState(0);
   const [mainSwiper, setMainSwiper] = useState<SwiperType>();
+  const { state } = useLocation();
+  const breadcrubms = useMemo(() => {
+    if (Array.isArray(state)) {
+      return [...(state as IBreadcrumb[]), { name: title ?? '', link: '' }]
+    }
 
-
+    return [{ name: title ?? '', link: '' }]
+  }, [state, data])
 
   return (
     <Container className={style.viewPage}>
-      <div className={style.viewPage__main}>
-        <div className={style.viewPage__sliderGallery}>
-          <Swiper className={style.viewPage__bigSlider}
-            spaceBetween={50}
-            slidesPerView={1}
-            thumbs={{ swiper: thumbsSwiper }}
-            onSwiper={setMainSwiper}
-            onSlideChange={() => setActiveThumbSlide(mainSwiper?.activeIndex ?? 0)}
-            modules={[Thumbs]}
-          >
-            {files?.map((img, index) => (
+      <Breadcrumbs links={breadcrubms} />
+      <div className={style.viewPage__content}>
+        <div className={style.viewPage__main}>
+          <div className={style.viewPage__sliderGallery}>
+            <Swiper className={style.viewPage__bigSlider}
+              spaceBetween={50}
+              slidesPerView={1}
+              thumbs={{ swiper: thumbsSwiper }}
+              onSwiper={setMainSwiper}
+              onSlideChange={() => setActiveThumbSlide(mainSwiper?.activeIndex ?? 0)}
+              modules={[Thumbs]}
+            >
+              {files?.map((img, index) => (
 
-              <SwiperSlide key={index} className={style.viewPage__bigItem}>
-                <img src={img.path} alt={title} className={style.viewPage__mainImage} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <Swiper className={style.viewPage__smallSlider}
-            spaceBetween={12}
-            slidesPerView={4.5}
-            onSwiper={setThumbsSwiper}
-            modules={[Thumbs]}
-          >
-            {files?.map((img, index) => (
-              <SwiperSlide key={index} className={classNames(style.viewPage__smallItem, { [style.activeItem]: activeThumbSlide === index })}>
-                <img src={img.path} alt={title} className={style.viewPage__mainImage} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+                <SwiperSlide key={index} className={style.viewPage__bigItem}>
+                  <img src={img.path} alt={title} className={style.viewPage__mainImage} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <Swiper className={style.viewPage__smallSlider}
+              spaceBetween={12}
+              slidesPerView={4.5}
+              onSwiper={setThumbsSwiper}
+              modules={[Thumbs]}
+            >
+              {files?.map((img, index) => (
+                <SwiperSlide key={index} className={classNames(style.viewPage__smallItem, { [style.activeItem]: activeThumbSlide === index })}>
+                  <img src={img.path} alt={title} className={style.viewPage__mainImage} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
 
-        <Title className={style.viewPage__title}>Адрес</Title>
-        <div className={style.viewPage__addressBlock}>
-          {store?.address}
-          {/*           <Button className={style.viewPage__location}>
+          <Title className={style.viewPage__title}>Адрес</Title>
+          <div className={style.viewPage__addressBlock}>
+            {store?.address}
+            {/*           <Button className={style.viewPage__location}>
             <GeoIcon
               strokeColor='#FC8080'
             />
             Показать на карте
           </Button> */}
-        </div>
-        <Title className={style.viewPage__title}>Характеристики</Title>
-        <div className={style.viewPage__feature}></div>
-        <Title className={style.viewPage__title}>Описание</Title>
-        <div className={style.viewPage__description} dangerouslySetInnerHTML={{ __html: description ?? '' }} />
-        <Title className={style.viewPage__title}>Написать продавцу</Title>
-        <TextArea
-          className={style.viewPage__textArea}
-          placeholder='Что вы хотите спросить?'
-        />
-        <Button
-          theme={ButtonTheme.RED}
-          size={ButtonSize.M}
-          className={style.viewPage__sendMessage}
-        >
-          Отправить
-        </Button>
-        <div className={style.viewPage__views}>
-          {labelsCounterFormatter(all_time_views ?? 0, ['просмотр', 'просмотра', 'просмотров'])} <GreyText>(+{views_today} сегодня)</GreyText>
-        </div>
-      </div>
-      <div className={style.viewPage__rightBlock}>
-        <div className={style.viewPage__heading}>
-          <Title>{title}</Title>
-          <ShareButton />
-        </div>
-        <div className={style.viewPage__rating}>
-          <Rating overall_rating={overall_rating ?? 0}></Rating>
-          <div className={style.viewPage__reviews}>
-            <Reviews marks={marks} overall_rating={overall_rating} />
-
+          </div>
+          <Title className={style.viewPage__title}>Характеристики</Title>
+          <div className={style.viewPage__feature}></div>
+          <Title className={style.viewPage__title}>Описание</Title>
+          <div className={style.viewPage__description} dangerouslySetInnerHTML={{ __html: description ?? '' }} />
+          <Title className={style.viewPage__title}>Написать продавцу</Title>
+          <TextArea
+            className={style.viewPage__textArea}
+            placeholder='Что вы хотите спросить?'
+          />
+          <Button
+            theme={ButtonTheme.RED}
+            size={ButtonSize.M}
+            className={style.viewPage__sendMessage}
+          >
+            Отправить
+          </Button>
+          <div className={style.viewPage__views}>
+            {labelsCounterFormatter(all_time_views ?? 0, ['просмотр', 'просмотра', 'просмотров'])} <GreyText>(+{views_today} сегодня)</GreyText>
           </div>
         </div>
-        <GreyText className={style.viewPage__greyText}>Цена:</GreyText>
-        <p className={style.viewPage__price}>{price} ₽</p>
-        <GreyText className={style.viewPage__greyText}>Опубликовано</GreyText>
-        <p className={style.viewPage__date}>{formattedDate}</p>
-        <Link to={`/main/profile/${store?.id}`} className={style.viewPage__vendor}>
-          <VendorProfile store={store as StoreType} />
-        </Link>
-        <Button
-          className={style.viewPage__phoneButton}
-          theme={ButtonTheme.RED}
-          size={ButtonSize.M}
-          onClick={handlePhoneClick}
-        >
-          Позвонить {phoneFormatter(phoneNumber, isPhoneShown)}
-        </Button>
-        <Button
-          className={style.viewPage__messageButton}
-          theme={ButtonTheme.OUTLINE}
-          size={ButtonSize.M}
-        >
-          Написать сообщение
-        </Button>
-        <Button
-          className={style.viewPage__reviewButton}
-          theme={ButtonTheme.GREY}
-          size={ButtonSize.M}
-        >
-          Оставить отзыв
-        </Button>
+        <div className={style.viewPage__rightBlock}>
+          <div className={style.viewPage__heading}>
+            <Title>{title}</Title>
+            <ShareButton />
+          </div>
+          <div className={style.viewPage__rating}>
+            <Rating overall_rating={overall_rating ?? 0}></Rating>
+            <div className={style.viewPage__reviews}>
+              <Reviews marks={marks} overall_rating={overall_rating} />
+
+            </div>
+          </div>
+          <GreyText className={style.viewPage__greyText}>Цена:</GreyText>
+          <p className={style.viewPage__price}>{price} ₽</p>
+          <GreyText className={style.viewPage__greyText}>Опубликовано</GreyText>
+          <p className={style.viewPage__date}>{formattedDate}</p>
+          <Link to={`/main/profile/${store?.id}`} className={style.viewPage__vendor}>
+            <VendorProfile store={store as StoreType} />
+          </Link>
+          <Button
+            className={style.viewPage__phoneButton}
+            theme={ButtonTheme.RED}
+            size={ButtonSize.M}
+            onClick={handlePhoneClick}
+          >
+            Позвонить {phoneFormatter(phoneNumber, isPhoneShown)}
+          </Button>
+          <Button
+            className={style.viewPage__messageButton}
+            theme={ButtonTheme.OUTLINE}
+            size={ButtonSize.M}
+          >
+            Написать сообщение
+          </Button>
+          <Button
+            className={style.viewPage__reviewButton}
+            theme={ButtonTheme.GREY}
+            size={ButtonSize.M}
+          >
+            Оставить отзыв
+          </Button>
+        </div>
       </div>
     </Container>
   )

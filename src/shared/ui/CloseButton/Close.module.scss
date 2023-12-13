@@ -1,6 +1,4 @@
 .closeButton{
-  width: 24px;
-  height: 24px;
   overflow: hidden;
 
   &__image{
@@ -8,3 +6,15 @@
     height: 100%;
   }
 }
+
+
+.size_m{
+  width: 24px;
+  height: 24px;
+}
+
+.size_s{
+  width: 15px;
+  height: 15px;
+}
+

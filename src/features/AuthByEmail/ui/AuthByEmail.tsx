@@ -11,10 +11,12 @@ import { useState, useContext } from 'react'
 import { sendData } from 'src/shared/lib/api/api'
 import { AuthContext, IUser } from 'src/app/providers/AuthProvider'
 import { NotificationType, NotificationsContext } from 'src/app/providers/NotificationsProvider'
+import { RadioButton } from 'src/shared/ui/RadioButton/RadioButton'
 
 interface EmailAuth {
   email: string
   password: string
+  radio: 'ba' | 'ba1'
 }
 
 export interface ResponseUserData {
@@ -26,7 +28,7 @@ export interface ResponseUserData {
 
 export const AuthByEmail = () => {
   const { addNotification } = useContext(NotificationsContext);
-  const { register, handleSubmit, formState: { errors, touchedFields } } = useForm<EmailAuth>({ mode: 'onBlur' })
+  const { register, handleSubmit, formState: { errors, touchedFields } } = useForm<EmailAuth>({ mode: 'onBlur', defaultValues: {radio:'ba'} })
   const [isSending, setIsSending] = useState(false)
   const { setUserData } = useContext(AuthContext)
   const navigate = useNavigate();
@@ -37,9 +39,9 @@ export const AuthByEmail = () => {
     try {
       setIsSending(true);
       const response = await sendData<EmailAuth>(data, 'api/v1/login')
-
+      
       if (!response.ok) {
-        throw new Error("Произошла ошибка при отправке данных");
+        throw new Error(response.statusText || "Произошла ошибка при отправке данных");
       }
 
       const userData: ResponseUserData = await response.json();
@@ -67,6 +69,8 @@ export const AuthByEmail = () => {
         className={style.authByEmail__inputGroup}
         onSubmit={handleSubmit(onSubmit)}
       >
+        <RadioButton  {...register('radio')} value={'ba'} id={'ba'}>хуй пизда</RadioButton>
+        <RadioButton {...register('radio')} value={'ba1'} id={'ba1'}>хуй пизда</RadioButton>
         <Input
           placeholder='Введите ваш E-mail'
           className={style.authByEmail__input}

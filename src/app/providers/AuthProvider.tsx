@@ -1,10 +1,7 @@
-import { ReactNode, createContext, useLayoutEffect, useState } from "react";
+import { PropsWithChildren, createContext, useLayoutEffect, useState } from "react";
 import { getData } from "src/shared/lib/api/api";
 import { useLocalStorage } from "src/shared/useLocalStorage";
 
-interface IAuthProvider {
-    children?: ReactNode
-}
 
 export interface ProfileInfo {
     firstname: string
@@ -34,7 +31,7 @@ export const AuthContext = createContext<AuthContextProps>({
     logout: () => { }
 })
 
-export const AuthProvider = ({ children }: IAuthProvider) => {
+export const AuthProvider = ({ children }: PropsWithChildren) => {
     const [user, setUser] = useState({});
     const [isFetching, setIsFetching] = useState(false);
     const [token, setToken] = useLocalStorage('AuthToken', null);
