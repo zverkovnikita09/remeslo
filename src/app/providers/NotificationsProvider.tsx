@@ -1,14 +1,10 @@
-import { ReactNode, createContext, useState, useCallback } from "react";
+import { createContext, useState, useCallback, PropsWithChildren } from "react";
 
 export enum NotificationType {
     Error = 'error',
     Warning = 'warning',
     Success = 'success',
     Info = 'info',
-}
-
-interface INotificationsProvider {
-    children?: ReactNode
 }
 
 export interface INotification {
@@ -26,7 +22,7 @@ interface NotificationsContextProps {
 
 export const NotificationsContext = createContext<NotificationsContextProps>({ notifications: [], addNotification: () => { }, removeNotification: () => { } })
 
-export const NotificationsProvider = ({ children }: INotificationsProvider) => {
+export const NotificationsProvider = ({ children }: PropsWithChildren) => {
     const [notifications, setNotifications] = useState<INotification[]>([]);
 
     const addNotification = useCallback((message: string, type: NotificationType) => {

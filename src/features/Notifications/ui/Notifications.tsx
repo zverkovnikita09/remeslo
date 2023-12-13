@@ -1,51 +1,28 @@
-import { useContext, useEffect, useState } from 'react'
-import { INotification, NotificationsContext } from 'src/app/providers/NotificationsProvider'
-import style from './Notifications.module.scss'
-import { classNames } from 'src/shared/lib/classNames/classNames'
+import { useContext } from 'react'
+import { NotificationsContext } from 'src/app/providers/NotificationsProvider'
 import { Portal } from 'src/shared/ui/Portal/Portal'
+
+import style from './Notifications.module.scss'
+import { NotificationsItem } from './NotificationsItem/NotificationsItem'
 
 interface NotificationsProps {
     timeout?: number
 }
 
 export const Notifications = ({ timeout = 2000 }: NotificationsProps) => {
-    const { notifications, removeNotification } = useContext(NotificationsContext);
-    const [currentNotification, setCurrentNotification] = useState<INotification | null>(null);
+    const { notifications } = useContext(NotificationsContext);
 
-    useEffect(() => {
-        let timeoutId;
-
-        if (notifications[0]) {
-            setCurrentNotification(notifications[0]);
-            timeoutId = setTimeout(() => {
-                removeNotification(notifications[0].id)
-            }, timeout);
-        }
-        else {
-            setCurrentNotification(null);
-            clearTimeout(timeoutId);
-        }
-
-    }, [notifications])
-
-    function handleOverlayClick() {
-        if (currentNotification) {
-            removeNotification(currentNotification.id)
-        }
-    }
-
-    if (!currentNotification) {
+    if (!notifications.length) {
         return null
     }
 
     return (
         <Portal>
-            <div className={style.notification} onClick={handleOverlayClick}>
-                <div onClick={(e) => { e.stopPropagation() }} className={classNames(style.notification__item, {}, [style[currentNotification.type]])}>
-                    <div className={style.notification__text}>
-                        {currentNotification.message}
-                    </div>
-                </div>
+            <div className={style.notifications}>
+                {notifications.map((notification) => (
+                    <NotificationsItem {...notification} timeout={timeout} key={notification.id} />
+                )
+                )}
             </div>
         </Portal>
     )

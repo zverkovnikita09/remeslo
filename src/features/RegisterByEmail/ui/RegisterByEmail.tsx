@@ -36,9 +36,9 @@ export const RegisterByEmail = () => {
     try {
       setIsSending(true);
       const response = await sendData<EmailRegistration>(data, 'api/v1/registration/email')
-
+      
       if (!response.ok) {
-        throw new Error("Произошла ошибка при отправке данных");
+        throw new Error(response.statusText || "Произошла ошибка при отправке данных");
       }
 
       setUserCreated(true);

@@ -6,6 +6,7 @@ import ErrorBoundary from './app/providers/ErrorsBoundary.tsx'
 import { AuthProvider } from './app/providers/AuthProvider.tsx'
 import { NotificationsProvider } from './app/providers/NotificationsProvider.tsx'
 import ScrollToTop from './app/providers/ScrollToTop.tsx'
+import { CategoriesProvider } from './app/providers/CategoriesProvider.tsx'
 
 const queryClient = new QueryClient()
 
@@ -18,9 +19,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <QueryClientProvider client={queryClient}>
         <NotificationsProvider>
           <AuthProvider>
-            <ScrollToTop>
-              <App />
-            </ScrollToTop>
+            <CategoriesProvider>
+              <ScrollToTop>
+                <App />
+              </ScrollToTop>
+            </CategoriesProvider>
           </AuthProvider>
         </NotificationsProvider>
       </QueryClientProvider>

@@ -2,7 +2,7 @@ import { Popup } from 'src/shared/ui/Popup/Popup'
 import style from './ReviewsPopup.module.scss'
 import { Title, TitleSize } from 'src/shared/ui/Title/TItle'
 import { CloseButton } from 'src/shared/ui/CloseButton/CloseButton'
-import { Button } from 'src/shared/ui/Button/Button'
+import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import { OverallRating } from 'src/shared/ui/OverallRating/OverallRating'
 import { ReviewsCount } from 'src/shared/ui/ReviewsStats/ReviewsCount'
 import { GoodEstimaions } from '../Reviews'
@@ -29,7 +29,13 @@ export const ReviewsPopup = ({ marks, overall_rating, closePopup, isActive, data
             overall_rating={overall_rating}
             marks={marks}
           />
-          <Button className={style.reviewsPopup__newOpinion}>Оставить отзыв</Button>
+          <Button 
+          className={style.reviewsPopup__newOpinion}
+          size={ButtonSize.M}
+          theme={ButtonTheme.GREY}
+          >
+            Оставить отзыв
+            </Button>
         </div>
         <div className={style.reviewsPopup__reviewStats}>
           <ReviewsCount stats={dataEstimations} />

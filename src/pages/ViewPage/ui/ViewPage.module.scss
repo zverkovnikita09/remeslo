@@ -1,24 +1,30 @@
 .viewPage {
   margin-top: 105px;
-  display: flex;
-  gap: 32px;
   padding-bottom: 87px;
-  font-weight: 600;
+
+
+  &__content {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    font-weight: 600;
+  }
 
   &__main {
     width: 774px;
-    
+
   }
-  &__sliderGallery{
+
+  &__sliderGallery {
     width: 100%;
   }
 
-  &__bigSlider{
+  &__bigSlider {
     height: 686px;
     border-radius: 32px;
   }
 
-  &__smallSlider{
+  &__smallSlider {
     margin-top: 32px;
     height: 123px;
     border-radius: 12px;
@@ -32,12 +38,12 @@
     object-fit: cover;
   }
 
-  &__smallItem{
+  &__smallItem {
     opacity: .5;
     cursor: pointer;
   }
 
-  &__smallImage{
+  &__smallImage {
     border-radius: 12px;
     width: 145px;
     height: 123px;
@@ -63,12 +69,14 @@
   &__rightBlock {
     width: 100%;
   }
-  &__heading{
+
+  &__heading {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 32px;
   }
+
   &__title {
     margin-top: 52px;
     margin-bottom: 16px;
@@ -93,10 +101,12 @@
 
   &__phoneButton {
     margin-top: 24px;
+    width: 100%;
   }
 
   &__messageButton {
     margin-top: 12px;
+    width: 100%;
   }
 
   &__views {
@@ -111,8 +121,10 @@
     width: 223px;
     margin-top: 16px;
   }
-  &__reviewButton{
+
+  &__reviewButton {
     margin-top: 16px;
+    width: 100%;
   }
 
   &__price {
@@ -128,6 +140,6 @@
 
 }
 
-.activeItem{
+.activeItem {
   opacity: 1;
 }

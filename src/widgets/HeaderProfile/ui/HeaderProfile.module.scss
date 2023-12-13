@@ -1,12 +1,12 @@
 .headerProfile {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 10px;
   position: relative;
 
   &__name {
     font-size: 18px;
-    line-height: 135%;
+    line-height: 135%; 
     font-weight: 600;
     cursor: pointer;
     display: flex;
