@@ -46,7 +46,7 @@ export const AuthByEmail = () => {
       setUserData({ token: userData.data.token, user: userData.data.user });
       navigate('/');
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof Error) { 
         addNotification(`${error.message}`, NotificationType.Error)
       }
 
