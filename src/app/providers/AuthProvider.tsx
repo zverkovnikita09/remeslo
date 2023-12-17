@@ -1,6 +1,6 @@
 import { PropsWithChildren, createContext, useLayoutEffect, useState } from "react";
 import { getData } from "src/shared/lib/api/api";
-import { useLocalStorage } from "src/shared/useLocalStorage";
+import { useLocalStorage } from "src/shared/hooks/useLocalStorage";
 
 
 export interface ProfileInfo {
