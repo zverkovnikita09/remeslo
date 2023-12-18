@@ -7,10 +7,12 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { IUser, ProfileInfo } from 'src/app/providers/AuthProvider'
 import { getData } from 'src/shared/lib/api/api'
+import { SingleGoods } from 'src/pages/ViewPage/ui/ViewPage'
+import { ReviewFormPopup } from 'src/features/ReviewFormPopup'
+
 
 interface ReviewsProps {
-  marks?: number
-  overall_rating?: number
+  good?: SingleGoods
 }
 
 export interface GoodEstimaions {
@@ -22,7 +24,7 @@ export interface GoodEstimaions {
   files: { path: string }[]
 }
 
-export const Reviews = ({marks, overall_rating}: ReviewsProps) => {
+export const Reviews = ({ good }: ReviewsProps) => {
   const [isPopupActive, setIsPopupActive] = useState(false)
 
   const { slug } = useParams();
@@ -44,15 +46,16 @@ export const Reviews = ({marks, overall_rating}: ReviewsProps) => {
 
   return (
     <>
+      <ReviewFormPopup goodInfo={good} closePopup={() => { }} isActive={true} />
       <ReviewsPopup
-      isActive={isPopupActive} 
-      closePopup={closePopup}
-      overall_rating={overall_rating}
-      marks={marks}
-      dataEstimations={dataEstimations}
+        isActive={isPopupActive}
+        closePopup={closePopup}
+        overall_rating={good?.overall_rating}
+        marks={good?.marks}
+        dataEstimations={dataEstimations}
       />
       <Button className={style.reviews} onClick={openPopup}>
-            {marks ? labelsCounterFormatter(marks, ['Отзыв', 'Отзыва', 'Отзывов']) : 'нет отзывов'}
+        {good?.marks ? labelsCounterFormatter(good?.marks, ['Отзыв', 'Отзыва', 'Отзывов']) : 'нет отзывов'}
       </Button>
 
     </>

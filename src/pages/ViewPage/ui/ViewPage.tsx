@@ -63,7 +63,7 @@ export interface TagType {
 
 export const ViewPage = () => {
   const { slug } = useParams();
-  const { data } = useQuery({
+  const { data: goodInfo } = useQuery({
     queryKey: slug,
     queryFn: () => getData<SingleGoods>({
       url: `/api/v1/good/${slug}`,
@@ -81,8 +81,7 @@ export const ViewPage = () => {
     views_today,
     store_id,
     overall_rating,
-    marks,
-  } = data ?? {};
+  } = goodInfo ?? {};
 
   const { data: store } = useQuery({
     queryKey: ['storeInfo', store_id],
@@ -125,14 +124,14 @@ export const ViewPage = () => {
     }
 
     return [{ name: title ?? '', link: '' }]
-  }, [state, data])
+  }, [state, goodInfo])
 
   return (
     <Container className={style.viewPage}>
       <Breadcrumbs links={breadcrubms} />
       <div className={style.viewPage__content}>
         <div className={style.viewPage__main}>
-          <SliderGallery title={title} files={files ?? []}/>
+          <SliderGallery title={title} files={files ?? []} />
 
           <Title className={style.viewPage__title}>Адрес</Title>
           <div className={style.viewPage__addressBlock}>
@@ -172,7 +171,7 @@ export const ViewPage = () => {
           <div className={style.viewPage__rating}>
             <Rating overall_rating={overall_rating ?? 0}></Rating>
             <div className={style.viewPage__reviews}>
-              <Reviews marks={marks} overall_rating={overall_rating} />
+              <Reviews good={goodInfo} />
 
             </div>
           </div>
