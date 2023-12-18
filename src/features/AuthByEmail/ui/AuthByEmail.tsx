@@ -11,12 +11,10 @@ import { useState, useContext } from 'react'
 import { sendData } from 'src/shared/lib/api/api'
 import { AuthContext, IUser } from 'src/app/providers/AuthProvider'
 import { NotificationType, NotificationsContext } from 'src/app/providers/NotificationsProvider'
-import { RadioButton } from 'src/shared/ui/RadioButton/RadioButton'
 
 interface EmailAuth {
   email: string
   password: string
-  radio: 'ba' | 'ba1'
 }
 
 export interface ResponseUserData {
@@ -28,7 +26,7 @@ export interface ResponseUserData {
 
 export const AuthByEmail = () => {
   const { addNotification } = useContext(NotificationsContext);
-  const { register, handleSubmit, formState: { errors, touchedFields } } = useForm<EmailAuth>({ mode: 'onBlur', defaultValues: {radio:'ba'} })
+  const { register, handleSubmit, formState: { errors, touchedFields } } = useForm<EmailAuth>({ mode: 'onBlur'})
   const [isSending, setIsSending] = useState(false)
   const { setUserData } = useContext(AuthContext)
   const navigate = useNavigate();
@@ -48,7 +46,7 @@ export const AuthByEmail = () => {
       setUserData({ token: userData.data.token, user: userData.data.user });
       navigate('/');
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof Error) { 
         addNotification(`${error.message}`, NotificationType.Error)
       }
 
@@ -69,8 +67,6 @@ export const AuthByEmail = () => {
         className={style.authByEmail__inputGroup}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <RadioButton  {...register('radio')} value={'ba'} id={'ba'}>хуй пизда</RadioButton>
-        <RadioButton {...register('radio')} value={'ba1'} id={'ba1'}>хуй пизда</RadioButton>
         <Input
           placeholder='Введите ваш E-mail'
           className={style.authByEmail__input}
