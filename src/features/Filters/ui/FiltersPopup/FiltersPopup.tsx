@@ -1,7 +1,6 @@
 import { Popup } from 'src/shared/ui/Popup/Popup'
 import style from './FiltersPopup.module.scss'
 import { Title, TitleSize } from 'src/shared/ui/Title/TItle'
-import { CloseButton } from 'src/shared/ui/CloseButton/CloseButton'
 import { Input } from 'src/shared/ui/Input/Input'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import { useQuery } from 'react-query'
@@ -90,7 +89,7 @@ export const FiltersPopup = ({ closePopup, isActive }: FiltersPopupProps) => {
   return (
     <Popup isActive={isActive} closePopup={closePopup}>
       <div className={style.filtersPopup}>
-        <CloseButton className={style.filtersPopup__close} />
+
         <Title size={TitleSize.S}>Настройки</Title>
         <div>
           {elements?.map((item) => (
