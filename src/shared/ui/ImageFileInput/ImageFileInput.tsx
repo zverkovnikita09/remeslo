@@ -4,26 +4,23 @@ import camera from '../../assets/camera.svg'
 import { classNames } from 'src/shared/lib/classNames/classNames';
 
 interface ImageFileInputProps extends InputHTMLAttributes<HTMLInputElement> {
-
+  files: FileList | null
+  setFiles: (files: FileList | null) => void
 }
 
 export const ImageFileInput = (props: ImageFileInputProps) => {
   const {
-    onChange,
+    files, setFiles,
     ...otherProps
   } = props;
 
-  const [files, setFiles] = useState<FileList | null>(null);
   const previews = useMemo(() => (
     [...(files || [])].map(file => URL.createObjectURL(file))
   ), [files])
-  const [filesError, setFilesError] = useState("");
   const [isDrag, setDrag] = useState(false);
   const id = useId();
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange?.(e)
-    console.log(e.target.files);
     setFiles(e.target.files)
   }
 
