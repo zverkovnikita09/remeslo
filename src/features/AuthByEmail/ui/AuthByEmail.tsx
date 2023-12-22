@@ -94,7 +94,7 @@ export const AuthByEmail = () => {
           theme={ButtonTheme.RED}
           size={ButtonSize.M}
           type='submit'
-          disabled={isSending}
+          isLoading={isSending}
         >
           Войти
         </Button>
