@@ -9,7 +9,6 @@ import { useQuery } from 'react-query'
 import { getData } from 'src/shared/lib/api/api'
 import { useContext } from 'react'
 import { CategoriesContext } from 'src/app/providers/CategoriesProvider'
-import { Select } from '@mui/material'
 
 
 export const MainPage = () => {
@@ -24,7 +23,6 @@ export const MainPage = () => {
 
   return (
     <Container className={style.mainPage}>
-      <Select></Select>
 
       <Title className={style.mainPage__categories}>Популярные категории</Title>
       <GreyText className={style.mainPage__catDescription}>
