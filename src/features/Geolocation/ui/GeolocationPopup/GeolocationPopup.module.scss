@@ -9,6 +9,10 @@
     display: grid;
     gap: 24px;
 
+    &__button{
+        place-content: baseline;
+    }
+
     &__item{
         flex-direction: column;
         align-items: flex-start;

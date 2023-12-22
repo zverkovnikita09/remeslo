@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useLayoutEffect, useState } from "react";
+import { PropsWithChildren, createContext, useLayoutEffect, useMemo, useState } from "react";
 import { getData } from "src/shared/lib/api/api";
 import { useLocalStorage } from "src/shared/hooks/useLocalStorage";
 
@@ -22,13 +22,15 @@ interface AuthContextProps {
     user: IUser
     setUserData: (...args: any) => void
     logout: () => void
+    isAuthed: boolean
 }
 
 export const AuthContext = createContext<AuthContextProps>({
     isFetching: false,
     token: '', user: {},
     setUserData: () => { },
-    logout: () => { }
+    logout: () => { },
+    isAuthed: false
 })
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
@@ -68,13 +70,18 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         setUser(user)
     }
 
+    const isAuthed = useMemo(() => (
+        Boolean(Object.keys(user).length)
+    ), [user])
+
     return (
         <AuthContext.Provider value={{
             isFetching,
             user,
             token,
             setUserData,
-            logout
+            logout,
+            isAuthed
         }}>
             {children}
         </AuthContext.Provider>

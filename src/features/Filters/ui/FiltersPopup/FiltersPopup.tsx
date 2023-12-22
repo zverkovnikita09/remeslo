@@ -3,8 +3,8 @@ import style from './FiltersPopup.module.scss'
 import { Title, TitleSize } from 'src/shared/ui/Title/TItle'
 import { Input } from 'src/shared/ui/Input/Input'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
-import { useQuery } from 'react-query'
-import { getData } from 'src/shared/lib/api/api'
+/* import { useQuery } from 'react-query'
+import { getData } from 'src/shared/lib/api/api' */
 
 interface FiltersPopupProps {
   isActive: boolean
@@ -115,6 +115,7 @@ export const FiltersPopup = ({ closePopup, isActive }: FiltersPopupProps) => {
             className={style.filtersPopup__button}
             theme={ButtonTheme.OUTLINE}
             size={ButtonSize.M}
+            onClick={closePopup}
           >
             Отмена
           </Button>

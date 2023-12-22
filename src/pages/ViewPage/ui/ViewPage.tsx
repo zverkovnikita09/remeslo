@@ -7,10 +7,10 @@ import { useQuery } from 'react-query'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { getData } from 'src/shared/lib/api/api'
 import { phoneFormatter } from 'src/shared/lib/phoneFormatter/phoneFormatter'
-import { useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { TextArea } from 'src/shared/ui/TextArea/TextArea'
 import { labelsCounterFormatter } from 'src/shared/lib/labelsCounterFormatter/labelsCounterFormatter'
-import { IUser } from 'src/app/providers/AuthProvider'
+import { AuthContext, IUser } from 'src/app/providers/AuthProvider'
 import { Rating } from 'src/features/Rating'
 import { VendorProfile } from 'src/features/VendorProfile'
 import { Reviews } from 'src/features/Reviews'
@@ -21,6 +21,7 @@ import { ShareButton } from 'src/features/ShareButton'
 import { Breadcrumbs } from 'src/features/Breadcrumbs'
 import { IBreadcrumb } from 'src/features/Breadcrumbs/ui/Breadcrumbs'
 import { SliderGallery } from 'src/features/SliderGallery'
+import { NotificationType, NotificationsContext } from 'src/app/providers/NotificationsProvider'
 
 export interface SingleGoods {
   all_time_views: number
@@ -62,6 +63,9 @@ export interface TagType {
 }
 
 export const ViewPage = () => {
+  const { isAuthed } = useContext(AuthContext);
+  const { addNotification } = useContext(NotificationsContext);
+
   const { slug } = useParams();
   const { data: goodInfo } = useQuery({
     queryKey: slug,
@@ -126,6 +130,20 @@ export const ViewPage = () => {
     return [{ name: title ?? '', link: '' }]
   }, [state, goodInfo])
 
+  const [isReviewFormActive, setIsReviewFormActive] = useState(false);
+
+  const openReviewForm = () => {
+    if (!isAuthed) {
+      addNotification('Оставлять отзывы могут только авторизованные пользователи', NotificationType.Error)
+      return
+    }
+    setIsReviewFormActive(true)
+  }
+
+  const closeReviewForm = () => {
+    setIsReviewFormActive(false)
+  }
+
   return (
     <Container className={style.viewPage}>
       <Breadcrumbs links={breadcrubms} />
@@ -171,7 +189,12 @@ export const ViewPage = () => {
           <div className={style.viewPage__rating}>
             <Rating overall_rating={overall_rating ?? 0}></Rating>
             <div className={style.viewPage__reviews}>
-              <Reviews good={goodInfo} />
+              <Reviews
+                good={goodInfo}
+                closeReviewForm={closeReviewForm}
+                openReviewForm={openReviewForm}
+                reviewFormState={isReviewFormActive}
+              />
 
             </div>
           </div>
@@ -201,6 +224,7 @@ export const ViewPage = () => {
             className={style.viewPage__reviewButton}
             theme={ButtonTheme.GREY}
             size={ButtonSize.M}
+            onClick={openReviewForm}
           >
             Оставить отзыв
           </Button>

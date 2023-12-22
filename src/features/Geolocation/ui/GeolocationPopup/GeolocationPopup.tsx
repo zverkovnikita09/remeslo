@@ -32,7 +32,9 @@ export const GeolocationPopup = ({ closePopup, isActive, setCity }: GeolocationP
                     return (
                         <Button
                             key={index}
-                            className={style.geolocationPopup__item}
+                            className={style.geolocationPopup__button}
+                            contentClassname={style.geolocationPopup__item}
+                            
                             onClick={() => chooseCity(city)}
                         >
                             <p className={style.geolocationPopup__itemName}>{city}</p>
