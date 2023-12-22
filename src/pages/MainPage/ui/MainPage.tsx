@@ -9,8 +9,6 @@ import { useQuery } from 'react-query'
 import { getData } from 'src/shared/lib/api/api'
 import { useContext } from 'react'
 import { CategoriesContext } from 'src/app/providers/CategoriesProvider'
-import { ImageFileInput } from 'src/shared/ui/ImageFileInput/ImageFileInput'
-import { useForm } from 'react-hook-form'
 
 
 export const MainPage = () => {
@@ -22,10 +20,8 @@ export const MainPage = () => {
     }),
   })
   const { categories } = useContext(CategoriesContext)
-  const { register } = useForm();
   return (
     <Container className={style.mainPage}>
-      <ImageFileInput {...register("file")} />
       <Title className={style.mainPage__categories}>Популярные категории</Title>
       <GreyText className={style.mainPage__catDescription}>
         Мы собрали для вас только лучшие и эксключизвные товары от  продавцов сервиса, чтобы вы могли быть уверены в их качестве и уникальности
