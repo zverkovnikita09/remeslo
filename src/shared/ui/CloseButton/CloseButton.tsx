@@ -10,7 +10,7 @@ export enum CloseButtonSize {
 }
 
 interface CloseButtonProps {
-  onClick?: () => void
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   className?: string
   size?: CloseButtonSize
 }

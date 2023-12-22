@@ -12,15 +12,21 @@ export enum RatingType {
 interface RatingProps {
     type?: RatingType
     className?: string
-    overall_rating: number
+    overall_rating?: number
+    onChange?: (event: React.SyntheticEvent<Element, Event>, value: number | null) => void
 }
 
-export const Rating = ({ className = '', type = RatingType.Readonly, overall_rating }: RatingProps) => {
+export const Rating = ({ className = '', type = RatingType.Readonly, overall_rating, onChange }: RatingProps) => {
+
 
     if (type === RatingType.Editable) {
         return (
             <MaterialRating
-
+                name="controlled"
+                value={overall_rating}
+                icon={<StarIcon fillColor="#FCAC38" />}
+                emptyIcon={<StarIcon fillColor="transparent" />}
+                onChange={onChange}
             />
         )
     }

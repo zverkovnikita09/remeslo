@@ -1,9 +1,10 @@
 .spinner {
-    width: 48px;
-    height: 48px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     position: relative;
-    animation: rotate 1s linear infinite
+    animation: rotate 1s linear infinite;
+    flex-shrink: 0;
 }
 
 .spinner::before {
@@ -12,7 +13,7 @@
     position: absolute;
     inset: 0px;
     border-radius: 50%;
-    border: 5px solid var(--red-color);
+    border: 3px solid var(--red-color);
     animation: prixClipFix 2s linear infinite;
 }
 

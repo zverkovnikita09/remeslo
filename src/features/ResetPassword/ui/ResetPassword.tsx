@@ -105,7 +105,7 @@ export const ResetPassword = () => {
                     theme={ButtonTheme.RED}
                     size={ButtonSize.M}
                     type='submit'
-                    disabled={isSending}
+                    isLoading={isSending}
                 >
                     Отправить
                 </Button>

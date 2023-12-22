@@ -20,8 +20,10 @@ export const MainPage = () => {
     }),
   })
   const { categories } = useContext(CategoriesContext)
+
   return (
     <Container className={style.mainPage}>
+
       <Title className={style.mainPage__categories}>Популярные категории</Title>
       <GreyText className={style.mainPage__catDescription}>
         Мы собрали для вас только лучшие и эксключизвные товары от  продавцов сервиса, чтобы вы могли быть уверены в их качестве и уникальности

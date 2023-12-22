@@ -1,6 +1,7 @@
 import { classNames } from 'src/shared/lib/classNames/classNames';
 import style from './Button.module.scss'
 import { ButtonHTMLAttributes, ReactNode, forwardRef } from 'react'
+import { Spinner } from '../Spinner/Spinner';
 
 export enum ButtonSize {
   PRIMARY = '',
@@ -16,10 +17,14 @@ export enum ButtonTheme {
   GREY = 'grey',
 }
 
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode
-  size?: ButtonSize,
+  size?: ButtonSize
   theme?: ButtonTheme
+  isLoading?: boolean
+  loadingText?: string
+  contentClassname?: string
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -30,6 +35,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       size = ButtonSize.PRIMARY,
       theme = ButtonTheme.PRIMARY,
+      isLoading,
+      disabled,
+      loadingText,
+      contentClassname = '',
       ...otherProps
     } = props;
 
@@ -44,9 +53,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={classNames(style.button, {}, additionalClasses)}
         type={type ?? 'button'}
         ref={ref}
+        disabled={isLoading || disabled}
         {...otherProps}
       >
-        {children}
+        {isLoading &&
+          <div className={style.button__loading}>
+            {loadingText ?? 'Отправка'} <Spinner />
+          </div>
+        }
+        <div className={classNames(style.button__content, { [style.isLoading]: !!isLoading }, [contentClassname])}>
+          {children}
+
+        </div>
       </button>
     )
   }

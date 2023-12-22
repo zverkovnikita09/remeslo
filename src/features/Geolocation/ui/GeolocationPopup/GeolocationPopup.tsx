@@ -1,7 +1,6 @@
 import { Popup } from 'src/shared/ui/Popup/Popup'
 import style from './GeolocationPopup.module.scss'
 import { Title, TitleSize } from 'src/shared/ui/Title/TItle'
-import { CloseButton } from 'src/shared/ui/CloseButton/CloseButton'
 import { Input } from 'src/shared/ui/Input/Input'
 import { Button } from 'src/shared/ui/Button/Button'
 
@@ -27,14 +26,15 @@ export const GeolocationPopup = ({ closePopup, isActive, setCity }: GeolocationP
     return (
         <Popup isActive={isActive} closePopup={closePopup}>
             <div className={style.geolocationPopup}>
-                <CloseButton className={style.geolocationPopup__close} />
                 <Title size={TitleSize.S}>Выберите город</Title>
                 <Input placeholder='Ваш город' />
                 {cities.map(({ city, region }, index) => {
                     return (
                         <Button
                             key={index}
-                            className={style.geolocationPopup__item}
+                            className={style.geolocationPopup__button}
+                            contentClassname={style.geolocationPopup__item}
+                            
                             onClick={() => chooseCity(city)}
                         >
                             <p className={style.geolocationPopup__itemName}>{city}</p>

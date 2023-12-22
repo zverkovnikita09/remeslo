@@ -11,8 +11,8 @@ import { AuthContext } from 'src/app/providers/AuthProvider'
 import { Spinner } from 'src/shared/ui/Spinner/Spinner'
 
 export const Header = () => {
-  const { user, isFetching, logout } = useContext(AuthContext);
-  const isAuthed = Boolean(Object.keys(user).length);
+  const { user, isFetching, logout, isAuthed } = useContext(AuthContext);
+
 
   return (
     <Container className={style.header}>
@@ -20,10 +20,10 @@ export const Header = () => {
       <div className={style.header__rightBlock}>
         <Geolocation />
         <SearchInput />
-        {isFetching ? 
-        <div className={style.header__spinner}>
-          <Spinner />
-        </div> :
+        {isFetching ?
+          <div className={style.header__spinner}>
+            <Spinner />
+          </div> :
           isAuthed ?
             <>
               <Link to='' className={style.header__link}>

@@ -9,10 +9,8 @@
     display: grid;
     gap: 24px;
 
-    &__close {
-        position: absolute;
-        right: 14px;
-        top: 14px;
+    &__button{
+        place-content: baseline;
     }
 
     &__item{

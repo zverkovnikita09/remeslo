@@ -1,5 +1,5 @@
 import style from "./Checkbox.module.scss";
-import { forwardRef } from "react";
+import { forwardRef, useId } from "react";
 import { classNames } from "src/shared/lib/classNames/classNames";
 
 interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -8,7 +8,6 @@ interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
     className?: string
     textPosition?: 'left' | 'right'
-    id: string
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
@@ -16,9 +15,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
         children,
         className = '',
         textPosition = 'left',
-        id,
         ...otherProps
     } = props;
+
+    const id = useId();
 
     return (
         <label htmlFor={id} className={classNames(style.checkbox, {}, [className])}>
