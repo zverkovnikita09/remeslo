@@ -11,6 +11,7 @@ import { useContext } from 'react'
 import { CategoriesContext } from 'src/app/providers/CategoriesProvider'
 import { Select } from '@mui/material'
 
+
 export const MainPage = () => {
   const { data: goods, isLoading } = useQuery({
     queryKey: 'goodsQuery',
