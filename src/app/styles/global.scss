@@ -43,3 +43,7 @@ body{
 .swiper-button-disabled{
   opacity: .5;
 }
+
+.no-pointer-events{
+  pointer-events: none;
+}
