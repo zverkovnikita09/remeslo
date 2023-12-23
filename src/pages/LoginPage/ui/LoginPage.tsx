@@ -12,7 +12,7 @@ export const LoginPage = () => {
       <div className={style.loginPage__content}>
         <MainLogo />
         <Outlet />
-        <Select />
+{/*         <Select /> */}
         <GreyText>© 2023 Remeslo</GreyText>
       </div>
       <div className={style.loginPage__image}>
