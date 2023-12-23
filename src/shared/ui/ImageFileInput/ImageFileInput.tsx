@@ -61,7 +61,7 @@ export const ImageFileInput = (props: ImageFileInputProps) => {
 
   const onDrop = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault()
-    let filesArray = [...(files ?? [])];
+    const filesArray = [...(files ?? [])];
 
     const newFilesArray = [...filesArray, ...(e.dataTransfer.files ?? [])];
 
@@ -73,7 +73,7 @@ export const ImageFileInput = (props: ImageFileInputProps) => {
   }
 
   const arrayToFilelist = (files: File[]): FileList => {
-    let dt = new DataTransfer();
+    const dt = new DataTransfer();
 
     files.forEach(file => {
       dt.items.add(file);
@@ -84,7 +84,7 @@ export const ImageFileInput = (props: ImageFileInputProps) => {
   }
 
   const onFileDelete = (index: number) => () => {
-    let filesArray = [...(files ?? [])];
+    const filesArray = [...(files ?? [])];
     const newFiles = [...filesArray.slice(0, index), ...filesArray.slice(index + 1)]
     setFiles(arrayToFilelist(newFiles));
 
