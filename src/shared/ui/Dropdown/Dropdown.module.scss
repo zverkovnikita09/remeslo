@@ -1,0 +1,13 @@
+.dropdown {
+  position: absolute;
+  border: 1px solid var(--dark-grey-color);
+  overflow-y: auto;
+}
+
+.top {
+  top: calc(100% + 10px);
+}
+
+.bottom {
+  bottom: calc(100% + 10px);
+}
