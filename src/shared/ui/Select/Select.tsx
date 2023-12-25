@@ -1,10 +1,16 @@
-import { forwardRef, useCallback, useRef, useState } from "react"
-import style from './Select.module.scss'
-import { Button } from "../Button/Button";
+import { useCallback, useRef, useState } from "react"
 import { Dropdown } from "../Dropdown/Dropdown";
+import style from './Select.module.scss'
+import { GreyText } from "../GreyText/GreyText";
+import { SlArrowDown } from "react-icons/sl";
+import { classNames } from "src/shared/lib/classNames/classNames";
+import { IoClose } from "react-icons/io5";
+import { Button } from "../Button/Button";
+
 
 interface CommonSelectProps {
-    option: (string | { name: string; value: string; })[]
+    options: (string | { name: string; value: string; })[]
+    placeholder?: string
 }
 
 interface MultipleSelectProps {
@@ -22,12 +28,10 @@ interface SingleSelectProps {
 type SelectProps = CommonSelectProps & (MultipleSelectProps | SingleSelectProps)
 
 export const Select = (props: SelectProps) => {
-    const { multiple } = props
+    const { multiple, placeholder, value, setValue, options } = props
 
-    const [value, setValue] = useState<string | string[]>('Залупа');
     const [isFocused, setIsFocused] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const options: (string | { name: string; value: string; })[] = [];
+    const [isDropdownOpen, setIsDropdownOpen] = useState(true);
     const [availableOptions, setAvailableOptions] = useState(options);
     const elementRef = useRef<HTMLDivElement>(null)
 
@@ -48,15 +52,20 @@ export const Select = (props: SelectProps) => {
             return;
         }
 
+        setIsDropdownOpen(false)
         setValue(selectValue);
-    }, [])
+    }, [value])
 
-    const deleteValue = (selectValue: string) => {
-        const optionValue = isOptionStringArray(options)
-            ? selectValue
-            : options.find(option => selectValue === (option as { name: string; value: string; }).value);
-        setAvailableOptions(prev => [...prev, optionValue!]);
-    }
+    const deleteValue = useCallback((selectValue: string) => () => {
+        if (multiple) {
+            setValue(value.filter(item => item !== selectValue))
+
+            const optionValue = isOptionStringArray(options)
+                ? selectValue
+                : options.find(option => selectValue === (option as { name: string; value: string; }).value);
+            setAvailableOptions(prev => [...prev, optionValue!]);
+        }
+    }, [value])
 
     return (
         <div
@@ -67,35 +76,53 @@ export const Select = (props: SelectProps) => {
             ref={elementRef}
             onClick={() => setIsDropdownOpen(pr => !pr)}
         >
+            <SlArrowDown
+                className={classNames(style.select__arrowDown, { [style.rotated]: isDropdownOpen })}
+                color="#9B9B9B"
+            />
+            {!multiple && (value || placeholder)}
+            {multiple && (value.length ?
+                (value.map((item) => (
+                    <div key={item} className={style.select__valueItem} onClick={e => e.stopPropagation()}>
+                        {item}
+                        <Button onClick={deleteValue(item)}><IoClose /></Button>
+                    </div>
+                )))
+                : placeholder)}
             <Dropdown
                 isOpen={isDropdownOpen}
                 onClose={() => setIsDropdownOpen(false)}
                 targetRef={elementRef}
                 horizontalPosition="left"
+                width="100%"
+                className={style.select__dropdown}
+                closeOnItemClick={false}
             >
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non quam fugit repellat quaerat id similique. Eveniet quos animi quibusdam libero numquam aliquam magnam illum accusantium vero delectus distinctio velit asperiores debitis ratione quisquam rerum id officiis consectetur eaque, nostrum non earum a aut voluptas? Quas sit asperiores exercitationem reiciendis sunt aperiam nisi, totam labore vel alias possimus eligendi laborum veritatis qui consequuntur maiores officiis modi sed sequi, quae soluta dicta? Quaerat nemo, ipsa quo commodi fuga exercitationem voluptas aut vero autem at sit obcaecati asperiores laboriosam similique magnam dignissimos, repellat doloribus excepturi sed? Sequi, excepturi! Atque quos quisquam dolorem quia.
-                {/*   {availableOptions.map((option) => {
+                {availableOptions?.length
+                    ? availableOptions.map((option) => {
                         if (typeof option === "string") {
                             return (
-                                <Button
+                                <div
                                     key={option}
-                                    className={style.dropdown__item}
+                                    className={classNames(style.select__item, { [style.selected]: option === value })}
                                     onClick={addValue(option)}
                                 >
                                     {option}
-                                </Button>
+                                </div>
                             )
                         }
                         return (
-                            <Button
+                            <div
                                 key={option.name}
-                                className={style.dropdown__item}
+                                className={classNames(style.select__item, { [style.selected]: option.value === value })}
                                 onClick={addValue(option.value)}
                             >
                                 {option.name}
-                            </Button>
+                            </div>
                         )
-                    })} */}
+                    })
+                    : <GreyText className={style.select__text}>Нет доступных элементов</GreyText>
+                }
             </Dropdown>
         </div>
     )

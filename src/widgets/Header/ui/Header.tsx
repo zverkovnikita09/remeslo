@@ -6,12 +6,11 @@ import { Link } from 'react-router-dom'
 import { HeaderProfile } from 'src/widgets/HeaderProfile/ui/HeaderProfile'
 import { SearchInput } from 'src/features/SearchInput'
 import { Geolocation } from 'src/features/Geolocation'
-import { useContext } from 'react'
-import { AuthContext } from 'src/app/providers/AuthProvider'
+import { useAuth } from 'src/app/providers/AuthProvider'
 import { Spinner } from 'src/shared/ui/Spinner/Spinner'
 
 export const Header = () => {
-  const { user, isFetching, logout, isAuthed } = useContext(AuthContext);
+  const { user, isFetching, logout, isAuthed } = useAuth();
 
 
   return (

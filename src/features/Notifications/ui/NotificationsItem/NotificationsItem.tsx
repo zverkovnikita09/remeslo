@@ -1,24 +1,24 @@
-import { INotification, NotificationType, NotificationsContext } from "src/app/providers/NotificationsProvider"
+import { INotification, NotificationType, useNotification } from "src/app/providers/NotificationsProvider"
 import { classNames } from "src/shared/lib/classNames/classNames"
 import { CloseButton, CloseButtonSize } from "src/shared/ui/CloseButton/CloseButton"
 import { IoCloseCircleOutline, IoCheckmarkCircleOutline, IoAlertCircleOutline } from "react-icons/io5";
 import style from './NotificationstItem.module.scss'
-import { useCallback, useContext, useEffect } from "react"
+import { useCallback, useEffect } from "react"
 
 interface NotificationsItemProps extends INotification {
     timeout?: number
 }
 
 export const NotificationsItem = ({ id, type, message, timeout }: NotificationsItemProps) => {
-    const { removeNotification } = useContext(NotificationsContext);
+    const { removeNotification } = useNotification();
 
-    useEffect(()=>{
+    useEffect(() => {
         const timeoutId: NodeJS.Timeout = setTimeout(() => {
             removeNotification(id);
         }, timeout);
 
         return () => clearTimeout(timeoutId)
-    },[])
+    }, [])
 
     const notificationIcon = useCallback((notificationType: NotificationType): JSX.Element => {
         switch (notificationType) {

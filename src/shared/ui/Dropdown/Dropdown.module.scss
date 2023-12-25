@@ -2,12 +2,13 @@
   position: absolute;
   border: 1px solid var(--dark-grey-color);
   overflow-y: auto;
+  border-radius: 24px;
 }
 
 .top {
-  top: calc(100% + 10px);
+  top: calc(100% + 8px);
 }
 
 .bottom {
-  bottom: calc(100% + 10px);
+  bottom: calc(100% + 8px);
 }

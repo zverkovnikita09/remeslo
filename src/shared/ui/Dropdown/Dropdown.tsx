@@ -5,7 +5,7 @@ import { PropsWithChildren, RefObject, useEffect, useLayoutEffect, useState } fr
 interface SelectDropdownProps {
   targetRef: RefObject<HTMLElement>
   horizontalPosition?: "left" | "right"
-  width?: number | "auto"
+  width?: number | "auto" | "100%"
   maxHeight?: number
   className?: string
   isOpen: boolean
@@ -32,9 +32,9 @@ export const Dropdown = (props: PropsWithChildren<SelectDropdownProps>) => {
     const rect = targetRef.current?.getBoundingClientRect();
 
     /**
-     * Проверка достаточно ли места для отображения контента (10 - размер margin)
+     * Проверка достаточно ли места для отображения контента (8 - размер margin)
      */
-    if (window.innerHeight - rect!.bottom < maxHeight + 10) {
+    if (window.innerHeight - rect!.bottom < maxHeight + 8) {
       setVerticalPosition("bottom")
     }
     else {

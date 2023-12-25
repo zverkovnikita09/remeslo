@@ -7,10 +7,8 @@ import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import googleIcon from 'src/shared/assets/googleIcon.svg'
 import vkIcon from 'src/shared/assets/vkIcon.svg'
 import { useForm } from 'react-hook-form'
-import { useState, useContext } from 'react'
-import { sendData } from 'src/shared/lib/api/api'
-import { AuthContext, IUser } from 'src/app/providers/AuthProvider'
-import { NotificationType, NotificationsContext } from 'src/app/providers/NotificationsProvider'
+import { IUser, useAuth } from 'src/app/providers/AuthProvider'
+import { useSendData } from 'src/shared/hooks/useSendData'
 
 interface EmailAuth {
   email: string
@@ -25,39 +23,16 @@ export interface ResponseUserData {
 }
 
 export const AuthByEmail = () => {
-  const { addNotification } = useContext(NotificationsContext);
-  const { register, handleSubmit, formState: { errors, touchedFields } } = useForm<EmailAuth>({ mode: 'onBlur'})
-  const [isSending, setIsSending] = useState(false)
-  const { setUserData } = useContext(AuthContext)
+  const { register, handleSubmit, formState: { errors, touchedFields } } = useForm<EmailAuth>({ mode: 'onBlur' })
+  const { setUserData } = useAuth();
   const navigate = useNavigate();
 
-
-  const onSubmit = async (data: EmailAuth) => {
-
-    try {
-      setIsSending(true);
-      const response = await sendData<EmailAuth>(data, 'api/v1/login')
-      
-      if (!response.ok) {
-        throw new Error(response.statusText || "Произошла ошибка при отправке данных");
-      }
-
-      const userData: ResponseUserData = await response.json();
+  const { isSending, handleSendData } = useSendData({
+    url: 'api/v1/login', onSuccess: (userData: ResponseUserData) => {
       setUserData({ token: userData.data.token, user: userData.data.user });
-      navigate('/');
-    } catch (error) {
-      if (error instanceof Error) { 
-        addNotification(`${error.message}`, NotificationType.Error)
-      }
-
-      if (typeof error === 'string') {
-        addNotification(`${error}`, NotificationType.Error)
-      }
+      navigate('/')
     }
-    finally {
-      setIsSending(false);
-    }
-  }
+  })
 
   return (
     <div className={style.authByEmail}>
@@ -65,7 +40,7 @@ export const AuthByEmail = () => {
       <p className={style.authByEmail__text}>Стань покупателем или начни продавать свое</p>
       <form
         className={style.authByEmail__inputGroup}
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(handleSendData)}
       >
         <Input
           placeholder='Введите ваш E-mail'

@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useLayoutEffect, useMemo, useState } from "react";
+import { PropsWithChildren, createContext, useContext, useLayoutEffect, useMemo, useState } from "react";
 import { getData } from "src/shared/lib/api/api";
 import { useLocalStorage } from "src/shared/hooks/useLocalStorage";
 
@@ -86,4 +86,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
             {children}
         </AuthContext.Provider>
     )
+}
+
+export const useAuth = () => {
+    const { ...params } = useContext(AuthContext)
+
+    return { ...params }
 }

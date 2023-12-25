@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useCallback, useMemo } from "react"
+import { PropsWithChildren, createContext, useCallback, useContext, useMemo } from "react"
 import { useQuery } from "react-query"
 import { useLocation } from "react-router-dom"
 import { IBreadcrumb } from "src/features/Breadcrumbs/ui/Breadcrumbs";
@@ -33,12 +33,12 @@ export const CategoriesProvider = ({ children }: PropsWithChildren) => {
         if (!tagsArray.length) {
             return {}
         }
-        let result: Record<string, [string, ICategory[] | ISubcategory[]]> = {};
-        let stack: any[] = []
+        const result: Record<string, [string, ICategory[] | ISubcategory[]]> = {};
+        const stack: any[] = []
         tagsArray.forEach(node => stack.push(node));
         while (stack.length) {
             const node = stack.pop()
-            let nodeChildren = checkCategory(node) ? node.subcategories : node.children;
+            const nodeChildren = checkCategory(node) ? node.subcategories : node.children;
             result[node.slug] = [node.name, nodeChildren];
             if (nodeChildren.length) {
                 nodeChildren.forEach((child: any) => stack.push(child))
@@ -56,9 +56,9 @@ export const CategoriesProvider = ({ children }: PropsWithChildren) => {
     })
 
     const pathArray = useMemo<IBreadcrumb[]>(() => {
-        let paths = path.pathname.split('/');
-        let filteredPath = paths.includes('tags') ? paths.slice(paths.indexOf('tags') + 1).filter(Boolean) : [];
-        let flatedCategories = flatCategories(categories ?? []);
+        const paths = path.pathname.split('/');
+        const filteredPath = paths.includes('tags') ? paths.slice(paths.indexOf('tags') + 1).filter(Boolean) : [];
+        const flatedCategories = flatCategories(categories ?? []);
         let pathLink = '/main/tags'
 
         return filteredPath.map((pathItem) => {
@@ -83,4 +83,10 @@ export const CategoriesProvider = ({ children }: PropsWithChildren) => {
             {children}
         </CategoriesContext.Provider>
     )
+}
+
+export const useCategoriesContext = () => {
+    const { ...params } = useContext(CategoriesContext);
+
+    return { ...params }
 }

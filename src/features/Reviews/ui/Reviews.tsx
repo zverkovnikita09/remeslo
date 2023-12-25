@@ -1,11 +1,11 @@
 import { Button } from 'src/shared/ui/Button/Button'
 import style from './Reviews.module.scss'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { ReviewsPopup } from './ReviewsPopup/ReviewsPopup'
 import { labelsCounterFormatter } from 'src/shared/lib/labelsCounterFormatter/labelsCounterFormatter'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { AuthContext, IUser, ProfileInfo } from 'src/app/providers/AuthProvider'
+import { IUser, ProfileInfo, useAuth } from 'src/app/providers/AuthProvider'
 import { getData } from 'src/shared/lib/api/api'
 import { SingleGoods } from 'src/pages/ViewPage/ui/ViewPage'
 import { ReviewFormPopup } from 'src/features/ReviewFormPopup'
@@ -29,7 +29,7 @@ export interface GoodEstimaions {
 
 export const Reviews = ({ good, closeReviewForm, openReviewForm, reviewFormState }: ReviewsProps) => {
   const [isPopupActive, setIsPopupActive] = useState(false)
-  const { isAuthed } = useContext(AuthContext);
+  const { isAuthed } = useAuth();
 
   const { slug } = useParams();
   const { data: dataEstimations } = useQuery({

@@ -6,8 +6,7 @@ import { OverallRating } from 'src/shared/ui/OverallRating/OverallRating'
 import { ReviewsCount } from 'src/shared/ui/ReviewsStats/ReviewsCount'
 import { GoodEstimaions } from '../Reviews'
 import { ReviewsList } from 'src/shared/ui/ReviewsList/ReviewsList'
-import { AuthContext } from 'src/app/providers/AuthProvider'
-import { useContext } from 'react'
+import { useAuth } from 'src/app/providers/AuthProvider'
 
 interface ReviewsPopupProps {
   isActive: boolean
@@ -26,7 +25,7 @@ export const ReviewsPopup = ({
   isActive,
   dataEstimations
 }: ReviewsPopupProps) => {
-  const { isAuthed } = useContext(AuthContext);
+  const { isAuthed } = useAuth();
 
   const openForm = () => {
     isAuthed && closePopup();

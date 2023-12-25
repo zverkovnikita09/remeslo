@@ -25,8 +25,8 @@ export const getData = async <T extends {}> ({ baseUrl = BASE_URL, dataFlag, url
 }
 
 export const sendData = async<DataType>(data: DataType, url: string) => {
-    let formData = new FormData();
-    for (let item in data) {
+    const formData = new FormData();
+    for (const item in data) {
       formData.append(item, String(data[item]))
     }
     const status = await fetch(`${BASE_URL}/${url}`, {

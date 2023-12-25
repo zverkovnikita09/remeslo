@@ -7,8 +7,7 @@ import { GoodsGrid, IGoods } from 'src/entities/GoodsGrid'
 import { Filters } from 'src/features/Filters'
 import { useQuery } from 'react-query'
 import { getData } from 'src/shared/lib/api/api'
-import { useContext } from 'react'
-import { CategoriesContext } from 'src/app/providers/CategoriesProvider'
+import { useCategoriesContext } from 'src/app/providers/CategoriesProvider'
 
 
 export const MainPage = () => {
@@ -19,7 +18,7 @@ export const MainPage = () => {
       dataFlag: true,
     }),
   })
-  const { categories } = useContext(CategoriesContext)
+  const { categories } = useCategoriesContext()
 
   return (
     <Container className={style.mainPage}>

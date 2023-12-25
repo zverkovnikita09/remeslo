@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback, PropsWithChildren } from "react";
+import { createContext, useState, useCallback, PropsWithChildren, useContext } from "react";
 
 export enum NotificationType {
     Error = 'error',
@@ -18,7 +18,6 @@ interface NotificationsContextProps {
     addNotification: (message: string, type: NotificationType) => void
     removeNotification: (id: string) => void
 }
-
 
 export const NotificationsContext = createContext<NotificationsContextProps>({ notifications: [], addNotification: () => { }, removeNotification: () => { } })
 
@@ -43,4 +42,10 @@ export const NotificationsProvider = ({ children }: PropsWithChildren) => {
             {children}
         </NotificationsContext.Provider>
     )
+}
+
+export const useNotification = () => {
+    const { ...params } = useContext(NotificationsContext);
+
+    return { ...params }
 }

@@ -7,10 +7,10 @@ import { useQuery } from 'react-query'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { getData } from 'src/shared/lib/api/api'
 import { phoneFormatter } from 'src/shared/lib/phoneFormatter/phoneFormatter'
-import { useContext, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { TextArea } from 'src/shared/ui/TextArea/TextArea'
 import { labelsCounterFormatter } from 'src/shared/lib/labelsCounterFormatter/labelsCounterFormatter'
-import { AuthContext, IUser } from 'src/app/providers/AuthProvider'
+import { IUser, useAuth } from 'src/app/providers/AuthProvider'
 import { Rating } from 'src/features/Rating'
 import { VendorProfile } from 'src/features/VendorProfile'
 import { Reviews } from 'src/features/Reviews'
@@ -21,7 +21,7 @@ import { ShareButton } from 'src/features/ShareButton'
 import { Breadcrumbs } from 'src/features/Breadcrumbs'
 import { IBreadcrumb } from 'src/features/Breadcrumbs/ui/Breadcrumbs'
 import { SliderGallery } from 'src/features/SliderGallery'
-import { NotificationType, NotificationsContext } from 'src/app/providers/NotificationsProvider'
+import { NotificationType, useNotification } from 'src/app/providers/NotificationsProvider'
 
 export interface SingleGoods {
   all_time_views: number
@@ -63,8 +63,8 @@ export interface TagType {
 }
 
 export const ViewPage = () => {
-  const { isAuthed } = useContext(AuthContext);
-  const { addNotification } = useContext(NotificationsContext);
+  const { isAuthed } = useAuth();
+  const { addNotification } = useNotification();
 
   const { slug } = useParams();
   const { data: goodInfo } = useQuery({

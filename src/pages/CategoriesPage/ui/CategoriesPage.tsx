@@ -4,8 +4,7 @@ import { Title } from "src/shared/ui/Title/TItle"
 import { Categories } from "src/features/Categories"
 import { Filters } from "src/features/Filters"
 import { GoodsGrid, IGoods } from "src/entities/GoodsGrid"
-import { useContext } from "react"
-import { CategoriesContext } from "src/app/providers/CategoriesProvider"
+import { useCategoriesContext } from "src/app/providers/CategoriesProvider"
 import { useQuery } from "react-query"
 import { getData } from "src/shared/lib/api/api"
 import { Container } from 'src/shared/ui/Container/Container'
@@ -16,11 +15,11 @@ export const CategoriesPage = () => {
     const { data: goods, isLoading } = useQuery({
         queryKey: 'goodsQuery',
         queryFn: () => getData<IGoods[]>({
-          url: `/api/v1/good`,
-          dataFlag: true,
+            url: `/api/v1/good`,
+            dataFlag: true,
         }),
-      })
-    const { currentCategories, pathArray } = useContext(CategoriesContext)
+    })
+    const { currentCategories, pathArray } = useCategoriesContext()
 
     if (!currentCategories?.length) {
         return null;

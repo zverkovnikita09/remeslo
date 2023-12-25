@@ -2,13 +2,10 @@ import { Title } from 'src/shared/ui/Title/TItle'
 import style from './ResetPassword.module.scss'
 import { Input } from 'src/shared/ui/Input/Input'
 import { useForm } from 'react-hook-form'
-import { sendData } from 'src/shared/lib/api/api'
-import { useState, useContext } from 'react'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import { BackButton } from 'src/shared/ui/BackButton'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { NotificationType, NotificationsContext } from 'src/app/providers/NotificationsProvider'
-
+import { useSendData } from 'src/shared/hooks/useSendData'
 
 interface ChangePassword {
     email: string
@@ -17,8 +14,6 @@ interface ChangePassword {
     token: string
 }
 
-
-
 export const ResetPassword = () => {
     const {
         register,
@@ -26,41 +21,13 @@ export const ResetPassword = () => {
         formState: { errors, touchedFields },
         getValues,
     } = useForm<ChangePassword>({ mode: 'onBlur' });
-    const [isSending, setIsSending] = useState(false)
     const [params] = useSearchParams()
     const navigate = useNavigate();
-    const { addNotification } = useContext(NotificationsContext);
 
     const token = params.get('pass_reset_token') || ''
     const email = params.get('email') || ''
 
-    const onSubmit = async (data: ChangePassword) => {
-
-        try {
-            setIsSending(true);
-
-            const response = await sendData<ChangePassword>({ ...data, token, email }, 'api/v1/password/reset')
-
-            if (!response.ok) {
-                throw new Error("Произошла ошибка при отправке данных");
-            }
-
-            navigate('/');
-
-        } catch (error) {
-            if (error instanceof Error) {
-                addNotification(`${error.message}`, NotificationType.Error)
-            }
-
-            if (typeof error === 'string') {
-                addNotification(`${error}`, NotificationType.Error)
-            }
-
-        }
-        finally {
-            setIsSending(false);
-        }
-    }
+    const { isSending, handleSendData } = useSendData({ url: 'api/v1/password/reset', onSuccess: () => navigate('/') })
 
     return (
         <div className={style.resetPassword}>
@@ -68,7 +35,7 @@ export const ResetPassword = () => {
             <p className={style.resetPassword__text}>Установите новый пароль минимум 8 символов (Для большей безопасности используйте цифры и заглавные буквы)</p>
             <form
                 className={style.resetPassword__inputGroup}
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit((data) => handleSendData({ ...data, token, email }))}
             >
                 <Input
                     placeholder='Введите новый пароль'

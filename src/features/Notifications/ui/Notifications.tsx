@@ -1,5 +1,4 @@
-import { useContext } from 'react'
-import { NotificationsContext } from 'src/app/providers/NotificationsProvider'
+import { useNotification } from 'src/app/providers/NotificationsProvider'
 import { Portal } from 'src/shared/ui/Portal/Portal'
 
 import style from './Notifications.module.scss'
@@ -10,7 +9,7 @@ interface NotificationsProps {
 }
 
 export const Notifications = ({ timeout = 2000 }: NotificationsProps) => {
-    const { notifications } = useContext(NotificationsContext);
+    const { notifications } = useNotification();
 
     if (!notifications.length) {
         return null

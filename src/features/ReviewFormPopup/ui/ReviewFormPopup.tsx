@@ -9,8 +9,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import { Input } from 'src/shared/ui/Input/Input'
 import { Checkbox } from 'src/shared/ui/Checkbox/Checkbox'
-import { useContext } from 'react'
-import { AuthContext } from 'src/app/providers/AuthProvider'
+import { useAuth } from 'src/app/providers/AuthProvider'
 
 
 interface ReviewFormPopupProps {
@@ -35,7 +34,7 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup }: ReviewFormPo
     }
 
     const files: FileList | null = watch('files');
-    const { user: { profile } } = useContext(AuthContext);
+    const { user: { profile } } = useAuth();
 
 
     return (
