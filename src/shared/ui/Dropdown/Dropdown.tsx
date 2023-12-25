@@ -1,6 +1,6 @@
 import { classNames } from 'src/shared/lib/classNames/classNames';
 import style from './Dropdown.module.scss'
-import { PropsWithChildren, RefObject, useLayoutEffect, useState } from 'react';
+import { PropsWithChildren, RefObject, useEffect, useLayoutEffect, useState } from 'react';
 
 interface SelectDropdownProps {
   targetRef: RefObject<HTMLElement>
@@ -8,6 +8,9 @@ interface SelectDropdownProps {
   width?: number | "auto"
   maxHeight?: number
   className?: string
+  isOpen: boolean
+  onClose: () => void
+  closeOnItemClick?: boolean
 }
 
 export const Dropdown = (props: PropsWithChildren<SelectDropdownProps>) => {
@@ -17,7 +20,10 @@ export const Dropdown = (props: PropsWithChildren<SelectDropdownProps>) => {
     children,
     width = "auto",
     maxHeight = 300,
-    className = ''
+    className = '',
+    isOpen,
+    onClose,
+    closeOnItemClick = true,
   } = props;
 
   const [vertivalPosition, setVerticalPosition] = useState<"top" | "bottom">("top")
@@ -40,9 +46,26 @@ export const Dropdown = (props: PropsWithChildren<SelectDropdownProps>) => {
     targetRef.current && calcCoords();
   }, [])
 
+  useEffect(() => {
+    const closeDropdownByOutsideClick = (e: MouseEvent) => {
+      if (e.target === targetRef.current) return
+      onClose()
+    }
+
+    if (isOpen) document.addEventListener("click", closeDropdownByOutsideClick)
+
+    return () => document.removeEventListener("click", closeDropdownByOutsideClick)
+  }, [isOpen])
+
+  const stopClickPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    !closeOnItemClick && e.stopPropagation()
+  }
+
+  if (!isOpen) return null
+
   return (
     <div
-      onClick={e => e.stopPropagation()}
+      onClick={stopClickPropagation}
       className={classNames(style.dropdown, {}, [className, style[vertivalPosition]])}
       style={{ [horizontalPosition]: 0, width, maxHeight }}>
       {children}

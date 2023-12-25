@@ -67,13 +67,14 @@ export const Select = (props: SelectProps) => {
             ref={elementRef}
             onClick={() => setIsDropdownOpen(pr => !pr)}
         >
-            {isDropdownOpen &&
-                <Dropdown
-                    targetRef={elementRef}
-                    horizontalPosition="left"
-                >
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non quam fugit repellat quaerat id similique. Eveniet quos animi quibusdam libero numquam aliquam magnam illum accusantium vero delectus distinctio velit asperiores debitis ratione quisquam rerum id officiis consectetur eaque, nostrum non earum a aut voluptas? Quas sit asperiores exercitationem reiciendis sunt aperiam nisi, totam labore vel alias possimus eligendi laborum veritatis qui consequuntur maiores officiis modi sed sequi, quae soluta dicta? Quaerat nemo, ipsa quo commodi fuga exercitationem voluptas aut vero autem at sit obcaecati asperiores laboriosam similique magnam dignissimos, repellat doloribus excepturi sed? Sequi, excepturi! Atque quos quisquam dolorem quia.
-                    {/*   {availableOptions.map((option) => {
+            <Dropdown
+                isOpen={isDropdownOpen}
+                onClose={() => setIsDropdownOpen(false)}
+                targetRef={elementRef}
+                horizontalPosition="left"
+            >
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non quam fugit repellat quaerat id similique. Eveniet quos animi quibusdam libero numquam aliquam magnam illum accusantium vero delectus distinctio velit asperiores debitis ratione quisquam rerum id officiis consectetur eaque, nostrum non earum a aut voluptas? Quas sit asperiores exercitationem reiciendis sunt aperiam nisi, totam labore vel alias possimus eligendi laborum veritatis qui consequuntur maiores officiis modi sed sequi, quae soluta dicta? Quaerat nemo, ipsa quo commodi fuga exercitationem voluptas aut vero autem at sit obcaecati asperiores laboriosam similique magnam dignissimos, repellat doloribus excepturi sed? Sequi, excepturi! Atque quos quisquam dolorem quia.
+                {/*   {availableOptions.map((option) => {
                         if (typeof option === "string") {
                             return (
                                 <Button
@@ -95,7 +96,7 @@ export const Select = (props: SelectProps) => {
                             </Button>
                         )
                     })} */}
-                </Dropdown>}
+            </Dropdown>
         </div>
     )
 }
