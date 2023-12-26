@@ -20,7 +20,26 @@
     gap: 12px;
     margin-top: 32px;
   }
-  &__button{
+
+  &__button {
     width: 100%;
+  }
+
+  &__inputs {
+    position: relative;
+    display: flex;
+    gap: 48px;
+
+    &::after {
+      content: "";
+      width: 24px;
+      height: 1px;
+      position: absolute;
+      border-radius: 2px;
+      background-color: #ccc;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 }

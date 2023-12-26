@@ -18,10 +18,7 @@ export const Notifications = ({ timeout = 2000 }: NotificationsProps) => {
     return (
         <Portal>
             <div className={style.notifications}>
-                {notifications.map((notification) => (
-                    <NotificationsItem {...notification} timeout={timeout} key={notification.id} />
-                )
-                )}
+                {notifications.map((notification) => <NotificationsItem {...notification} timeout={timeout} key={notification.id} />)}
             </div>
         </Portal>
     )
