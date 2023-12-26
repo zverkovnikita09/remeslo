@@ -12,6 +12,7 @@ import { Spinner } from 'src/shared/ui/Spinner/Spinner'
 export const Header = () => {
   const { user, isFetching, logout, isAuthed } = useAuth();
 
+
   return (
     <Container className={style.header}>
       <MainLogo />
@@ -28,7 +29,6 @@ export const Header = () => {
                 <Button
                   size={ButtonSize.M}
                   theme={ButtonTheme.RED}
-                  tabIndex={-1}
                 >
                   Разместить
                 </Button>

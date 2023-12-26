@@ -17,6 +17,8 @@ interface RatingProps {
 }
 
 export const Rating = ({ className = '', type = RatingType.Readonly, overall_rating, onChange }: RatingProps) => {
+
+
     if (type === RatingType.Editable) {
         return (
             <MaterialRating

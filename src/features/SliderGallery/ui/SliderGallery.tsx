@@ -6,32 +6,17 @@ import style from './SliderGallery.module.scss'
 import { useState } from 'react';
 import { Gallery } from 'src/features/Gallery';
 import { useGalleryState } from 'src/shared/hooks/useGalleryState';
-import { SkeletonPlaceholder } from 'src/shared/ui/SkeletonPlaceholder/SkeletonPlaceholder';
 
 interface SliderGalleryProps {
     files?: { path: string }[]
     title?: string
-    isLoading?: boolean
 }
 
-export const SliderGallery = ({ files = [], title, isLoading }: SliderGalleryProps) => {
+export const SliderGallery = ({ files = [], title }: SliderGalleryProps) => {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType>();
     const [activeThumbSlide, setActiveThumbSlide] = useState(0);
     const [mainSwiper, setMainSwiper] = useState<SwiperType>();
     const { currentGalleryImage, galleryClose, galleryOpen } = useGalleryState();
-
-    if (isLoading) return (
-        <div className={style.sliderGallery}>
-            <SkeletonPlaceholder className={style.sliderGallery__bigSlider} heightUnset />
-            <div className={classNames(style.sliderGallery__smallSlider, {}, [style.smallSliderSkeleton])}>
-                <SkeletonPlaceholder className={style.sliderGallery__smallImage} widthUnset />
-                <SkeletonPlaceholder className={style.sliderGallery__smallImage} widthUnset />
-                <SkeletonPlaceholder className={style.sliderGallery__smallImage} widthUnset />
-                <SkeletonPlaceholder className={style.sliderGallery__smallImage} widthUnset />
-                <SkeletonPlaceholder className={style.sliderGallery__smallImage} widthUnset />
-            </div>
-        </div>
-    )
 
     return (
         <div className={style.sliderGallery}>

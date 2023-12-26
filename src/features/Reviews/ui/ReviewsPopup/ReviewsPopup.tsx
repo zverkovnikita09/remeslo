@@ -5,7 +5,7 @@ import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import { OverallRating } from 'src/shared/ui/OverallRating/OverallRating'
 import { ReviewsCount } from 'src/shared/ui/ReviewsStats/ReviewsCount'
 import { GoodEstimaions } from '../Reviews'
-import { ReviewsList } from 'src/features/ReviewsList/ui/ReviewsList'
+import { ReviewsList } from 'src/shared/ui/ReviewsList/ReviewsList'
 import { useAuth } from 'src/app/providers/AuthProvider'
 
 interface ReviewsPopupProps {

@@ -31,7 +31,7 @@ export const RegisterByEmail = () => {
   const { isSending, handleSendData } = useSendData({
     url: 'api/v1/registration/email', onSuccess: () => {
       navigate("/login")
-      addNotification(`На указанный Вами email ${getValues('email')} отправлено сообщение для подтверждения`, NotificationType.Info)
+      addNotification(`На указанный Вами email ${getValues('email')} отправлено сообщение для подтверждения`, NotificationType.Warning)
     }
   })
 

@@ -6,20 +6,12 @@ interface SkeletonPlaceholderProps {
     className?: string
     width?: number | string
     height?: number | string
-    heightUnset?: boolean
-    widthUnset?: boolean
     children?: ReactNode
 }
 
-export const SkeletonPlaceholder = ({ className = '', width = 'auto', height = 'auto', widthUnset, heightUnset, children }: SkeletonPlaceholderProps) => {
+export const SkeletonPlaceholder = ({ className = '', width = 'auto', height = 'auto', children }: SkeletonPlaceholderProps) => {
     return (
-        <div
-            className={classNames(style.skeletonPlaceholder, {}, [className])}
-            style={{
-                width: !widthUnset ? width : undefined,
-                height: !heightUnset ? height : undefined
-            }}
-        >
+        <div className={classNames(style.skeletonPlaceholder, {}, [className])} style={{ width, height }}>
             <div className={style.skeletonPlaceholder__activity} />
             {children}
         </div>
