@@ -23,13 +23,13 @@ export const NotificationsItem = ({ id, type, message, timeout }: NotificationsI
     const notificationIcon = useCallback((notificationType: NotificationType): JSX.Element => {
         switch (notificationType) {
             case NotificationType.Error:
-                return <IoCloseCircleOutline size={20} />;
+                return <IoCloseCircleOutline size={30} />;
             case NotificationType.Warning:
-                return <IoAlertCircleOutline size={20} />;
+                return <IoAlertCircleOutline size={30} />;
             case NotificationType.Success:
-                return <IoCheckmarkCircleOutline size={20} />;
+                return <IoCheckmarkCircleOutline size={30} />;
             case NotificationType.Info:
-                return <></>;
+                return <IoAlertCircleOutline size={30} />;
             default:
                 const unknownNotification: never = notificationType;
                 throw new Error(`Неизвестный тип оповещения ${unknownNotification}`);
@@ -38,7 +38,7 @@ export const NotificationsItem = ({ id, type, message, timeout }: NotificationsI
 
     return (
         <div className={classNames(style.notificationsItem, {}, [style[type]])}>
-            <CloseButton onClick={() => removeNotification(id)} size={CloseButtonSize.S} className={style.notificationsItem__close} />
+            <CloseButton tabIndex={-1} onClick={() => removeNotification(id)} size={CloseButtonSize.S} className={style.notificationsItem__close} />
             {notificationIcon(type)}
             <p className={style.notificationsItem__text}>
                 {message}

@@ -22,7 +22,7 @@
   border-radius: 4px;
 }
 
-body{
+body {
   color: var(--dark-grey-color);
 }
 
@@ -40,10 +40,14 @@ body{
   text-decoration: underline;
 }
 
-.swiper-button-disabled{
+.swiper-button-disabled {
   opacity: .5;
 }
 
-.no-pointer-events{
+.no-pointer-events {
   pointer-events: none;
+}
+
+div:focus {
+  outline: none;
 }

@@ -14,14 +14,13 @@ import { IUser, useAuth } from 'src/app/providers/AuthProvider'
 import { Rating } from 'src/features/Rating'
 import { VendorProfile } from 'src/features/VendorProfile'
 import { Reviews } from 'src/features/Reviews'
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/thumbs';
-import { ShareButton } from 'src/features/ShareButton'
+import { Share } from 'src/features/Share'
 import { Breadcrumbs } from 'src/features/Breadcrumbs'
 import { IBreadcrumb } from 'src/features/Breadcrumbs/ui/Breadcrumbs'
 import { SliderGallery } from 'src/features/SliderGallery'
 import { NotificationType, useNotification } from 'src/app/providers/NotificationsProvider'
+import { ViewPageRightBlock } from './ViewPageRightBlock/ViewPageRightBlock'
+import { SkeletonPlaceholder } from 'src/shared/ui/SkeletonPlaceholder/SkeletonPlaceholder'
 
 export interface SingleGoods {
   all_time_views: number
@@ -63,11 +62,8 @@ export interface TagType {
 }
 
 export const ViewPage = () => {
-  const { isAuthed } = useAuth();
-  const { addNotification } = useNotification();
-
   const { slug } = useParams();
-  const { data: goodInfo } = useQuery({
+  const { data: goodInfo, isLoading: isGoodLoading } = useQuery({
     queryKey: slug,
     queryFn: () => getData<SingleGoods>({
       url: `/api/v1/good/${slug}`,
@@ -77,17 +73,14 @@ export const ViewPage = () => {
 
   const {
     title,
-    price,
     description,
     files,
-    published_at,
     all_time_views,
     views_today,
     store_id,
-    overall_rating,
   } = goodInfo ?? {};
 
-  const { data: store } = useQuery({
+  const { data: store, isLoading: isStoreLoading } = useQuery({
     queryKey: ['storeInfo', store_id],
     queryFn: () => getData<StoreType>({
       url: `/api/v1/store/${store_id}`,
@@ -97,30 +90,6 @@ export const ViewPage = () => {
     enabled: !!store_id,
   })
 
-  const [isPhoneShown, setIsPhoneShown] = useState(false);
-
-  const formattedDate = new Date(published_at ?? '').toLocaleString('ru', {
-    day: 'numeric',
-    month: 'long',
-    hour: 'numeric',
-    minute: 'numeric'
-  }).replace(' в ', ' ');
-
-  const phoneNumber = store?.phone_number ?? ''
-
-  const handlePhoneClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (!isPhoneShown) {
-      setIsPhoneShown(true);
-    }
-    else {
-      const link = document.createElement('a');
-      link.setAttribute('href', `tel:${phoneNumber}`);
-      link.click();
-      link.remove();
-    }
-  }
-
   const { state } = useLocation();
   const breadcrubms = useMemo(() => {
     if (Array.isArray(state)) {
@@ -128,107 +97,61 @@ export const ViewPage = () => {
     }
 
     return [{ name: title ?? '', link: '' }]
-  }, [state, goodInfo])
-
-  const [isReviewFormActive, setIsReviewFormActive] = useState(false);
-
-  const openReviewForm = () => {
-    if (!isAuthed) {
-      addNotification('Оставлять отзывы могут только авторизованные пользователи', NotificationType.Error)
-      return
-    }
-    setIsReviewFormActive(true)
-  }
-
-  const closeReviewForm = () => {
-    setIsReviewFormActive(false)
-  }
+  }, [state, title])
 
   return (
     <Container className={style.viewPage}>
       <Breadcrumbs links={breadcrubms} />
       <div className={style.viewPage__content}>
         <div className={style.viewPage__main}>
-          <SliderGallery title={title} files={files ?? []} />
+          <SliderGallery title={title} files={files ?? []} isLoading={isGoodLoading} />
 
           <Title className={style.viewPage__title}>Адрес</Title>
-          <div className={style.viewPage__addressBlock}>
-            {store?.address}
-            {/*           <Button className={style.viewPage__location}>
-            <GeoIcon
-              strokeColor='#FC8080'
-            />
-            Показать на карте
-          </Button> */}
-          </div>
+          {
+            isGoodLoading
+              ? <SkeletonPlaceholder width="90%" height={19} />
+              : <div className={style.viewPage__addressBlock}>
+                {store?.address}
+              </div>
+          }
           <Title className={style.viewPage__title}>Характеристики</Title>
           <div className={style.viewPage__feature}></div>
           <Title className={style.viewPage__title}>Описание</Title>
-          <div className={style.viewPage__description} dangerouslySetInnerHTML={{ __html: description ?? '' }} />
-          <Title className={style.viewPage__title}>Написать продавцу</Title>
-          <TextArea
-            className={style.viewPage__textArea}
-            placeholder='Что вы хотите спросить?'
-          />
-          <Button
-            theme={ButtonTheme.RED}
-            size={ButtonSize.M}
-            className={style.viewPage__sendMessage}
-          >
-            Отправить
-          </Button>
-          <div className={style.viewPage__views}>
-            {labelsCounterFormatter(all_time_views ?? 0, ['просмотр', 'просмотра', 'просмотров'])} <GreyText>(+{views_today} сегодня)</GreyText>
-          </div>
-        </div>
-        <div className={style.viewPage__rightBlock}>
-          <div className={style.viewPage__heading}>
-            <Title>{title}</Title>
-            <ShareButton />
-          </div>
-          <div className={style.viewPage__rating}>
-            <Rating overall_rating={overall_rating ?? 0}></Rating>
-            <div className={style.viewPage__reviews}>
-              <Reviews
-                good={goodInfo}
-                closeReviewForm={closeReviewForm}
-                openReviewForm={openReviewForm}
-                reviewFormState={isReviewFormActive}
+          {
+            isGoodLoading
+              ? <>
+                <SkeletonPlaceholder width="100%" height={19} className={style.viewPage__textPlaceholder} />
+                <SkeletonPlaceholder width="95%" height={19} className={style.viewPage__textPlaceholder} />
+                <SkeletonPlaceholder width="80%" height={19} className={style.viewPage__textPlaceholder} />
+              </>
+              : <div className={style.viewPage__description} dangerouslySetInnerHTML={{ __html: description ?? '' }} />
+          }
+          {
+            !isGoodLoading &&
+            <>
+              <Title className={style.viewPage__title}>Написать продавцу</Title>
+              <TextArea
+                className={style.viewPage__textArea}
+                placeholder='Что вы хотите спросить?'
               />
-
-            </div>
+              <Button
+                theme={ButtonTheme.RED}
+                size={ButtonSize.M}
+                className={style.viewPage__sendMessage}
+              >
+                Отправить
+              </Button>
+            </>
+          }
+          <div className={style.viewPage__views}>
+            {
+              isGoodLoading
+                ? <SkeletonPlaceholder height={19} width="40%" />
+                : <>{labelsCounterFormatter(all_time_views ?? 0, ['просмотр', 'просмотра', 'просмотров'])} <GreyText>(+{views_today} сегодня)</GreyText></>
+            }
           </div>
-          <GreyText className={style.viewPage__greyText}>Цена:</GreyText>
-          <p className={style.viewPage__price}>{price} ₽</p>
-          <GreyText className={style.viewPage__greyText}>Опубликовано</GreyText>
-          <p className={style.viewPage__date}>{formattedDate}</p>
-          <Link to={`/main/profile/${store?.id}`} className={style.viewPage__vendor}>
-            <VendorProfile store={store as StoreType} />
-          </Link>
-          <Button
-            className={style.viewPage__phoneButton}
-            theme={ButtonTheme.RED}
-            size={ButtonSize.M}
-            onClick={handlePhoneClick}
-          >
-            Позвонить {phoneFormatter(phoneNumber, isPhoneShown)}
-          </Button>
-          <Button
-            className={style.viewPage__messageButton}
-            theme={ButtonTheme.OUTLINE}
-            size={ButtonSize.M}
-          >
-            Написать сообщение
-          </Button>
-          <Button
-            className={style.viewPage__reviewButton}
-            theme={ButtonTheme.GREY}
-            size={ButtonSize.M}
-            onClick={openReviewForm}
-          >
-            Оставить отзыв
-          </Button>
         </div>
+        <ViewPageRightBlock goodInfo={goodInfo} store={store} isLoading={isGoodLoading || isStoreLoading} />
       </div>
     </Container>
   )

@@ -57,6 +57,16 @@ export const Dropdown = (props: PropsWithChildren<SelectDropdownProps>) => {
     return () => document.removeEventListener("click", closeDropdownByOutsideClick)
   }, [isOpen])
 
+
+  useEffect(() => {
+    const closeOnEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    };
+
+    if (isOpen) document.addEventListener("keydown", closeOnEsc)
+    return () => document.removeEventListener("keydown", closeOnEsc)
+  }, [isOpen])
+
   const stopClickPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     !closeOnItemClick && e.stopPropagation()
   }
