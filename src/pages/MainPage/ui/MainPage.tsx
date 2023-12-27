@@ -4,7 +4,6 @@ import { GreyText } from 'src/shared/ui/GreyText/GreyText'
 import { Container } from 'src/shared/ui/Container/Container'
 import { Categories } from 'src/features/Categories'
 import { GoodsGrid, IGoods } from 'src/entities/GoodsGrid'
-import { Filters } from 'src/features/Filters'
 import { useQuery } from 'react-query'
 import { getData } from 'src/shared/lib/api/api'
 import { useCategoriesContext } from 'src/app/providers/CategoriesProvider'
@@ -30,12 +29,12 @@ export const MainPage = () => {
       <Categories categories={categories} />
       <div className={style.mainPage__titleContainer}>
         <Title>Рекомендации для вас</Title>
-        <Filters />
+
       </div>
       <GoodsGrid goods={goods?.slice(0, 10)} isLoading={isLoading} />
       <div className={style.mainPage__titleContainer}>
         <Title>Объявления из других городов</Title>
-        <Filters />
+
       </div>
       <GoodsGrid goods={goods?.slice(5, 15)} isLoading={isLoading} />
     </Container>
