@@ -15,6 +15,7 @@ interface ReviewsPopupProps {
   marks?: number
   dataEstimations?: GoodEstimaions[]
   openReviewForm: () => void
+  setNeedPreviousPopup?(need: boolean): void
 }
 
 export const ReviewsPopup = ({
@@ -23,14 +24,17 @@ export const ReviewsPopup = ({
   closePopup,
   openReviewForm,
   isActive,
-  dataEstimations
+  dataEstimations,
+  setNeedPreviousPopup,
 }: ReviewsPopupProps) => {
   const { isAuthed } = useAuth();
 
   const openForm = () => {
     isAuthed && closePopup();
     openReviewForm();
+    setNeedPreviousPopup?.(true);
   }
+
 
   return (
     <Popup isActive={isActive} closePopup={closePopup}>

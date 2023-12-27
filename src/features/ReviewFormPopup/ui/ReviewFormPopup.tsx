@@ -16,6 +16,8 @@ interface ReviewFormPopupProps {
     goodInfo?: SingleGoods
     isActive: boolean
     closePopup: () => void
+    openReviewPopup?(): void
+    backToReview?: boolean
 }
 
 interface ReviewForm {
@@ -25,7 +27,7 @@ interface ReviewForm {
     files: FileList | null
 }
 
-export const ReviewFormPopup = ({ goodInfo, isActive, closePopup }: ReviewFormPopupProps) => {
+export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, openReviewPopup }: ReviewFormPopupProps) => {
     const { control, handleSubmit, setValue, setError, watch, formState: { errors, /* touchedFields */ }, clearErrors } = useForm<ReviewForm>({ defaultValues: { files: null } });
 
     const onSubmit = (data: ReviewForm) => {
@@ -36,9 +38,13 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup }: ReviewFormPo
     const files: FileList | null = watch('files');
     const { user: { profile } } = useAuth();
 
+    const closeFormPopup = () => {
+        closePopup();
+        backToReview && openReviewPopup?.();
+    }
 
     return (
-        <Popup isActive={isActive} closePopup={closePopup} >
+        <Popup isActive={isActive} closePopup={closeFormPopup} >
             <form onSubmit={handleSubmit(onSubmit)} className={style.reviewFormPopup}>
                 <Title size={TitleSize.S}>Ваш отзыв о товаре</Title>
                 <div className={style.reviewFormPopup__goodInfo}>
@@ -90,7 +96,7 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup }: ReviewFormPo
                         className={style.reviewFormPopup__button}
                         theme={ButtonTheme.OUTLINE}
                         size={ButtonSize.M}
-                        onClick={closePopup}
+                        onClick={closeFormPopup}
                     >
                         Отмена
                     </Button>
