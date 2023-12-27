@@ -31,7 +31,7 @@ export const Select = (props: SelectProps) => {
     const { multiple, placeholder, value, setValue, options } = props
 
     const [isFocused, setIsFocused] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [availableOptions, setAvailableOptions] = useState(options);
     const elementRef = useRef<HTMLDivElement>(null)
 

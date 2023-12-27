@@ -31,7 +31,7 @@ interface IFilterItemWithElements {
 }
 
 interface IFilterItemWithoutElements {
-  type: 'range_input' | 'info' | 'input_by_value' | 'input_like'
+  type: 'range_input' | 'input_by_value' | 'input_like'
   elements: null
 }
 
@@ -52,51 +52,35 @@ export const FiltersPopup = ({ closePopup, isActive }: FiltersPopupProps) => {
 
     switch (type) {
       case 'select':
-
         return (<Select />)
       case 'multiple_select':
-
         return (<Select multiple />)
-
       case 'range_input':
-
         return (
           <div className={style.filtersPopup__inputs}>
             <Input />
             <Input />
           </div>
         )
-
       case 'checkbox':
-
         return (<Checkbox />)
       case 'radio_button':
-
         return (<RadioButton />)
-      case 'info':
-
-        return (<></>)
-
       case 'input_by_value':
-
         return (
           <Input />
         )
       case 'input_like':
-
-        return (<></>)
-
-
+        return (<Input />)
       default:
         const unknownItem: never = type;
-        throw new Error(`Неизвестный тип оповещения ${unknownItem}`);
+        throw new Error(`Неизвестный тип инпута ${unknownItem}`);
     }
   }
 
   return (
     <Popup isActive={isActive} closePopup={closePopup}>
       <div className={style.filtersPopup}>
-
         <Title size={TitleSize.S}>Настройки</Title>
         <div>
           {elements?.map((item) => (
