@@ -6,7 +6,7 @@ import { getData } from "src/shared/lib/api/api"
 
 interface CategoriesContextProps {
     categories: ICategory[];
-    currentCategories: [string, ICategory[] | ISubcategory[]] | []
+    currentCategories: [string, ICategory[] | ISubcategory[], string] | []
     pathArray: IBreadcrumb[]
 }
 
@@ -18,6 +18,7 @@ export interface ICategory {
     name: string
     image: string
     slug: string
+    id: string
     subcategories: ISubcategory[]
 }
 
@@ -33,13 +34,13 @@ export const CategoriesProvider = ({ children }: PropsWithChildren) => {
         if (!tagsArray.length) {
             return {}
         }
-        const result: Record<string, [string, ICategory[] | ISubcategory[]]> = {};
+        const result: Record<string, [string, ICategory[] | ISubcategory[], string]> = {};
         const stack: any[] = []
         tagsArray.forEach(node => stack.push(node));
         while (stack.length) {
             const node = stack.pop()
             const nodeChildren = checkCategory(node) ? node.subcategories : node.children;
-            result[node.slug] = [node.name, nodeChildren];
+            result[node.slug] = [node.name, nodeChildren, node.id];
             if (nodeChildren.length) {
                 nodeChildren.forEach((child: any) => stack.push(child))
             }
@@ -67,13 +68,12 @@ export const CategoriesProvider = ({ children }: PropsWithChildren) => {
         })
     }, [path, categories]);
 
-    const currentCategories = useMemo<[string, ICategory[] | ISubcategory[]] | []>(() => {
+    const currentCategories = useMemo<[string, ICategory[] | ISubcategory[], string] | []>(() => {
         if (!pathArray.length) return [];
 
         if (pathArray.some(item => !item.name)) {
             return [];
         }
-
 
         return flatCategories(categories ?? [])[pathArray.at(-1)?.link.split('/').at(-1) ?? ''] // находим в объекте из функции flatCategories находим список категорий по ключу, равному последнему элементу pathArray
     }, [pathArray, categories]);

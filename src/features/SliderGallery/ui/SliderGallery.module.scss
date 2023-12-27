@@ -1,7 +1,5 @@
 .sliderGallery {
-
     width: 100%;
-
 
     &__bigSlider {
         height: 686px;
@@ -12,7 +10,6 @@
         margin-top: 32px;
         height: 123px;
         border-radius: 12px;
-
     }
 
     &__mainImage {
@@ -39,4 +36,9 @@
 
 .activeItem {
     opacity: 1;
-  }
+}
+
+.smallSliderSkeleton {
+    display: flex;
+    gap: 12px;
+}

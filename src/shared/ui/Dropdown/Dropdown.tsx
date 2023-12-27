@@ -1,6 +1,8 @@
 import { classNames } from 'src/shared/lib/classNames/classNames';
 import style from './Dropdown.module.scss'
-import { PropsWithChildren, RefObject, useEffect, useLayoutEffect, useState } from 'react';
+import { PropsWithChildren, RefObject, useLayoutEffect, useRef, useState } from 'react';
+import { useDocumentEvent } from 'src/shared/hooks/useDocumentEvent';
+import { useOutsideClick } from 'src/shared/hooks/useOutsideClick';
 
 interface SelectDropdownProps {
   targetRef: RefObject<HTMLElement>
@@ -10,7 +12,6 @@ interface SelectDropdownProps {
   className?: string
   isOpen: boolean
   onClose: () => void
-  closeOnItemClick?: boolean
 }
 
 export const Dropdown = (props: PropsWithChildren<SelectDropdownProps>) => {
@@ -23,10 +24,10 @@ export const Dropdown = (props: PropsWithChildren<SelectDropdownProps>) => {
     className = '',
     isOpen,
     onClose,
-    closeOnItemClick = true,
   } = props;
 
   const [vertivalPosition, setVerticalPosition] = useState<"top" | "bottom">("top")
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const calcCoords = () => {
     const rect = targetRef.current?.getBoundingClientRect();
@@ -46,26 +47,24 @@ export const Dropdown = (props: PropsWithChildren<SelectDropdownProps>) => {
     targetRef.current && calcCoords();
   }, [])
 
-  useEffect(() => {
-    const closeDropdownByOutsideClick = (e: MouseEvent) => {
-      if (e.target === targetRef.current) return
-      onClose()
-    }
+  useOutsideClick({
+    elementRef: dropdownRef,
+    onOutsideClick: onClose,
+    triggerRef: targetRef,
+    enabled: isOpen,
+  })
 
-    if (isOpen) document.addEventListener("click", closeDropdownByOutsideClick)
+  const closeOnEsc = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') onClose()
+  };
 
-    return () => document.removeEventListener("click", closeDropdownByOutsideClick)
-  }, [isOpen])
-
-  const stopClickPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    !closeOnItemClick && e.stopPropagation()
-  }
+  useDocumentEvent('keydown', closeOnEsc, isOpen);
 
   if (!isOpen) return null
 
   return (
     <div
-      onClick={stopClickPropagation}
+      ref={dropdownRef}
       className={classNames(style.dropdown, {}, [className, style[vertivalPosition]])}
       style={{ [horizontalPosition]: 0, width, maxHeight }}>
       {children}

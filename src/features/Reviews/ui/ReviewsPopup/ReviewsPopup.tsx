@@ -5,7 +5,7 @@ import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
 import { OverallRating } from 'src/shared/ui/OverallRating/OverallRating'
 import { ReviewsCount } from 'src/shared/ui/ReviewsStats/ReviewsCount'
 import { GoodEstimaions } from '../Reviews'
-import { ReviewsList } from 'src/shared/ui/ReviewsList/ReviewsList'
+import { ReviewsList } from 'src/features/ReviewsList/ui/ReviewsList'
 import { useAuth } from 'src/app/providers/AuthProvider'
 
 interface ReviewsPopupProps {
@@ -15,6 +15,7 @@ interface ReviewsPopupProps {
   marks?: number
   dataEstimations?: GoodEstimaions[]
   openReviewForm: () => void
+  setNeedPreviousPopup?(need: boolean): void
 }
 
 export const ReviewsPopup = ({
@@ -23,14 +24,17 @@ export const ReviewsPopup = ({
   closePopup,
   openReviewForm,
   isActive,
-  dataEstimations
+  dataEstimations,
+  setNeedPreviousPopup,
 }: ReviewsPopupProps) => {
   const { isAuthed } = useAuth();
 
   const openForm = () => {
     isAuthed && closePopup();
     openReviewForm();
+    setNeedPreviousPopup?.(true);
   }
+
 
   return (
     <Popup isActive={isActive} closePopup={closePopup}>

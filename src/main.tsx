@@ -7,6 +7,9 @@ import { AuthProvider } from './app/providers/AuthProvider.tsx'
 import { NotificationsProvider } from './app/providers/NotificationsProvider.tsx'
 import ScrollToTop from './app/providers/ScrollToTop.tsx'
 import { CategoriesProvider } from './app/providers/CategoriesProvider.tsx'
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
 
 const queryClient = new QueryClient()
 

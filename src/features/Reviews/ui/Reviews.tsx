@@ -30,6 +30,7 @@ export interface GoodEstimaions {
 export const Reviews = ({ good, closeReviewForm, openReviewForm, reviewFormState }: ReviewsProps) => {
   const [isPopupActive, setIsPopupActive] = useState(false)
   const { isAuthed } = useAuth();
+  const [needPreviousPopup, setNeedPreviousPopup] = useState(false);
 
   const { slug } = useParams();
   const { data: dataEstimations } = useQuery({
@@ -46,6 +47,12 @@ export const Reviews = ({ good, closeReviewForm, openReviewForm, reviewFormState
 
   const closeReviewPopup = () => {
     setIsPopupActive(false)
+    setNeedPreviousPopup(false)
+  }
+
+  const closeFormPopup = () => {
+    setNeedPreviousPopup(false);
+    closeReviewForm();
   }
 
   return (
@@ -57,12 +64,19 @@ export const Reviews = ({ good, closeReviewForm, openReviewForm, reviewFormState
         overall_rating={good?.overall_rating}
         marks={good?.marks}
         dataEstimations={dataEstimations}
+        setNeedPreviousPopup={setNeedPreviousPopup}
       />
       <Button className={style.reviews} onClick={openReviewPopup}>
         {good?.marks ? labelsCounterFormatter(good?.marks, ['Отзыв', 'Отзыва', 'Отзывов']) : 'нет отзывов'}
       </Button>
       {isAuthed &&
-        <ReviewFormPopup goodInfo={good} closePopup={closeReviewForm} isActive={reviewFormState} />
+        <ReviewFormPopup
+          goodInfo={good}
+          closePopup={closeFormPopup}
+          isActive={reviewFormState}
+          backToReview={needPreviousPopup}
+          openReviewPopup={openReviewPopup}
+        />
       }
     </>
   )

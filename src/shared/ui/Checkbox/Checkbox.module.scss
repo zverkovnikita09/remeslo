@@ -18,16 +18,24 @@
     padding: 0;
     white-space: nowrap;
     width: 1px;
-  
-    &:checked~#{$this}__check{
+
+    &:checked~#{$this}__check {
       background-color: var(--red-color);
+
       &::before {
         transform: translate(14px);
       }
     }
-  
+
+    &:focus {
+      outline: none;
+
+      &~#{$this}__check {
+        outline: 2px solid black;
+      }
+    }
   }
-  
+
   &__check {
     position: relative;
     width: 44px;
@@ -35,7 +43,7 @@
     border-radius: 50px;
     background-color: #C0C0C0;
     transition: 0.2s ease-out;
-  
+
     &::before {
       content: '';
       display: block;
@@ -47,7 +55,7 @@
       border-radius: 50%;
       transition: 0.2s ease-out;
       background-color: #fff;
-  
+
     }
   }
 }

@@ -1,4 +1,6 @@
 .notificationsItem {
+    $this: &;
+
     display: flex;
     gap: 6px;
     align-items: center;
@@ -12,14 +14,14 @@
     margin-top: 10px;
 
     &__text {
-        max-width: calc(100% - 26px);
+        max-width: calc(100% - 36px);
         font-size: 15px;
         font-weight: 600;
         line-height: 135%;
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 3;
-                line-clamp: 3; 
+        line-clamp: 3;
         -webkit-box-orient: vertical;
     }
 
@@ -29,26 +31,43 @@
         right: 5px;
         width: max-content;
         height: max-content;
+    }
 
-        & img {
+    &.success {
+        border-color: var(--success-color);
+        background-color: (var(--success-color));
+        color: #FFF;
+
+        #{$this}__close img {
             filter: brightness(0) invert(1);
         }
     }
-}
 
-.success {
-    border-color: var(--success-color);
-    background-color: (var(--success-color));
-    color: #FFF;
-}
+    &.error {
+        border-color: var(--error-color);
+        background-color: (var(--error-color));
+        color: #FFF;
 
-.error {
-    border-color: var(--error-color);
-    background-color: (var(--error-color));
-    color: #FFF;
-}
+        #{$this}__close img {
+            filter: brightness(0) invert(1);
+        }
+    }
 
-.warning {
-    border-color: var(--warning-color);
-    background-color: (var(--warning-color));
+    &.warning {
+        border-color: var(--warning-color);
+        background-color: (var(--warning-color));
+
+        #{$this}__close img {
+            filter: brightness(0) invert(1);
+        }
+    }
+
+    &.info {
+        border-color: #3222c4;
+        border-width: 2px;
+
+        #{$this}__close img {
+            filter: brightness(0);
+        }
+    }
 }
