@@ -3,11 +3,13 @@ import style from './FiltersPopup.module.scss'
 import { Title, TitleSize } from 'src/shared/ui/Title/TItle'
 import { Input } from 'src/shared/ui/Input/Input'
 import { Button, ButtonSize, ButtonTheme } from 'src/shared/ui/Button/Button'
-import { useForm } from 'react-hook-form'
-import { Checkbox, Select } from '@mui/material'
 import { RadioButton } from 'src/shared/ui/RadioButton/RadioButton'
-/* import { useQuery } from 'react-query'
-import { getData } from 'src/shared/lib/api/api' */
+import { Select } from 'src/shared/ui/Select/Select'
+import { Checkbox } from 'src/shared/ui/Checkbox/Checkbox'
+import { useQuery } from 'react-query'
+import { getData } from 'src/shared/lib/api/api'
+import { useCategoriesContext } from 'src/app/providers/CategoriesProvider'
+import { ChangeEvent, useState } from 'react'
 
 interface FiltersPopupProps {
   isActive: boolean
@@ -37,24 +39,57 @@ interface IFilterItemWithoutElements {
 
 type IFilterItem = IFilterItemMain & (IFilterItemWithElements | IFilterItemWithoutElements)
 
-let elements: IFilterItem[] = [];
 export const FiltersPopup = ({ closePopup, isActive }: FiltersPopupProps) => {
-  const { register } = useForm();
-  /*   const { data } = useQuery({
-      queryKey: slug,
-      queryFn: () => getData<IFilterItem>({
-        url: `/api/v1/good/${slug}`,
-        dataFlag: true
-      }),
-    }) */
+  const { currentCategories, pathArray } = useCategoriesContext();
+  const tagOrSubcategory = pathArray.length > 1 ? 'subcategory_id' : 'tag_id';
+  const { data: filterObjects } = useQuery({
+    queryKey: currentCategories[2],
+    queryFn: () => getData<IFilterItem[]>({
+      url: `/api/v1/parameter`,
+      params: { [tagOrSubcategory]: currentCategories[2] ?? '' },
+      dataFlag: true
+    }),
+  })
 
-  const generateFilterFormObjects = ({ type }: IFilterItem): JSX.Element => {
+  const [formValues, setFormValues] = useState<Record<string, string | string[] | boolean>>({});
 
+  const onInputChange = (event: ChangeEvent) => {
+
+  }
+
+  const onSelectChange = (name: string) => (value: string | string[]) => {
+    setFormValues(prev => ({ ...prev, [name]: value }));
+  }
+
+  const onCheckboxChange = (event: ChangeEvent) => {
+
+  }
+
+  const getOptions = (elements: IFilterItem['elements']) => {
+    return elements?.map(({ id, data }) => ({ name: data, value: id }))
+  }
+
+
+  const generateFilterFormObjects = ({ type, elements, id, title }: IFilterItem): JSX.Element => {
     switch (type) {
       case 'select':
-        return (<Select />)
+        return (
+          <Select
+            options={getOptions(elements) ?? []}
+            value={(formValues[id] as string) ?? ''}
+            setValue={onSelectChange(id)}
+            placeholder={title}
+          />
+        )
       case 'multiple_select':
-        return (<Select multiple />)
+        return (
+          <Select
+            multiple options={getOptions(elements) ?? []}
+            value={(formValues[id] as string[]) ?? []}
+            setValue={onSelectChange(id)}
+            placeholder={title}
+          />
+        )
       case 'range_input':
         return (
           <div className={style.filtersPopup__inputs}>
@@ -83,14 +118,15 @@ export const FiltersPopup = ({ closePopup, isActive }: FiltersPopupProps) => {
       <div className={style.filtersPopup}>
         <Title size={TitleSize.S}>Настройки</Title>
         <div>
-          {elements?.map((item) => (
-            <div key={item.id}>
-              <p className={style.filtersPopup__sectionTitle}>
-                {item.title}
-              </p>
-              {/* {generateFilterFormObjects(item)} */}
-            </div>
-          ))}
+          {!!filterObjects?.length &&
+            filterObjects.map((item) => (
+              <div key={item.id}>
+                <p className={style.filtersPopup__sectionTitle}>
+                  {item.title}
+                </p>
+                {generateFilterFormObjects(item)}
+              </div>
+            ))}
         </div>
         {/*         <p className={style.filtersPopup__sectionTitle}>Категории</p>
         <div className={style.filtersPopup__categories}>
