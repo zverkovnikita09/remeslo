@@ -3,7 +3,7 @@ import style from './Popup.module.scss'
 import { Portal } from '../Portal/Portal';
 import { CloseButton } from '../CloseButton/CloseButton';
 import { MouseEvent, useCallback, useEffect, useRef } from 'react';
-import FocusTrap from '@mui/material/Unstable_TrapFocus';
+/* import FocusTrap from '@mui/material/Unstable_TrapFocus'; */
 
 export interface PopupProps {
   children?: React.ReactNode,
@@ -29,7 +29,7 @@ export const Popup: React.FC<PopupProps> = ({ children, isActive, closePopup }) 
 
   return (
     <Portal>
-      <FocusTrap open={isActive}>
+{/*       <FocusTrap open={isActive}> */}
         <div
           className={classNames(style.overlay, { [style.active]: isActive })}
           onClick={closePopupByOverlayClick}
@@ -40,7 +40,7 @@ export const Popup: React.FC<PopupProps> = ({ children, isActive, closePopup }) 
             {children}
           </div>
         </div>
-      </FocusTrap>
+{/*       </FocusTrap> */}
     </Portal>
   )
 }

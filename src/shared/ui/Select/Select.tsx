@@ -96,7 +96,6 @@ export const Select = (props: SelectProps) => {
                 horizontalPosition="left"
                 width="100%"
                 className={style.select__dropdown}
-                closeOnItemClick={false}
             >
                 {availableOptions?.length
                     ? availableOptions.map((option) => {

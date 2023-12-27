@@ -1,12 +1,16 @@
 .share {
     position: relative;
-    width: auto;
-    padding: 8px;
-    background-color: var(--light-grey-color);
-    transition: 0.1s;
 
-    &.open {
-        color: var(--red-color);
+    &__button {
+
+        width: auto;
+        padding: 8px;
+        background-color: var(--light-grey-color);
+        transition: 0.1s;
+
+        &.open {
+            color: var(--red-color);
+        }
     }
 
     &__dropdown {

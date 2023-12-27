@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
-import { useToggleDropdown } from "src/shared/hooks/useToggle";
+import { useToggleDropdown } from "src/shared/hooks/useToggleDropdown";
 import { Dropdown } from "src/shared/ui/Dropdown/Dropdown";
 import style from './ReviewSortDropdown.module.scss'
 import { classNames } from "src/shared/lib/classNames/classNames";
 import { Button } from "src/shared/ui/Button/Button";
-import FocusTrap from "@mui/material/Unstable_TrapFocus";
+/* import FocusTrap from "@mui/material/Unstable_TrapFocus"; */
 
 interface ReviewSortDropdown {
   onValueChange?: (value: string) => void
@@ -25,12 +25,15 @@ export const ReviewSortDropdown = ({ onValueChange }: ReviewSortDropdown) => {
   }
 
   return (
-    <Button
-      ref={elementRef}
-      className={style.reviewSortDropdown}
-      onClick={toggleDropdown}
-    >
-      {selectedValue}
+    <div className={style.reviewSortDropdown}>
+
+      <Button
+        ref={elementRef}
+        className={style.reviewSortDropdown__button}
+        onClick={toggleDropdown}
+      >
+        {selectedValue}
+      </Button>
       <Dropdown
         isOpen={isDropdownOpen}
         onClose={toggleDropdown}
@@ -38,25 +41,24 @@ export const ReviewSortDropdown = ({ onValueChange }: ReviewSortDropdown) => {
         horizontalPosition="left"
         className={style.reviewSortDropdown__dropdown}
         width={225}
-        closeOnItemClick={false}
       >
-        <FocusTrap open={isDropdownOpen}>
-          <div>
-            {options.map(option => (
-              <Button
-                key={option}
-                className={classNames(style.reviewSortDropdown__item, { [style.selected]: selectedValue === option })}
-                contentClassname={style.reviewSortDropdown__itemText}
-                onClick={handleSelectValue(option)}
-                tabIndex={selectedValue === option ? -1 : 0}
-              >
-                {option}
-                {selectedValue === option && <FaCheck />}
-              </Button>
-            ))}
-          </div>
-        </FocusTrap>
+        {/*         <FocusTrap open={isDropdownOpen}> */}
+        <div>
+          {options.map(option => (
+            <Button
+              key={option}
+              className={classNames(style.reviewSortDropdown__item, { [style.selected]: selectedValue === option })}
+              contentClassname={style.reviewSortDropdown__itemText}
+              onClick={handleSelectValue(option)}
+            /* tabIndex={selectedValue === option ? -1 : 0} */
+            >
+              {option}
+              {selectedValue === option && <FaCheck />}
+            </Button>
+          ))}
+        </div>
+        {/*         </FocusTrap> */}
       </Dropdown>
-    </Button>
+    </div>
   )
 }

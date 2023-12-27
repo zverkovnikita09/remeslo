@@ -1,8 +1,11 @@
 .headerProfile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
   position: relative;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
   &__name {
     font-size: 18px;

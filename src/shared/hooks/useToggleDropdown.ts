@@ -1,10 +1,9 @@
-import { MouseEvent, useCallback, useState } from "react"
+import { useCallback, useState } from "react"
 
 export const useToggleDropdown = (defaultValue?: boolean) => {
   const [isOpen, setIsOpen] = useState(defaultValue ?? false);
 
-  const onToggle = useCallback((e?: MouseEvent<HTMLElement>) => {
-    e?.stopPropagation();
+  const onToggle = useCallback(() => {
     setIsOpen(pr => !pr)
   }, [])
 
