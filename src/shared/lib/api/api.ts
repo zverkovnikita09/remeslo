@@ -16,7 +16,7 @@ export interface DataResponse<T> {
   message: string
 }
 
-export const getData = async <T extends {}>({ baseUrl = BASE_URL, dataFlag, url, headers = {}, params = {} }: GetDataParams): Promise<T> => {
+export const getData = async <T extends object>({ baseUrl = BASE_URL, dataFlag, url, headers = {}, params = {} }: GetDataParams): Promise<T> => {
   const queryParams = JSON.stringify(params) === '{}' ? '' : '?' + generateUrlParams(params);
   const response = await fetch(`${baseUrl}${url}${queryParams}`, {
     headers

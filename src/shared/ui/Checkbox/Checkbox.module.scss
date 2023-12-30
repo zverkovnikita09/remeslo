@@ -27,7 +27,7 @@
       }
     }
 
-    &:focus {
+    &:focus-visible {
       outline: none;
 
       &~#{$this}__check {

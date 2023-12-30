@@ -4,7 +4,6 @@ import { classNames } from "src/shared/lib/classNames/classNames";
 
 interface RadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement> {
     children?: React.ReactNode,
-    checked?: boolean,
     className?: string
 }
 
@@ -13,7 +12,6 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>((props
     const {
         children,
         className = '',
-        checked,
         ...otherProps
     } = props;
 

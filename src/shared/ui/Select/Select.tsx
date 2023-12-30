@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Dropdown } from "../Dropdown/Dropdown";
 import style from './Select.module.scss'
 import { GreyText } from "../GreyText/GreyText";
@@ -47,13 +47,6 @@ export const Select = (props: SelectProps) => {
     const addValue = useCallback((selectValue: string) => () => {
         if (multiple) {
             setValue([...(value ?? []), selectValue]);
-            setAvailableOptions(prev => prev.filter(option => {
-                if (typeof option === 'string') {
-                    return selectValue !== option;
-                }
-
-                return selectValue !== option.value;
-            }))
             toggleDropdown();
             return;
         }
@@ -64,11 +57,6 @@ export const Select = (props: SelectProps) => {
     const deleteValue = useCallback((selectValue: string) => () => {
         if (multiple) {
             setValue(value?.filter(item => item !== selectValue) ?? [])
-
-            const optionValue = isOptionStringArray(options)
-                ? selectValue
-                : options.find(option => selectValue === (option as OptionType).value);
-            setAvailableOptions(prev => [...prev, optionValue!]);
         }
     }, [value])
 
@@ -79,6 +67,18 @@ export const Select = (props: SelectProps) => {
 
         return (options.find(item => (item as OptionType).value === value) as OptionType)?.name || ''
     }
+
+    useEffect(() => {
+        if (multiple) {
+            const stringOptions = isOptionStringArray(options) ? options : options.map(option => (option as OptionType).value);
+            const newOptions = stringOptions.filter(option => !(value?.includes(option) ?? true));
+            setAvailableOptions(
+                isOptionStringArray(options)
+                    ? newOptions
+                    : newOptions.map(option => options.find(item => (item as OptionType).value === option)!)
+            )
+        }
+    }, [value])
 
     return (
         <div className={style.select}>

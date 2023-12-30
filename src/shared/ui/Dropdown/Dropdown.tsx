@@ -33,9 +33,9 @@ export const Dropdown = (props: PropsWithChildren<SelectDropdownProps>) => {
     const rect = targetRef.current?.getBoundingClientRect();
 
     /**
-     * Проверка достаточно ли места для отображения контента (8 - размер margin)
+     * Проверка достаточно ли места для отображения контента (10 - размер margin)
      */
-    if (window.innerHeight - rect!.bottom < maxHeight + 8) {
+    if (window.innerHeight - rect!.bottom < maxHeight + 10) {
       setVerticalPosition("bottom")
     }
     else {

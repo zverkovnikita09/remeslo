@@ -10,7 +10,7 @@ type CategoryId = string
 
 interface CategoriesContextProps {
     categories: ICategory[];
-    currentCategories: [CategoryName, Subcategories, CategoryId] | []
+    currentCategory: [CategoryName, Subcategories, CategoryId] | []
     pathArray: IBreadcrumb[]
 }
 
@@ -26,7 +26,7 @@ export interface ICategory {
     subcategories: ISubcategory[]
 }
 
-export const CategoriesContext = createContext<CategoriesContextProps>({ categories: [], currentCategories: ['', [], ''], pathArray: [] })
+export const CategoriesContext = createContext<CategoriesContextProps>({ categories: [], currentCategory: ['', [], ''], pathArray: [] })
 
 export const checkCategory = (tag: ISubcategory | ICategory): tag is ICategory => {
     return (tag as ICategory).subcategories !== undefined;
@@ -72,7 +72,7 @@ export const CategoriesProvider = ({ children }: PropsWithChildren) => {
         })
     }, [path, categories]);
 
-    const currentCategories = useMemo<[CategoryName, Subcategories, CategoryId] | []>(() => {
+    const currentCategory = useMemo<[CategoryName, Subcategories, CategoryId] | []>(() => {
         if (!pathArray.length) return [];
 
         if (pathArray.some(item => !item.name)) {
@@ -83,7 +83,7 @@ export const CategoriesProvider = ({ children }: PropsWithChildren) => {
     }, [pathArray, categories]);
 
     return (
-        <CategoriesContext.Provider value={{ categories: categories ?? [], currentCategories: currentCategories, pathArray: pathArray }}>
+        <CategoriesContext.Provider value={{ categories: categories ?? [], currentCategory, pathArray }}>
             {children}
         </CategoriesContext.Provider>
     )

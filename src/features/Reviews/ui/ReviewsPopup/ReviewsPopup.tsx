@@ -30,11 +30,10 @@ export const ReviewsPopup = ({
   const { isAuthed } = useAuth();
 
   const openForm = () => {
-    isAuthed && closePopup();
+    closePopup();
     openReviewForm();
     setNeedPreviousPopup?.(true);
   }
-
 
   return (
     <Popup isActive={isActive} closePopup={closePopup}>
@@ -45,14 +44,15 @@ export const ReviewsPopup = ({
             overall_rating={overall_rating}
             marks={marks}
           />
-          <Button
-            className={style.reviewsPopup__newOpinion}
-            size={ButtonSize.M}
-            theme={ButtonTheme.GREY}
-            onClick={openForm}
-          >
-            Оставить отзыв
-          </Button>
+          {isAuthed &&
+            <Button
+              className={style.reviewsPopup__newOpinion}
+              size={ButtonSize.M}
+              theme={ButtonTheme.GREY}
+              onClick={openForm}
+            >
+              Оставить отзыв
+            </Button>}
         </div>
         <div className={style.reviewsPopup__reviewStats}>
           <ReviewsCount stats={dataEstimations} />

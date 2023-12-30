@@ -45,7 +45,6 @@ export const GoodsGrid = ({ goods, isLoading = false, isArchived = false, catego
               className={style.goodsGrid__itemImage}
               state={categoryState}
             >
-
               <img
                 src={files?.length ? files[0].path : templateLogo}
                 className={files?.length ? '' : style.templateLogo}
@@ -61,7 +60,7 @@ export const GoodsGrid = ({ goods, isLoading = false, isArchived = false, catego
             </Link>
             <p className={style.goodsGrid__itemPrice}>{price} ₽</p>
             <p className={style.goodsGrid__itemDate}>{formattedDate}</p>
-            <GoodsFavorite className={style.goodsGrid__favoriteButton} />
+            {<GoodsFavorite className={style.goodsGrid__favoriteButton} />}
             <Rating className={style.goodsGrid__rating} type={RatingType.Numeric} overall_rating={overall_rating} />
           </div>
         )
