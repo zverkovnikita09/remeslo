@@ -23,7 +23,7 @@ export const CategoriesPage = () => {
         queryFn: () => getData<IGoods[]>({
             url: `/api/v1/good`,
             dataFlag: true,
-            params: search ? { ...parseQueryString(search), [tagOrSubcategory]: currentCategory[2] ?? '' } : {},
+            params: { ...(search ? parseQueryString(search) : {}), [tagOrSubcategory]: currentCategory[2] ?? '' },
         }),
         enabled: !!currentCategory[2]
     })
