@@ -20,7 +20,7 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>((props
 
             <input
                 id={id}
-                className={style.radioButton__input}
+                className={classNames(style.radioButton__input, {}, ['hiddenInput'])}
                 type='radio'
                 ref={ref}
                 {...otherProps}

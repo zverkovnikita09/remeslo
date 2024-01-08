@@ -22,7 +22,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
 
     return (
         <label htmlFor={id} className={classNames(style.checkbox, {}, [className])}>
-            <input id={id} className={style.checkbox__input} type='checkbox' ref={ref} {...otherProps} />
+            <input id={id} className={classNames(style.checkbox__input, {}, ['hiddenInput'])} type='checkbox' ref={ref} {...otherProps} />
             { textPosition === 'left' &&
                 <span>{children}</span>
             }

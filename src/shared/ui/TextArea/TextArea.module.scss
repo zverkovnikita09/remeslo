@@ -1,4 +1,5 @@
 .textarea {
+    transition: height 0s;
 
     &__textField {
         width: 100%;
@@ -13,6 +14,7 @@
         font-size: 16px;
 
         line-height: 135%;
+
 
         &::-webkit-input-placeholder {
             color: var(--dark-grey-color);
