@@ -1,1 +1,0 @@
-export {StarIcon} from './ui/StarIcon.tsx'

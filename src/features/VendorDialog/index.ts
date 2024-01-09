@@ -1,1 +1,0 @@
-export { VendorDialog } from './ui/VendorDialog.tsx'

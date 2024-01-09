@@ -1,1 +1,0 @@
-export { SliderGallery } from './ui/SliderGallery.tsx'

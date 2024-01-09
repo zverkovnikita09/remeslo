@@ -1,1 +1,0 @@
-export { GoodsGrid, type IGoods } from './ui/GoodsGrid'

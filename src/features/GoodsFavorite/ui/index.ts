@@ -1,1 +1,0 @@
-export {GoodsFavorite} from './GoodsFavorite.tsx'
