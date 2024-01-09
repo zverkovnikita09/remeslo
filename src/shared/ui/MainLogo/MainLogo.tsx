@@ -11,7 +11,7 @@ interface MainLogoProps {
 export const MainLogo: FC<MainLogoProps> = ({ className = '' }) => {
   return (
     <Link to='/' className={classNames(style.mainLogo, {}, [className])}>
-      <img src={logo} alt="" height={53} />
+      <img src={logo} alt="Логотип Ремесло" />
     </Link>
   )
 }

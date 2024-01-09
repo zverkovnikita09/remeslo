@@ -24,26 +24,25 @@ export const Header = () => {
           </div> :
           isAuthed ?
             <>
-              <Link to='' className={style.header__link}>
-                <Button
-                  size={ButtonSize.M}
-                  theme={ButtonTheme.RED}
-                  tabIndex={-1}
-                >
-                  Разместить
-                </Button>
-              </Link>
+              <Button to='' className={style.header__link}
+                size={ButtonSize.M}
+                theme={ButtonTheme.RED}
+                as={Link}
+              >
+                Разместить
+              </Button>
               <HeaderProfile profileInfo={user.profile} logout={logout} />
             </>
             :
-            <Link to='/login' className={style.header__link}>
-              <Button
-                size={ButtonSize.M}
-                theme={ButtonTheme.RED}
-              >
-                Войти
-              </Button>
-            </Link>
+            <Button
+              size={ButtonSize.M}
+              theme={ButtonTheme.RED}
+              as={Link}
+              to='/login'
+              className={style.header__link}
+            >
+              Войти
+            </Button>
         }
       </div>
     </Container>

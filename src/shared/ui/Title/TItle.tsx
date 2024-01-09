@@ -2,29 +2,26 @@ import { classNames } from 'src/shared/lib/classNames/classNames'
 import style from './Title.module.scss'
 import { FC, ReactNode } from 'react'
 
-export enum TitleHeading {
-
-}
-
 export enum TitleSize {
   S = 'size_s',
   M = 'size_m',
   L = 'size_l'
 }
 
-
 interface TitleProps {
-  head?: TitleHeading
   size?: TitleSize
   className?: string
   children?: ReactNode
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
 }
 
-export const Title: FC<TitleProps> = ({ children, className = '', size = TitleSize.M }) => {
+export const Title: FC<TitleProps> = ({ children, className = '', size = TitleSize.M, as = "h1" }) => {
   const additionalClasses = [
     className,
     style[size],
   ]
 
-  return <h1 className={classNames(style.title, {}, additionalClasses)}>{children}</h1>
+  const Component = as;
+
+  return <Component className={classNames(style.title, {}, additionalClasses)}>{children}</Component>
 }

@@ -17,6 +17,7 @@
     @media (max-width: 768px) {
       text-align: center;
       font-size: 13px;
+      margin-top: 12px;
     }
   }
 
@@ -27,16 +28,33 @@
     margin-block: 32px;
     padding-bottom: 32px;
     border-bottom: 1px solid #ccc;
+
+    @media (max-width: 768px) {
+      margin-block: 16px;
+      padding-bottom: 16px;
+      gap: 12px;
+    }
   }
 
   &__link {
     text-align: center;
     margin-top: 16px;
+
+    @media (max-width: 768px) {
+      font-size: 15px;
+      margin-top: 14px;
+    }
   }
 
   &__socialButton {
     gap: 8px;
     margin-bottom: 8px;
     width: 100%;
+
+    @media (max-width: 768px) {
+      font-size: 16px;
+      padding-inline: 28px;
+      font-weight: 400;
+    }
   }
 }

@@ -21,7 +21,6 @@ export const MainPage = () => {
 
   return (
     <Container className={style.mainPage}>
-
       <Title className={style.mainPage__categories}>Популярные категории</Title>
       <GreyText className={style.mainPage__catDescription}>
         Мы собрали для вас только лучшие и эксключизвные товары от  продавцов сервиса, чтобы вы могли быть уверены в их качестве и уникальности
@@ -29,12 +28,10 @@ export const MainPage = () => {
       <Categories categories={categories} />
       <div className={style.mainPage__titleContainer}>
         <Title>Рекомендации для вас</Title>
-
       </div>
       <GoodsGrid goods={goods?.slice(0, 10)} isLoading={isLoading} />
       <div className={style.mainPage__titleContainer}>
         <Title>Объявления из других городов</Title>
-
       </div>
       <GoodsGrid goods={goods?.slice(5, 15)} isLoading={isLoading} />
     </Container>

@@ -9,6 +9,10 @@
     grid-template-columns: 1fr;
   }
 
+  @media (max-width: 768px) {
+    padding-block: 24px;
+  }
+
   &__logo {
     @media (max-width: 768px) {
       align-self: center;
@@ -30,11 +34,10 @@
   }
 
   &__image {
-    height: 100%;
-    display: grid;
-    place-content: center;
+    border-radius: 44px;
     z-index: 0;
     overflow: hidden;
+    position: relative;
 
     @media (max-width: 1440px) {
       position: absolute;
@@ -44,13 +47,14 @@
       left: 0;
       display: block;
       filter: blur(3px);
+      border-radius: 0;
 
       &::after {
         content: "";
         position: absolute;
         z-index: 1;
         background-color: #fff;
-        opacity: 0.7;
+        opacity: 0.8;
         top: 0;
         right: 0;
         bottom: 0;
@@ -59,6 +63,7 @@
     }
 
     img {
+      position: absolute;
       height: 100%;
       width: 100%;
       object-fit: cover;

@@ -26,9 +26,8 @@ export const ReviewSortDropdown = ({ onValueChange }: ReviewSortDropdown) => {
 
   return (
     <div className={style.reviewSortDropdown}>
-
       <Button
-        ref={elementRef}
+        buttonRef={elementRef}
         className={style.reviewSortDropdown__button}
         onClick={toggleDropdown}
       >

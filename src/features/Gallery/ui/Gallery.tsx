@@ -58,13 +58,13 @@ export const Gallery = ({ files, currentImage, onGalleryClose }: GalleryProps) =
 
                         ))}
                     </Swiper>
-                    <Button ref={prevArrow} className={classNames(style.gallery__prevArrow)}>
+                    <Button buttonRef={prevArrow} className={classNames(style.gallery__prevArrow)}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                             <path d="M10.07 6.84668L4 12.9167L10.07 18.9867" stroke="#ffffff" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M21 12.9166H4.17004" stroke="#ffffff" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                     </Button>
-                    <Button ref={nextArrow} className={style.gallery__nextArrow}>
+                    <Button buttonRef={nextArrow} className={style.gallery__nextArrow}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                             <path d="M10.07 6.84668L4 12.9167L10.07 18.9867" stroke="#ffffff" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M21 12.9166H4.17004" stroke="#ffffff" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />

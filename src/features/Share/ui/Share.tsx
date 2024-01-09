@@ -33,7 +33,7 @@ export const Share = ({ title, imagePath }: ShareProps) => {
                 className={classNames(style.share__button, { [style.open]: isDropdownOpen })}
                 theme={ButtonTheme.GREY}
                 onClick={toggleDropdown}
-                ref={elementRef}
+                buttonRef={elementRef}
             >
                 <ShareIcon strokeColor="currentColor" />
             </Button>
