@@ -3,21 +3,69 @@
   padding-block: 32px;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  position: relative;
 
-  &__content{
+  @media (max-width: 1440px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 768px) {
+    padding-block: 24px;
+  }
+
+  &__logo {
+    @media (max-width: 768px) {
+      align-self: center;
+    }
+  }
+
+  &__content {
     padding: 0 60px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 25px;
+    position: relative;
+    z-index: 2;
+
+    @media (max-width: 768px) {
+      padding: 0;
+    }
   }
 
   &__image {
-    height: 100%;
-    display: grid;
-    place-content: center;
-    
+    border-radius: 44px;
+    z-index: 0;
+    overflow: hidden;
+    position: relative;
+
+    @media (max-width: 1440px) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: block;
+      filter: blur(3px);
+      border-radius: 0;
+
+      &::after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        background-color: #fff;
+        opacity: 0.8;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    }
+
     img {
+      position: absolute;
+      height: 100%;
+      width: 100%;
       object-fit: cover;
     }
   }

@@ -42,4 +42,15 @@
       transform: translate(-50%, -50%);
     }
   }
+
+  &__checkboxes {
+    display: grid;
+    gap: 5px;
+  }
+
+  &__radios{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
 }

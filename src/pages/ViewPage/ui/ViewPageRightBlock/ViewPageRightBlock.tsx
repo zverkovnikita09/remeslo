@@ -33,17 +33,12 @@ export const ViewPageRightBlock = ({ goodInfo, isLoading, store }: ViewPageRight
     phone_number
   } = store ?? {};
   const { isAuthed } = useAuth();
-  const { addNotification } = useNotification();
 
   const [isPhoneShown, setIsPhoneShown] = useState(false);
 
   const [isReviewFormActive, setIsReviewFormActive] = useState(false);
 
   const openReviewForm = () => {
-    if (!isAuthed) {
-      addNotification('Оставлять отзывы могут только авторизованные пользователи', NotificationType.Error)
-      return
-    }
     setIsReviewFormActive(true)
   }
 
@@ -69,6 +64,10 @@ export const ViewPageRightBlock = ({ goodInfo, isLoading, store }: ViewPageRight
       link.click();
       link.remove();
     }
+  }
+
+  const sendMessage = () => {
+
   }
 
   if (isLoading) return (
@@ -118,21 +117,24 @@ export const ViewPageRightBlock = ({ goodInfo, isLoading, store }: ViewPageRight
       >
         Позвонить {phoneFormatter(phone_number ?? '', isPhoneShown)}
       </Button>
-      <Button
-        className={style.viewPageRightBlock__messageButton}
-        theme={ButtonTheme.OUTLINE}
-        size={ButtonSize.M}
-      >
-        Написать сообщение
-      </Button>
-      <Button
-        className={style.viewPageRightBlock__reviewButton}
-        theme={ButtonTheme.GREY}
-        size={ButtonSize.M}
-        onClick={openReviewForm}
-      >
-        Оставить отзыв
-      </Button>
+      {isAuthed &&
+        <Button
+          className={style.viewPageRightBlock__messageButton}
+          theme={ButtonTheme.OUTLINE}
+          size={ButtonSize.M}
+          onClick={sendMessage}
+        >
+          Написать сообщение
+        </Button>}
+      {isAuthed &&
+        <Button
+          className={style.viewPageRightBlock__reviewButton}
+          theme={ButtonTheme.GREY}
+          size={ButtonSize.M}
+          onClick={openReviewForm}
+        >
+          Оставить отзыв
+        </Button>}
     </div>
   )
 }

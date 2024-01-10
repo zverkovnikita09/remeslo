@@ -4,15 +4,18 @@
   line-height: 135%;
 }
 
-.size_s{
+.size_s {
   font-size: 24px;
 }
 
-.size_m{
+.size_m {
   font-size: 32px;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
 }
 
-.size_l{
+.size_l {
   font-size: 46px;
 }
-

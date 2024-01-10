@@ -1,0 +1,9 @@
+.messageInput {
+    flex: 1;
+    position: relative;
+
+    &__input {
+        padding: 17px 20px;
+        min-height: var(--itemsHeight);
+    }
+}

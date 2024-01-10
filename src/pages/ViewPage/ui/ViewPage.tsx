@@ -9,7 +9,7 @@ import { getData } from 'src/shared/lib/api/api'
 import { useMemo } from 'react'
 import { TextArea } from 'src/shared/ui/TextArea/TextArea'
 import { labelsCounterFormatter } from 'src/shared/lib/labelsCounterFormatter/labelsCounterFormatter'
-import { IUser } from 'src/app/providers/AuthProvider'
+import { IUser, useAuth } from 'src/app/providers/AuthProvider'
 import { Breadcrumbs } from 'src/features/Breadcrumbs'
 import { IBreadcrumb } from 'src/features/Breadcrumbs/ui/Breadcrumbs'
 import { SliderGallery } from 'src/features/SliderGallery'
@@ -56,7 +56,9 @@ export interface TagType {
 }
 
 export const ViewPage = () => {
+  const { isAuthed } = useAuth()
   const { slug } = useParams();
+
   const { data: goodInfo, isLoading: isGoodLoading } = useQuery({
     queryKey: slug,
     queryFn: () => getData<SingleGoods>({
@@ -79,12 +81,12 @@ export const ViewPage = () => {
     queryFn: () => getData<StoreType>({
       url: `/api/v1/store/${store_id}`,
       dataFlag: true,
-
     }),
     enabled: !!store_id,
   })
 
   const { state } = useLocation();
+
   const breadcrubms = useMemo(() => {
     if (Array.isArray(state)) {
       return [...(state as IBreadcrumb[]), { name: title ?? '', link: '' }]
@@ -111,17 +113,8 @@ export const ViewPage = () => {
           <Title className={style.viewPage__title}>Характеристики</Title>
           <div className={style.viewPage__feature}></div>
           <Title className={style.viewPage__title}>Описание</Title>
-          {
-            isGoodLoading
-              ? <>
-                <SkeletonPlaceholder width="100%" height={19} className={style.viewPage__textPlaceholder} />
-                <SkeletonPlaceholder width="95%" height={19} className={style.viewPage__textPlaceholder} />
-                <SkeletonPlaceholder width="80%" height={19} className={style.viewPage__textPlaceholder} />
-              </>
-              : <div className={style.viewPage__description} dangerouslySetInnerHTML={{ __html: description ?? '' }} />
-          }
-          {
-            !isGoodLoading &&
+          <div className={style.viewPage__description} dangerouslySetInnerHTML={{ __html: description ?? '' }} />
+          {isAuthed &&
             <>
               <Title className={style.viewPage__title}>Написать продавцу</Title>
               <TextArea
@@ -135,8 +128,7 @@ export const ViewPage = () => {
               >
                 Отправить
               </Button>
-            </>
-          }
+            </>}
           <div className={style.viewPage__views}>
             {
               isGoodLoading

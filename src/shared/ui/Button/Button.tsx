@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { classNames } from 'src/shared/lib/classNames/classNames';
 import style from './Button.module.scss'
-import { ButtonHTMLAttributes, ReactNode, forwardRef } from 'react'
+import { AnchorHTMLAttributes, ButtonHTMLAttributes, ComponentType, ReactNode, RefCallback, RefObject } from 'react'
 import { Spinner } from '../Spinner/Spinner';
 
 export enum ButtonSize {
@@ -17,7 +18,6 @@ export enum ButtonTheme {
   GREY = 'grey',
 }
 
-
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode
   size?: ButtonSize
@@ -25,47 +25,67 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean
   loadingText?: string
   contentClassname?: string
+  as?: "button"
+  to?: string
+  buttonRef?: RefObject<HTMLElement> | RefCallback<HTMLElement>
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (props, ref) => {
-    const {
-      type,
-      className = '',
-      children,
-      size = ButtonSize.PRIMARY,
-      theme = ButtonTheme.PRIMARY,
-      isLoading,
-      disabled,
-      loadingText,
-      contentClassname = '',
-      ...otherProps
-    } = props;
+interface AnchorProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  as?: "a" | ComponentType
+  to?: string
+  children?: ReactNode
+  size?: ButtonSize
+  theme?: ButtonTheme
+  isLoading?: boolean
+  loadingText?: string
+  contentClassname?: string
+  buttonRef?: RefObject<HTMLElement> | RefCallback<HTMLElement>
+}
 
-    const additionalClasses = [
-      className,
-      style[size],
-      style[theme]
-    ]
+type ComponentButtonProps = ButtonProps | AnchorProps;
 
-    return (
-      <button
-        className={classNames(style.button, {}, additionalClasses)}
-        type={type ?? 'button'}
-        ref={ref}
-        disabled={isLoading || disabled}
-        {...otherProps}
-      >
-        {isLoading &&
-          <div className={style.button__loading}>
-            {loadingText ?? 'Отправка'} <Spinner />
-          </div>
-        }
-        <div className={classNames(style.button__content, { [style.isLoading]: !!isLoading }, [contentClassname])}>
-          {children}
+export const Button = (props: ComponentButtonProps) => {
+  const {
+    type = 'button',
+    className = '',
+    children,
+    size = ButtonSize.PRIMARY,
+    theme = ButtonTheme.PRIMARY,
+    isLoading,
+    //@ts-ignore
+    disabled,
+    loadingText,
+    contentClassname = '',
+    as = "button",
+    buttonRef,
+    ...otherProps
+  } = props;
 
+  const additionalClasses = [
+    className,
+    style[size],
+    style[theme]
+  ]
+
+  const Component = as;
+
+  return (
+    <Component
+      className={classNames(style.button, {}, additionalClasses)}
+      //@ts-ignore
+      type={as === 'button' ? type : undefined}
+      disabled={isLoading || disabled}
+      ref={buttonRef}
+      {...otherProps}
+    >
+      {isLoading &&
+        <div className={style.button__loading}>
+          {loadingText ?? 'Отправка'} <Spinner />
         </div>
-      </button>
-    )
-  }
-)
+      }
+      <div className={classNames(style.button__content, { [style.isLoading]: !!isLoading }, [contentClassname])}>
+        {children}
+      </div>
+    </Component>
+  )
+}

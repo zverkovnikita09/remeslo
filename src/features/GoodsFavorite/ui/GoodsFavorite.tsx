@@ -10,18 +10,19 @@ interface GoodsFavoriteProps {
 
 export const GoodsFavorite = ({ className = '', }: GoodsFavoriteProps) => {
     const [isFavorite, setIsFavorite] = useState(false);
+    const [firstChecked, setFirstChecked] = useState(false)
 
     const toggleFavorite = () => {
-        setIsFavorite(isFavorite ? false : true);
+        setIsFavorite(pr => !pr);
+        setFirstChecked(pr => !pr)
     }
 
     return (
         <Button
-            className={classNames(style.goodsFavorite, {}, [className])}
+            className={classNames(style.goodsFavorite, { [style.active]: firstChecked }, [className])}
             onClick={toggleFavorite}
-
         >
-            <HeartIcon fillColor= {isFavorite ? '#122533' : '#ffffff'} />
+            <HeartIcon fillColor={isFavorite ? '#122533' : '#ffffff'} />
         </Button>
     )
 }

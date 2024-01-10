@@ -59,7 +59,6 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
                         rules={{ required: true }}
                         render={(props) => <Rating type={RatingType.Editable} onChange={props.field.onChange} />}
                     />
-
                 </div>
 
                 <div className={style.reviewFormPopup__review}>

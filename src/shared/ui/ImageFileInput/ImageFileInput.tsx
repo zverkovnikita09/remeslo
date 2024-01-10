@@ -1,13 +1,14 @@
-import { InputHTMLAttributes, useId, useMemo, useState } from 'react'
+import { useId, useMemo, useState } from 'react'
 import style from './ImageFileInput.module.scss'
 import camera from '../../assets/camera.svg'
 import { classNames } from 'src/shared/lib/classNames/classNames';
 import { CloseButton } from '../CloseButton/CloseButton';
 import { GreyText } from '../GreyText/GreyText';
-import { labelsCounterFormatter } from 'src/shared/lib/labelsCounterFormatter/labelsCounterFormatter';
 import { FieldError } from 'react-hook-form';
+import { checkFileInputError } from 'src/shared/lib/checkFileInputError/checkFileInputError';
+import { arrayToFilelist } from 'src/shared/lib/arrayToFilesList/arrayToFileList';
 
-interface ImageFileInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface FileInputProps {
   files: FileList | null
   setFiles: (files: FileList | null) => void
   setError: (message: string) => void
@@ -18,18 +19,17 @@ interface ImageFileInputProps extends InputHTMLAttributes<HTMLInputElement> {
   clearErrors?: () => void
 }
 
-export const ImageFileInput = (props: ImageFileInputProps) => {
+export const ImageFileInput = (props: FileInputProps) => {
   const {
     files,
     setFiles,
     setError,
-    allowedFileCount = 10,
-    allowedFileSize = 10 * 1024 * 1024,
-    allowedFileTypes = ['png', 'jpg', 'jpeg', 'svg', 'webp'],
     error,
     clearErrors,
-    ...otherProps
+    allowedFileTypes = ['png', 'jpg', 'jpeg', 'svg', 'webp'],
   } = props;
+
+  const checkError = (files: File[]) => checkFileInputError({ files, setError, allowedFileTypes, clearErrors })
 
   const previews = useMemo(() => (
     [...(files || [])].map(file => URL.createObjectURL(file))
@@ -72,51 +72,10 @@ export const ImageFileInput = (props: ImageFileInputProps) => {
     setDrag(false)
   }
 
-  const arrayToFilelist = (files: File[]): FileList => {
-    const dt = new DataTransfer();
-
-    files.forEach(file => {
-      dt.items.add(file);
-
-    })
-
-    return dt.files;
-  }
-
   const onFileDelete = (index: number) => () => {
     const filesArray = [...(files ?? [])];
     const newFiles = [...filesArray.slice(0, index), ...filesArray.slice(index + 1)]
     setFiles(arrayToFilelist(newFiles));
-
-  }
-
-  const checkError = (files: File[]): boolean => {
-    if (
-      files.reduce((acc, file) => (
-        acc + file.size
-      ), 0) > allowedFileSize
-    ) {
-      setError(`Суммарный размер файлов не должен превышать: ${allowedFileSize / 1024 / 1024} МБ`)
-      return true;
-    }
-
-    if (
-      !(files.every(file => (
-        allowedFileTypes.includes(file.type.split('/')[1])
-      )))
-    ) {
-      setError(`Допустимые форматы загружаемых файлов: ${allowedFileTypes.join(', ')}`)
-      return true;
-    }
-
-    if (files.length > allowedFileCount) {
-      setError(`Вы можете прикрепить не более ${labelsCounterFormatter(allowedFileCount, ['файла', 'файлов', 'файлов'])}`)
-      return true
-    }
-
-    clearErrors?.();
-
-    return false;
   }
 
   return (
@@ -145,11 +104,10 @@ export const ImageFileInput = (props: ImageFileInputProps) => {
         onDrop={onDrop}
       >
         <input
-          className={style.imageFileInput__input}
+          className='hiddenInput'
           type="file"
           id={id}
           onChange={onInputChange}
-          {...otherProps}
           multiple
         />
         {

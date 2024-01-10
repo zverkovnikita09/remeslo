@@ -9,7 +9,7 @@ export const RegistrationPage = () => {
   return (
     <Container className={style.registrationPage}>
       <div className={style.registrationPage__content}>
-        <MainLogo />
+        <MainLogo className={style.registrationPage__logo} />
         <RegisterByEmail />
         <GreyText>© 2023 Remeslo</GreyText>
       </div>

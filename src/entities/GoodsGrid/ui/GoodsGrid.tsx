@@ -1,11 +1,11 @@
 import style from './GoodsGrid.module.scss'
-import templateLogo from 'src/shared/assets/templateLogo.png'
 import { Link } from 'react-router-dom'
 import { GoodsFavorite } from 'src/features/GoodsFavorite/ui'
 import { Rating, RatingType } from 'src/features/Rating/ui/Rating'
 import { GoodsSkeleton } from './GoodsSkeleton/GoodsSkeleton'
 import { classNames } from 'src/shared/lib/classNames/classNames'
 import { IBreadcrumb } from 'src/features/Breadcrumbs/ui/Breadcrumbs'
+import { GoodsImage } from './GoodsImage/GoodsImage'
 
 export interface IGoods {
   files?: { path: string }[]
@@ -45,12 +45,7 @@ export const GoodsGrid = ({ goods, isLoading = false, isArchived = false, catego
               className={style.goodsGrid__itemImage}
               state={categoryState}
             >
-
-              <img
-                src={files?.length ? files[0].path : templateLogo}
-                className={files?.length ? '' : style.templateLogo}
-                alt={title}
-              />
+              <GoodsImage title={title} files={files} />
             </Link>
             <Link
               to={`/main/view/${id}`}
@@ -61,7 +56,7 @@ export const GoodsGrid = ({ goods, isLoading = false, isArchived = false, catego
             </Link>
             <p className={style.goodsGrid__itemPrice}>{price} ₽</p>
             <p className={style.goodsGrid__itemDate}>{formattedDate}</p>
-            <GoodsFavorite className={style.goodsGrid__favoriteButton} />
+            {<GoodsFavorite className={style.goodsGrid__favoriteButton} />}
             <Rating className={style.goodsGrid__rating} type={RatingType.Numeric} overall_rating={overall_rating} />
           </div>
         )

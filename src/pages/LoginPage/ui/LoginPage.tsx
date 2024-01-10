@@ -9,12 +9,12 @@ export const LoginPage = () => {
   return (
     <Container className={style.loginPage}>
       <div className={style.loginPage__content}>
-        <MainLogo />
+        <MainLogo className={style.loginPage__logo} />
         <Outlet />
         <GreyText>© 2023 Remeslo</GreyText>
       </div>
       <div className={style.loginPage__image}>
-        <img src={background} height={832} width={687} alt="Фоновое изображение" />
+        <img src={background} alt="Фоновое изображение" />
       </div>
     </Container>
   )

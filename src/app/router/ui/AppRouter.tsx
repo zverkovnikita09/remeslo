@@ -21,10 +21,12 @@ export const AppRouter = () => {
           <Route index element={<MainPage />} />
           <Route path="tags/*" element={<CategoriesPage />} />
           <Route path="profile/:slug" element={<ProfilePage />} />
-          <Route path="profile/chat" element={<ChatPage />} />
           <Route path="profile/:slug/complete" element={<ProfilePage />} />
           <Route path="view/:slug" element={<ViewPage />} />
           <Route path="*" element={<></>} />
+        </Route>
+        <Route path="/main/profile/chat" element={<Layout noFooter />}>
+          <Route index element={<ChatPage />} />
         </Route>
         <Route path="login" element={<LoginPage />}>
           <Route index element={<AuthByEmail />} />

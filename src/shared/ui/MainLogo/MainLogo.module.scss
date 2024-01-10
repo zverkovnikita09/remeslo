@@ -1,4 +1,12 @@
-.mainLogo{
+.mainLogo {
   width: max-content;
   display: block;
+
+  img {
+    height: 53px;
+
+    @media (max-width: 768px) {
+      height: 35px;
+    }
+  }
 }

@@ -4,9 +4,13 @@ import { useLocation } from "react-router-dom"
 import { IBreadcrumb } from "src/features/Breadcrumbs/ui/Breadcrumbs";
 import { getData } from "src/shared/lib/api/api"
 
+type CategoryName = string
+type Subcategories = ICategory[] | ISubcategory[]
+type CategoryId = string
+
 interface CategoriesContextProps {
     categories: ICategory[];
-    currentCategories: [string, ICategory[] | ISubcategory[], string] | []
+    currentCategory: [CategoryName, Subcategories, CategoryId] | []
     pathArray: IBreadcrumb[]
 }
 
@@ -22,7 +26,7 @@ export interface ICategory {
     subcategories: ISubcategory[]
 }
 
-export const CategoriesContext = createContext<CategoriesContextProps>({ categories: [], currentCategories: ['', []], pathArray: [] })
+export const CategoriesContext = createContext<CategoriesContextProps>({ categories: [], currentCategory: ['', [], ''], pathArray: [] })
 
 export const checkCategory = (tag: ISubcategory | ICategory): tag is ICategory => {
     return (tag as ICategory).subcategories !== undefined;
@@ -34,7 +38,7 @@ export const CategoriesProvider = ({ children }: PropsWithChildren) => {
         if (!tagsArray.length) {
             return {}
         }
-        const result: Record<string, [string, ICategory[] | ISubcategory[], string]> = {};
+        const result: Record<string, [CategoryName, Subcategories, CategoryId]> = {};
         const stack: any[] = []
         tagsArray.forEach(node => stack.push(node));
         while (stack.length) {
@@ -68,7 +72,7 @@ export const CategoriesProvider = ({ children }: PropsWithChildren) => {
         })
     }, [path, categories]);
 
-    const currentCategories = useMemo<[string, ICategory[] | ISubcategory[], string] | []>(() => {
+    const currentCategory = useMemo<[CategoryName, Subcategories, CategoryId] | []>(() => {
         if (!pathArray.length) return [];
 
         if (pathArray.some(item => !item.name)) {
@@ -79,7 +83,7 @@ export const CategoriesProvider = ({ children }: PropsWithChildren) => {
     }, [pathArray, categories]);
 
     return (
-        <CategoriesContext.Provider value={{ categories: categories ?? [], currentCategories: currentCategories, pathArray: pathArray }}>
+        <CategoriesContext.Provider value={{ categories: categories ?? [], currentCategory, pathArray }}>
             {children}
         </CategoriesContext.Provider>
     )

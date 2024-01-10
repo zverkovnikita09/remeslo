@@ -1,0 +1,44 @@
+.goodsImage {
+
+  &__slider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 0;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    &.templateLogo {
+      width: 94px;
+      height: 99px;
+    }
+  }
+}
+
+.customBullets {
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  border-color: #fff;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+}
+
+.activeCustomBullets {
+  background-color: #fff;
+}
+
+.bulletContainer {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  gap: 10px;
+}

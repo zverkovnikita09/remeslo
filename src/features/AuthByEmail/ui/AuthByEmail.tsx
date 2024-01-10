@@ -9,8 +9,6 @@ import vkIcon from 'src/shared/assets/vkIcon.svg'
 import { useForm } from 'react-hook-form'
 import { IUser, useAuth } from 'src/app/providers/AuthProvider'
 import { useSendData } from 'src/shared/hooks/useSendData'
-import { useState } from 'react'
-import { Select } from 'src/shared/ui/Select/Select'
 
 interface EmailAuth {
   email: string
@@ -81,7 +79,7 @@ export const AuthByEmail = () => {
         size={ButtonSize.M}
         className={style.authByEmail__socialButton}
       >
-        <img src={googleIcon} alt="Google" height={24} width={24} />
+        <img src={googleIcon} alt="Иконка Google" height={24} width={24} />
         Войти с помощью Google
       </Button>
       <Button
@@ -89,7 +87,7 @@ export const AuthByEmail = () => {
         size={ButtonSize.M}
         className={style.authByEmail__socialButton}
       >
-        <img src={vkIcon} alt="VK" width={24} height={24} />
+        <img src={vkIcon} alt="Иконка VK" width={24} height={24} />
         Войти с помощью Vkontakte
       </Button>
       <Link to='reset-password' className={style.authByEmail__link}>
