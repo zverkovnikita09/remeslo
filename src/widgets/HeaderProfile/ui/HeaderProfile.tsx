@@ -19,7 +19,7 @@ export const HeaderProfile = ({ profileInfo, logout }: HeaderProfileProps) => {
 
   return (
     <div className={style.headerProfile}>
-      <Button className={style.headerProfile__button} ref={listButtonRef} onClick={toggleDropdown}>
+      <Button className={style.headerProfile__button} buttonRef={listButtonRef} onClick={toggleDropdown}>
         <UserPhoto profileInfo={profileInfo} />
         <p className={style.headerProfile__name}>{profileInfo?.firstname}</p>
       </Button>

@@ -11,7 +11,6 @@ import { SingleGoods, StoreType } from "../ViewPage"
 import { useState } from "react"
 import { Rating } from "src/features/Rating"
 import { useAuth } from "src/app/providers/AuthProvider"
-import { NotificationType, useNotification } from "src/app/providers/NotificationsProvider"
 import { SkeletonPlaceholder } from "src/shared/ui/SkeletonPlaceholder/SkeletonPlaceholder"
 
 interface ViewPageRightBlockProps {

@@ -75,6 +75,7 @@ export const Button = (props: ComponentButtonProps) => {
       //@ts-ignore
       type={as === 'button' ? type : undefined}
       disabled={isLoading || disabled}
+      //@ts-ignore
       ref={buttonRef}
       {...otherProps}
     >

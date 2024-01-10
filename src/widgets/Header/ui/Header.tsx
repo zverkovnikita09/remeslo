@@ -27,6 +27,7 @@ export const Header = () => {
               <Button to='' className={style.header__link}
                 size={ButtonSize.M}
                 theme={ButtonTheme.RED}
+                // @ts-ignore
                 as={Link}
               >
                 Разместить
@@ -37,6 +38,7 @@ export const Header = () => {
             <Button
               size={ButtonSize.M}
               theme={ButtonTheme.RED}
+              // @ts-ignore
               as={Link}
               to='/login'
               className={style.header__link}
