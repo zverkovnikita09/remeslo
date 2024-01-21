@@ -1,0 +1,12 @@
+.socialButton {
+  gap: 8px;
+  margin-bottom: 8px;
+  width: 100%;
+  display: flex;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding-inline: 28px;
+    font-weight: 400;
+  }
+}
