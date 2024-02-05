@@ -1,0 +1,81 @@
+.viewPageRightBlock {
+  width: 100%;
+}
+
+.heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.rating {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reviews {
+  width: auto;
+  color: var(--red-color);
+}
+
+.greyText {
+  margin-top: 24px;
+  font-weight: 400;
+}
+
+.phoneButton {
+  margin-top: 24px;
+  width: 100%;
+}
+
+.messageButton {
+  margin-top: 12px;
+  width: 100%;
+}
+
+.reviewButton {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.price {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.date {
+  margin-top: 8px;
+}
+
+.titlePlaceholder {
+  height: 32px;
+  margin-bottom: 11px;
+}
+
+.ratingPlaceholder {
+  height: 24px;
+  width: 180px;
+  margin-top: 24px;
+}
+
+.pricePlaceholder {
+  margin-top: 7px;
+  height: 32px;
+  width: 120px;
+}
+
+.datePlaceholder {
+  height: 19px;
+  width: 140px;
+  margin-top: 8px;
+}
+
+.buttonPlaceholder {
+  height: 56px;
+  width: 100%;
+  margin-top: 12px;
+}

@@ -1,0 +1,54 @@
+.viewPage {
+  margin-top: 105px;
+  padding-bottom: 87px;
+}
+
+.content {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+  font-weight: 600;
+}
+
+.main {
+  width: 774px;
+  flex-shrink: 0;
+}
+
+.addressBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.location {
+  color: var(--red-color);
+  justify-content: flex-end;
+  flex-shrink: 0;
+  width: auto;
+  gap: 5px;
+}
+
+.title {
+  margin-top: 52px;
+  margin-bottom: 16px;
+}
+
+
+.views {
+  margin-top: 52px;
+  padding-top: 24px;
+  display: flex;
+  gap: 5px;
+  border-top: 1px solid #ccc;
+}
+
+.sendMessage {
+  width: 223px;
+  margin-top: 16px;
+}
+
+.textPlaceholder {
+  margin-bottom: 3px;
+}

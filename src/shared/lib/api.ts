@@ -25,7 +25,7 @@ export const getData = async <T extends object>({
   headers = {},
   params = {},
   next = {},
-  cache = 'default'
+  cache
 }: GetDataParams): Promise<T> => {
   const queryParams = JSON.stringify(params) === '{}' ? '' : '?' + generateUrlParams(params);
   const response = await fetch(`${baseUrl}${url}${queryParams}`, {
@@ -40,11 +40,9 @@ export const getData = async <T extends object>({
   return dataFlag ? data.data : data;
 }
 
-export const sendData = async<DataType>(data: DataType, url: string) => {
+export const sendData = async<DataType extends {}>(data: DataType, url: string) => {
   const formData = new FormData();
-  for (const item in data) {
-    formData.append(item, String(data[item]))
-  }
+  Object.entries(data).forEach(([key, value]) => formData.append(key, String(value)))
   const status = await fetch(`${BASE_URL}/${url}`, {
     body: formData,
     method: 'post',

@@ -1,0 +1,1 @@
+export { GoodsImage } from './GoodsImage'
