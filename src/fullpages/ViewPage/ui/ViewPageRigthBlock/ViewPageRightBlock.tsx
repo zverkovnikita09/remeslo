@@ -1,5 +1,5 @@
 "use client"
-import { SingleGoods } from "@pages/ViewPage"
+import { SingleGoods } from "@fullpages/ViewPage"
 import { Store } from "@shared/models/store.model";
 import { Title } from "@shared/ui/Title";
 import { useState } from "react";

@@ -1,1 +1,1 @@
-export { VendorProfile } from './ui/VendorProfile.tsx'
+export { VendorProfile } from './ui/VendorProfile'

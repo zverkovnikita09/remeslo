@@ -1,0 +1,48 @@
+.sliderGallery {
+  width: 100%;
+}
+
+.bigSlider {
+  height: 686px;
+  border-radius: 32px;
+}
+
+.smallSlider {
+  margin-top: 32px;
+  height: 123px;
+  border-radius: 12px;
+}
+
+.mainImage {
+  border-radius: 32px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.bigItem {
+  position: relative;
+  height: 100%;
+}
+
+.smallItem {
+  opacity: .5;
+  cursor: pointer;
+  position: relative;
+}
+
+.smallImage {
+  border-radius: 12px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.activeItem {
+  opacity: 1;
+}
+
+.smallSliderSkeleton {
+  display: flex;
+  gap: 12px;
+}

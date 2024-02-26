@@ -1,5 +1,5 @@
 import { Goods } from "@entities/GoodsGrid";
-import MainPage from "@pages/MainPage";
+import MainPage from "@fullpages/MainPage";
 import { getData } from "@shared/lib/api";
 
 export default async function Main() {

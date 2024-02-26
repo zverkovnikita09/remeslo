@@ -6,8 +6,11 @@ import Link from 'next/link';
 import { SearchInput } from '@features/SearchInput';
 import { Geolocation } from '@features/Geolocation';
 
-export const Header = () => {
-  const isAuthed = false;
+interface HeaderProps {
+  isAuthed: boolean
+}
+
+export const Header = ({ isAuthed }: HeaderProps) => {
   return (
     <Container className={style.header}>
       <MainLogo />

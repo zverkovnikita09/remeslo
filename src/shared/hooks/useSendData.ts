@@ -16,7 +16,7 @@ export const useSendData = ({ defaultErrorMessage = "Произошла ошиб
   const [error, setError] = useState<string | null>(null)
   const { addNotification } = useNotification();
 
-  const handleSendData = async (data: unknown) => {
+  const handleSendData = async <T extends {}>(data: T) => {
     try {
       setIsSending(true);
       const response = await sendData(data, url)

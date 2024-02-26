@@ -4,6 +4,8 @@ import '@/styles/globals.scss'
 import { NotificationsProvider } from '@providers/NotificationsProvider'
 import { PropsWithChildren } from 'react'
 import { Notifications } from '@entities/Notifications'
+import { ScrollToTop } from '@providers/ScrollToTop'
+import { SessionProvider } from '@providers/SessionProvider'
 
 const montserrat = Montserrat({ subsets: ['cyrillic', 'latin'] })
 
@@ -21,13 +23,17 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={montserrat.className}>
-        <div id='root'>
-          <NotificationsProvider>
-            <Notifications />
-            {children}
-          </NotificationsProvider>
-        </div>
+        <SessionProvider>
+          <div id='root'>
+            <ScrollToTop>
+              <NotificationsProvider>
+                <Notifications />
+                {children}
+              </NotificationsProvider>
+            </ScrollToTop>
+          </div>
+        </SessionProvider>
       </body>
-    </html>
+    </html >
   )
 }

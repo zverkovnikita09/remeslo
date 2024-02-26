@@ -1,1 +1,1 @@
-export {Notifications} from './ui/Notifications.tsx'
+export {Notifications} from './ui/Notifications'

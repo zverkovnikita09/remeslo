@@ -1,0 +1,1 @@
+export { SliderGallery } from './ui/SliderGallery'

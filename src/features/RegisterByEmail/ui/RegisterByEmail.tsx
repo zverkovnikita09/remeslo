@@ -8,7 +8,7 @@ import style from './RegisterByEmail.module.scss'
 import { Input } from '@shared/ui/Input'
 import { Button, ButtonSize, ButtonTheme } from '@shared/ui/Button'
 import Link from 'next/link'
-import { SocialAuthButton } from '@shared/ui/SocialAuthButton/SocialAuthButton'
+/* import { SocialAuthButton } from '@shared/ui/SocialAuthButton/SocialAuthButton' */
 
 interface EmailRegistration {
   firstname: string
@@ -115,7 +115,7 @@ export const RegisterByEmail = () => {
         Уже есть аккаунт? &nbsp;
         <Link href='/login' className='textUnderline'>Войти</Link>
       </p>
-      <SocialAuthButton />
+      {/* <SocialAuthButton /> */}
     </>
   )
 }

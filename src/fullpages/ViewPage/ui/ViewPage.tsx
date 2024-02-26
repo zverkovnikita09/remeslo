@@ -6,6 +6,7 @@ import style from './ViewPage.module.scss';
 import { Title } from "@shared/ui/Title";
 import { labelsCounterFormatter } from "@shared/lib/labelsCounterFormatter";
 import { ViewPageRightBlock } from "./ViewPageRigthBlock/ViewPageRightBlock";
+import { SliderGallery } from "@entities/SliderGallery";
 
 interface ViewPageProps {
   goodInfo?: SingleGoods;
@@ -37,7 +38,7 @@ export const ViewPage = ({ goodInfo, store }: ViewPageProps) => {
       {/* <Breadcrumbs links={breadcrubms} /> */}
       <div className={style.content}>
         <div className={style.main}>
-          {/* <SliderGallery title={title} files={files ?? []} isLoading={isGoodLoading} /> */}
+          <SliderGallery title={title} files={files ?? []} />
           <Title as="h2" className={style.title}>Адрес</Title>
           <div className={style.addressBlock}>
             {store?.address}

@@ -1,5 +1,5 @@
-import ViewPage from '@pages/ViewPage';
-import { SingleGoods } from '@pages/ViewPage/model/singleGoods.model';
+import ViewPage from '@fullpages/ViewPage';
+import { SingleGoods } from '@fullpages/ViewPage/model/singleGoods.model';
 import { getData } from '@shared/lib/api';
 import { Store } from '@shared/models/store.model';
 
