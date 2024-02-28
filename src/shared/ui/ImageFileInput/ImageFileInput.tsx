@@ -1,0 +1,127 @@
+"use client"
+import { useId, useMemo, useState } from 'react'
+import style from './ImageFileInput.module.scss'
+import camera from '@images/camera.svg'
+import { CloseButton } from '../CloseButton/CloseButton';
+import { FieldError } from 'react-hook-form';
+import cn from 'classnames'
+import Image from 'next/image';
+import { checkFileInputError } from '@shared/lib/checkFileInputError';
+import { arrayToFilelist } from '@shared/lib/arrayToFileList';
+
+export interface FileInputProps {
+  files: FileList | null
+  setFiles: (files: FileList | null) => void
+  setError: (message: string) => void
+  allowedFileTypes?: string[]
+  allowedFileSize?: number
+  allowedFileCount?: number
+  error?: FieldError
+  clearErrors?: () => void
+}
+
+export const ImageFileInput = (props: FileInputProps) => {
+  const {
+    files,
+    setFiles,
+    setError,
+    error,
+    clearErrors,
+    allowedFileTypes = ['png', 'jpg', 'jpeg', 'svg', 'webp'],
+  } = props;
+
+  const checkError = (files: File[]) => checkFileInputError({ files, setError, allowedFileTypes, clearErrors })
+
+  const previews = useMemo(() => (
+    [...(files || [])].map(file => URL.createObjectURL(file))
+  ), [files])
+
+  const [isDrag, setDrag] = useState(false);
+  const id = useId();
+
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const filesArray = [...(files ?? [])];
+
+    const newFilesArray = [...filesArray, ...(e.target.files ?? [])];
+
+    !checkError(newFilesArray) &&
+
+      setFiles(arrayToFilelist(newFilesArray));
+  }
+
+
+  const onDragStart = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault()
+    setDrag(true)
+  }
+
+  const onDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setDrag(false);
+  }
+
+  const onDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault()
+    const filesArray = [...(files ?? [])];
+
+    const newFilesArray = [...filesArray, ...(e.dataTransfer.files ?? [])];
+
+    !checkError(newFilesArray) &&
+
+      setFiles(arrayToFilelist(newFilesArray));
+
+    setDrag(false)
+  }
+
+  const onFileDelete = (index: number) => () => {
+    const filesArray = [...(files ?? [])];
+    const newFiles = [...filesArray.slice(0, index), ...filesArray.slice(index + 1)]
+    setFiles(arrayToFilelist(newFiles));
+  }
+
+  return (
+    <div className={style.imageFileInput}>
+      <div className={style.errorMessage}>
+        {error?.message}
+      </div>
+      <div className={style.preview}>
+        {previews.map((src, index) =>
+          <div
+            key={index}
+            className={style.imageWrapper}
+          >
+            <CloseButton onClick={onFileDelete(index)} className={style.removeImage} />
+            <Image src={src} className={style.previewImage} alt='' fill />
+          </div>
+        )}
+      </div>
+      <label
+        htmlFor={id}
+        className={cn(style.label, { [style.isDrag]: isDrag })}
+        onDragStart={onDragStart}
+        onDragOver={onDragStart}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+      >
+        <input
+          className='hiddenInput'
+          type="file"
+          id={id}
+          onChange={onInputChange}
+          multiple
+        />
+        {
+          isDrag ? 'Отпустите файл для загрузки' :
+            <><Image className='no-pointer-events' src={camera} alt="Камера" width={32} height={32} />Нажмите или перетащите сюда изображения</>
+        }
+      </label>
+      <div className={style.loadInfo}>
+        <div className={style.loadTitle}>Вы можете загрузить до 10 фотографий</div>
+        <p className='greyText'>Допустимые форматы {allowedFileTypes.map((item) => (
+          item.toUpperCase()
+        )).join(', ')}
+        </p>
+      </div>
+    </div>
+  )
+}

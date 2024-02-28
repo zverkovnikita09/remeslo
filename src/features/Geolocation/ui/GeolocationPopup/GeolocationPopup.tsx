@@ -3,11 +3,11 @@ import { Input } from '@shared/ui/Input'
 import { Button } from '@shared/ui/Button'
 import { Title, TitleSize } from '@shared/ui/Title'
 import { Popup } from '@shared/ui/Popup'
+import { useCookies } from 'next-client-cookies';
 
 interface GeolocationPopupProps {
   isActive: boolean
   closePopup: () => void
-  setCity: (city: string) => void
 }
 
 const cities = [
@@ -18,11 +18,14 @@ const cities = [
   { city: 'Липецк', region: 'Липецкая область' },
 ]
 
-export const GeolocationPopup = ({ closePopup, isActive, setCity }: GeolocationPopupProps) => {
+export const GeolocationPopup = ({ closePopup, isActive }: GeolocationPopupProps) => {
+  const { set: setCookie } = useCookies();
+  
   const chooseCity = (city: string) => {
-    setCity(city);
+    setCookie('city', city);
     closePopup();
   }
+  
   return (
     <Popup isActive={isActive} closePopup={closePopup}>
       <div className={style.geolocationPopup}>

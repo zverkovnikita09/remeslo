@@ -13,11 +13,10 @@ interface GoodsGridProps {
   goods?: Goods[]
   isLoading?: boolean
   isArchived?: boolean
-  categoryState?: IBreadcrumb[]
   title?: string;
 }
 
-export const GoodsGrid = ({ goods, isLoading = false, isArchived = false, categoryState = [], title }: GoodsGridProps) => {
+export const GoodsGrid = ({ goods, isLoading = false, isArchived = false, title }: GoodsGridProps) => {
   if (isLoading) {
     return <GoodsSkeleton />
   }

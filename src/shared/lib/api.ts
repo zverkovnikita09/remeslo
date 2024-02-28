@@ -5,7 +5,7 @@ interface GetDataParams {
   dataFlag?: boolean // флаг для получения данных или респонса
   headers?: Record<string, string>
   baseUrl?: string
-  params?: Record<string, string | number>
+  params?: Record<string, string | number | undefined>
   next?: NextFetchRequestConfig
   cache?: RequestCache
 }

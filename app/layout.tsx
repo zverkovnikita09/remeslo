@@ -6,6 +6,7 @@ import { PropsWithChildren } from 'react'
 import { Notifications } from '@entities/Notifications'
 import { ScrollToTop } from '@providers/ScrollToTop'
 import { SessionProvider } from '@providers/SessionProvider'
+import { CookiesProvider } from 'next-client-cookies/server'
 
 const montserrat = Montserrat({ subsets: ['cyrillic', 'latin'] })
 
@@ -26,10 +27,12 @@ export default function RootLayout({
         <SessionProvider>
           <div id='root'>
             <ScrollToTop>
-              <NotificationsProvider>
-                <Notifications />
-                {children}
-              </NotificationsProvider>
+              <CookiesProvider>
+                <NotificationsProvider>
+                  <Notifications />
+                  {children}
+                </NotificationsProvider>
+              </CookiesProvider>
             </ScrollToTop>
           </div>
         </SessionProvider>

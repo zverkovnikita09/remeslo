@@ -1,3 +1,4 @@
+"use client"
 import { Store } from "@shared/models/store.model";
 import { SingleGoods } from "../model/singleGoods.model";
 import { Container } from "@shared/ui/Container";
@@ -7,15 +8,18 @@ import { Title } from "@shared/ui/Title";
 import { labelsCounterFormatter } from "@shared/lib/labelsCounterFormatter";
 import { ViewPageRightBlock } from "./ViewPageRigthBlock/ViewPageRightBlock";
 import { SliderGallery } from "@entities/SliderGallery";
+import { Button, ButtonSize, ButtonTheme } from "@shared/ui/Button";
+import { TextArea } from "@shared/ui/TextArea";
+import { useSession } from "next-auth/react";
+import { GoodEstimaions } from "@features/Reviews/ui/Reviews";
 
 interface ViewPageProps {
   goodInfo?: SingleGoods;
   store?: Store;
+  estimations?: GoodEstimaions[]
 }
 
-export const ViewPage = ({ goodInfo, store }: ViewPageProps) => {
-  /* const { isAuthed } = useAuth() */
-
+export const ViewPage = ({ goodInfo, store, estimations }: ViewPageProps) => {
   const {
     title,
     description,
@@ -24,6 +28,10 @@ export const ViewPage = ({ goodInfo, store }: ViewPageProps) => {
     views_today,
     store_id,
   } = goodInfo ?? {};
+
+  const { status } = useSession();
+
+  const isAuthed = status === 'authenticated';
 
   /*  const breadcrubms = useMemo(() => {
      if (Array.isArray(state)) {
@@ -47,26 +55,26 @@ export const ViewPage = ({ goodInfo, store }: ViewPageProps) => {
           <div className={style.feature}></div>
           <Title as="h2" className={style.title}>Описание</Title>
           <div className={style.description} dangerouslySetInnerHTML={{ __html: description ?? '' }} />
-          {/* {isAuthed &&
+          {isAuthed &&
             <>
-              <Title className={style.viewPage__title}>Написать продавцу</Title>
+              <Title className={style.title}>Написать продавцу</Title>
               <TextArea
-                className={style.viewPage__textArea}
+                className={style.textArea}
                 placeholder='Что вы хотите спросить?'
               />
               <Button
                 theme={ButtonTheme.RED}
                 size={ButtonSize.M}
-                className={style.viewPage__sendMessage}
+                className={style.sendMessage}
               >
                 Отправить
               </Button>
-            </>} */}
+            </>}
           <div className={style.views}>
             {labelsCounterFormatter(all_time_views ?? 0, ['просмотр', 'просмотра', 'просмотров'])} <p className="greyText">(+{views_today} сегодня)</p>
           </div>
         </div>
-        <ViewPageRightBlock goodInfo={goodInfo} store={store} />
+        <ViewPageRightBlock goodInfo={goodInfo} store={store} estimations={estimations} />
       </div>
     </Container>
   )

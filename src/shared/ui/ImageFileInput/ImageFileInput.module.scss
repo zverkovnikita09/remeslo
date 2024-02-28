@@ -1,0 +1,65 @@
+.imageFileInput {
+  width: 100%;
+}
+
+.preview {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.imageWrapper {
+  position: relative;
+}
+
+.removeImage {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  & img {
+    filter: invert(47%) sepia(99%) saturate(5515%) hue-rotate(343deg) brightness(102%) contrast(105%);
+  }
+}
+
+.previewImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.loadInfo {
+  margin-top: 12px;
+  display: grid;
+  gap: 4px;
+}
+
+.loadTitle {
+  font-weight: 600;
+}
+
+.label {
+  display: flex;
+  height: 144px;
+  width: 100%;
+  border-radius: 10px;
+  border: 2px dashed #9B9B9B;
+  margin-top: 12px;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+  font-size: 18px;
+  color: #9B9B9B;
+  cursor: pointer;
+
+  &.isDrag {
+    background-color: var(--light-grey-color);
+  }
+}
+
+.errorMessage {
+  margin-bottom: 8px;
+  color: var(--error-color);
+}

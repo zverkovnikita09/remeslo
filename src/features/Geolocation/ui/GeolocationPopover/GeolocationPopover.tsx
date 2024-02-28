@@ -3,34 +3,37 @@ import style from './GeolocationPopover.module.scss'
 import cn from 'classnames'
 import { useCallback } from 'react'
 import { CloseButton } from '@shared/ui/CloseButton'
+import { useCookies } from 'next-client-cookies'
 
 interface GeolocationPopoverProps {
   city: string
   className?: string
   onClose?: () => void
-  setCity?: (proposedCity: string) => void
+  openPopup: () => void
 }
 
-export const GeolocationPopover = ({ city, className, onClose, setCity }: GeolocationPopoverProps) => {
+export const GeolocationPopover = ({ city, className, onClose, openPopup }: GeolocationPopoverProps) => {
+  const { set: setCookie } = useCookies();
 
   const handleSetCity = useCallback(() => {
-    setCity?.(city)
+    setCookie('city', city);
     onClose?.()
   }, [])
 
   return (
     <div className={cn(style.geolocationPopover, className)}>
       <CloseButton
-        className={style.geolocationPopover__close}
+        className={style.close}
         onClick={onClose}
       />
-      <p className={style.geolocationPopover__text}>
+      <p className={style.text}>
         Ваш регион <br /> {city}
       </p>
-      <div className={style.geolocationPopover__buttonContainer}>
+      <div className={style.buttonContainer}>
         <Button
           theme={ButtonTheme.OUTLINE}
           size={ButtonSize.S}
+          onClick={openPopup}
         >
           Изменить
         </Button>

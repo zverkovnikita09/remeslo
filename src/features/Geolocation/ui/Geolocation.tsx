@@ -1,14 +1,16 @@
+"use client"
 import { useEffect, useState } from 'react'
 import style from './Geolocation.module.scss'
 import { GeolocationPopover } from './GeolocationPopover/GeolocationPopover'
-/* import { GeoIcon } from 'src/shared/ui/GeoIcon/GeoIcon'
-import { useLocalStorage } from 'src/shared/hooks/useLocalStorage' */
 import { getUserCity, getUserIp } from '../lib/api'
 import { GeolocationPopup } from './GeolocationPopup/GeolocationPopup'
 import { Button } from '@shared/ui/Button'
+import { GeoIcon } from '@shared/ui/GeoIcon'
+import { useCookies } from 'next-client-cookies'
 
 export const Geolocation = () => {
-  const [city, setCity] = useState('city');
+  const { get: getCookie } = useCookies();
+  const city = getCookie("city");
   const [proposedCity, setProposedCity] = useState('');
   const [isCityPopover, setCityPopover] = useState(false);
   const [isCityPopup, setCityPopup] = useState(false);
@@ -44,16 +46,15 @@ export const Geolocation = () => {
       <GeolocationPopup
         isActive={isCityPopup}
         closePopup={togglePopup}
-        setCity={setCity}
       />
       <Button
-        className={style.geolocation__button}
+        className={style.button}
         onClick={togglePopup}
       >
         {
           city ?
             <>
-              {/* <GeoIcon /> */}
+              <GeoIcon />
               {city}
             </> :
             'Выбрать город'
@@ -63,9 +64,9 @@ export const Geolocation = () => {
         isCityPopover &&
         <GeolocationPopover
           city={proposedCity}
-          className={style.geolocation__popover}
+          className={style.popover}
           onClose={togglePopover}
-          setCity={setCity}
+          openPopup={togglePopup}
         />
       }
     </div>

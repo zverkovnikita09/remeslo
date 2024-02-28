@@ -1,3 +1,5 @@
+import { Goods } from "@entities/GoodsGrid"
+
 export interface ProfileInfo {
   firstname: string
   lastname: string
@@ -9,4 +11,5 @@ export interface User {
   email_verified?: string
   id?: string
   profile?: ProfileInfo
+  favorites: Goods[]
 }

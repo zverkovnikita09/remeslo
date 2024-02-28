@@ -1,37 +1,42 @@
-import { Store } from '@shared/models/store.model'
 import style from './VendorProfile.module.scss'
 import { UserPhoto, UserPhotoSize } from '@shared/ui/UserPhoto'
 import { OverallRating } from '@shared/ui/OverallRating'
+import cn from 'classnames'
+import { ProfileInfo } from '@shared/models/user.model'
 
 interface VendorProfileWithoutRatingProps {
-  store: Partial<Store>
+  profile?: ProfileInfo
+  registered_at?: string
   photoSize?: UserPhotoSize
   withRating?: false
   overallRating?: number
   marks?: number
+  column?: boolean
 }
 
 interface VendorProfileWithRatingProps {
-  store: Partial<Store>
+  profile?: ProfileInfo
+  registered_at?: string
   photoSize?: UserPhotoSize
   withRating: true
   overallRating: number
   marks?: number
+  column?: boolean
 }
 
 type VendorProfileProps = VendorProfileWithoutRatingProps | VendorProfileWithRatingProps
 
-export const VendorProfile = ({ store, photoSize, withRating = false, overallRating, marks }: VendorProfileProps) => {
+export const VendorProfile = ({ profile, photoSize, registered_at, withRating = false, overallRating, marks, column }: VendorProfileProps) => {
   return (
-    <div className={style.vendor}>
-      <UserPhoto profileInfo={store?.user?.profile} imageSize={photoSize} />
-      <div className={style.vendor__info}>
-        <div className={style.vendor__name}>
-          {store?.user?.profile?.firstname}
+    <div className={cn(style.vendor, { [style.column]: column })}>
+      <UserPhoto avatar={profile?.avatar} imageSize={photoSize} />
+      <div className={style.info}>
+        <div className={style.name}>
+          {profile?.firstname} {profile?.lastname}
         </div>
-        <div className={style.vendor__date}>
+        <div className={style.date}>
           <p className="greyText">
-            На сайте c {new Date(store?.user?.email_verified || '').toLocaleString('ru', {
+            На сайте c {new Date(registered_at || '').toLocaleString('ru', {
               day: 'numeric',
               month: 'long',
               year: 'numeric'

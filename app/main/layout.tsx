@@ -5,10 +5,11 @@ import { getServerSession } from 'next-auth/next'
 import { authConfig } from '@providers/Auth'
 
 export default async function Layout({ children }: PropsWithChildren) {
-  const session = await getServerSession(authConfig)
+  const session = await getServerSession(authConfig);
+  
   return (
     <>
-      <Header isAuthed={!!session?.user} />
+      <Header isAuthed={!!session?.user} user={session?.user.user} />
       <main>{children}</main>
       <Footer />
     </>

@@ -1,0 +1,67 @@
+.editProfile {
+  width: 100%;
+  display: grid;
+  gap: 32px;
+}
+
+.editPhoto {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+}
+
+.downloadButton {
+  margin-top: 8px;
+  color: var(--red-color);
+}
+
+.userPhotoButton {
+  position: relative;
+  overflow: hidden;
+  border-radius: 50% !important;
+
+  &::after{
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #000;
+    opacity: 0;
+    transition: 0.2s;
+  }
+
+  &:hover {
+    &:after {
+      opacity: 0.5;
+    }
+
+    .cameraImage {
+      opacity: 1;
+    }
+  }
+}
+
+.cameraImage {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  filter: brightness(0) invert(1);
+  transition: 0.2s;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.button {
+  width: 294px;
+}

@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation'
+import { RedirectType, redirect } from 'next/navigation'
 
 export default function View() {
-  redirect("/main")
+  redirect("/main", RedirectType.replace)
 }

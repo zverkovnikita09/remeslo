@@ -50,6 +50,5 @@ export const authConfig: AuthOptions = {
       session.user = token;
       return session
     },
-
   }
 }

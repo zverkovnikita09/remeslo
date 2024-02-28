@@ -1,0 +1,54 @@
+.headerProfile {
+  position: relative;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.name {
+  font-size: 18px;
+  line-height: 135%;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-bottom: 2px solid var(--dark-grey-color);
+    border-right: 2px solid var(--dark-grey-color);
+    transform: rotate(45deg);
+    margin-bottom: 2px;
+  }
+}
+
+.dropdown {
+  padding: 15px 0;
+  display: grid;
+}
+
+.link {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 135%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  white-space: nowrap;
+  padding: 9px 24px;
+  width: 100%;
+
+  &:hover {
+    background-color: var(--light-grey-color) !important;
+  }
+
+  &:focus {
+    background-color: var(--light-grey-color) !important;
+  }
+}

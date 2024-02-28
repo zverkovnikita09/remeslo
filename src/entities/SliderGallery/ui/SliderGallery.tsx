@@ -33,7 +33,7 @@ export const SliderGallery = ({ files = [], title }: SliderGalleryProps) => {
       >
         {files?.map((img, index) => (
           <SwiperSlide onClick={galleryOpen(index)} key={index} className={style.bigItem}>
-            <Image src={img.path} alt={title ?? ''} className={style.mainImage} fill/>
+            <Image src={img.path} alt={title ?? ''} className={style.mainImage} fill />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -11,16 +11,16 @@ export enum UserPhotoSize {
 }
 
 interface UserPhotoProps {
-  profileInfo?: ProfileInfo
+  avatar?: ProfileInfo['avatar']
   imageSize?: UserPhotoSize
 }
 
-export const UserPhoto = ({ profileInfo, imageSize = UserPhotoSize.M }: UserPhotoProps) => {
-  const hasPhoto = !!profileInfo?.avatar;
+export const UserPhoto = ({ avatar, imageSize = UserPhotoSize.M }: UserPhotoProps) => {
+  const hasPhoto = !!avatar;
   return (
     <div className={cn(style.imageContainer, style[imageSize])}>
       <Image
-        src={hasPhoto ? profileInfo.avatar : userImg}
+        src={hasPhoto ? avatar : userImg}
         alt="Фото профиля"
         className={style.image}
         fill={hasPhoto}

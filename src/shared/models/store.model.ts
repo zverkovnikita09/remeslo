@@ -1,11 +1,13 @@
+import { Goods } from "@entities/GoodsGrid"
 import { User } from "./user.model"
 
 export interface Store {
   address: string
-  avatar: { path: string }[] | null
-  banner: { path: string }[] | null
+  avatar: string | null
+  baner: string | null
   description: string
   id: string
+  goods: Goods[]
   moderate: number
   phone_number: string
   published_at: string

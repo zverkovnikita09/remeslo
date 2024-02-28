@@ -1,18 +1,16 @@
 "use client"
-import { useState, useEffect, PropsWithChildren } from 'react'
+import { useState, useEffect, PropsWithChildren, useRef } from 'react'
 import { createPortal } from 'react-dom';
 
-export const Portal= ({ children }: PropsWithChildren) => {
-  const [container] = useState(() => {
-    return document.createElement('div');
-  });
+export const Portal = ({ children }: PropsWithChildren) => {
+  const ref = useRef<Element | null>(null)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    document?.body.appendChild(container)
-    return () => {
-      document?.body.removeChild(container)
-    }
-  }, [document])
+    ref.current = document.createElement("div")
+    document.body.appendChild(ref.current)
+    setMounted(true)
+  }, [])
 
-  return createPortal(children, container)
+  return (mounted && ref.current) ? createPortal(children, ref.current) : null
 }

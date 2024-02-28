@@ -11,13 +11,16 @@ import Link from "next/link";
 import { Share } from "@features/Share/ui/Share";
 import { VendorProfile } from "@entities/VendorProfile";
 import { Rating } from "@shared/ui/Rating";
+import { Reviews } from "@features/Reviews";
+import { GoodEstimaions } from "@features/Reviews/ui/Reviews";
 
 interface ViewPageRightBlockProps {
   goodInfo?: SingleGoods;
   store?: Store;
+  estimations?: GoodEstimaions[]
 }
 
-export const ViewPageRightBlock = ({ goodInfo, store }: ViewPageRightBlockProps) => {
+export const ViewPageRightBlock = ({ goodInfo, store, estimations }: ViewPageRightBlockProps) => {
   const {
     title,
     files,
@@ -29,7 +32,6 @@ export const ViewPageRightBlock = ({ goodInfo, store }: ViewPageRightBlockProps)
   const {
     phone_number
   } = store ?? {};
-  /*  const { isAuthed } = useAuth(); */
 
   const [isPhoneShown, setIsPhoneShown] = useState(false);
 
@@ -76,12 +78,13 @@ export const ViewPageRightBlock = ({ goodInfo, store }: ViewPageRightBlockProps)
       <div className={style.rating}>
         <Rating overall_rating={overall_rating ?? 0} />
         <div className={style.reviews}>
-          {/* <Reviews
+          <Reviews
             good={goodInfo}
             closeReviewForm={closeReviewForm}
             openReviewForm={openReviewForm}
             reviewFormState={isReviewFormActive}
-          /> */}
+            estimations={estimations}
+          />
         </div>
       </div>
       <p className={cn(style.greyText, 'greyText')}>Цена:</p>
@@ -89,7 +92,7 @@ export const ViewPageRightBlock = ({ goodInfo, store }: ViewPageRightBlockProps)
       <p className={cn(style.greyText, 'greyText')}>Опубликовано</p>
       <p className={style.date}>{formattedDate}</p>
       <Link href={`/main/store/${store?.id}`} className={style.vendor}>
-        <VendorProfile store={store ?? {}} />
+        <VendorProfile profile={store?.user?.profile} />
       </Link>
       <Button
         className={style.phoneButton}

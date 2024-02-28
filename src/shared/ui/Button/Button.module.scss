@@ -1,13 +1,9 @@
 .button {
-  display: grid;
-  place-content: center;
   outline: none;
   border: none;
   background-color: transparent;
   cursor: pointer;
-  border-radius: 10px;
   transition: 0.2s;
-  font-weight: 600;
   line-height: 135%;
 }
 
@@ -20,6 +16,10 @@
 .red {
   background-color: var(--red-color);
   color: #fff;
+  display: grid;
+  place-content: center;
+  font-weight: 600;
+  border-radius: 10px;
 
   &:hover,
   &:focus {
@@ -38,6 +38,10 @@
 .outline {
   border: 1px solid #122533;
   background-color: #fff;
+  display: grid;
+  place-content: center;
+  font-weight: 600;
+  border-radius: 10px;
 
   &:disabled {
     border-color: #9B9B9B;
@@ -48,6 +52,10 @@
 .black {
   background-color: #122533;
   color: #fff;
+  display: grid;
+  place-content: center;
+  font-weight: 600;
+  border-radius: 10px;
 
   &:disabled {
     background-color: #9B9B9B;
@@ -56,6 +64,8 @@
 
 .grey {
   background-color: var(--light-grey-color);
+  font-weight: 600;
+  border-radius: 10px;
 
   &:hover,
   &:focus {
