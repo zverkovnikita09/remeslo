@@ -1,13 +1,13 @@
 "use client"
-import { useId, useMemo, useState } from 'react'
+import {useId, useMemo, useRef, useState} from 'react'
 import style from './ImageFileInput.module.scss'
 import camera from '@images/camera.svg'
-import { CloseButton } from '../CloseButton/CloseButton';
-import { FieldError } from 'react-hook-form';
+import {CloseButton} from '../CloseButton/CloseButton';
+import {FieldError} from 'react-hook-form';
 import cn from 'classnames'
 import Image from 'next/image';
-import { checkFileInputError } from '@shared/lib/checkFileInputError';
-import { arrayToFilelist } from '@shared/lib/arrayToFileList';
+import {checkFileInputError} from '@shared/lib/checkFileInputError';
+import {arrayToFilelist} from '@shared/lib/arrayToFileList';
 
 export interface FileInputProps {
   files: FileList | null
@@ -18,6 +18,7 @@ export interface FileInputProps {
   allowedFileCount?: number
   error?: FieldError
   clearErrors?: () => void
+  label?: string
 }
 
 export const ImageFileInput = (props: FileInputProps) => {
@@ -28,9 +29,12 @@ export const ImageFileInput = (props: FileInputProps) => {
     error,
     clearErrors,
     allowedFileTypes = ['png', 'jpg', 'jpeg', 'svg', 'webp'],
+    label,
   } = props;
 
-  const checkError = (files: File[]) => checkFileInputError({ files, setError, allowedFileTypes, clearErrors })
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const checkError = (files: File[]) => checkFileInputError({files, setError, allowedFileTypes, clearErrors})
 
   const previews = useMemo(() => (
     [...(files || [])].map(file => URL.createObjectURL(file))
@@ -44,9 +48,9 @@ export const ImageFileInput = (props: FileInputProps) => {
 
     const newFilesArray = [...filesArray, ...(e.target.files ?? [])];
 
+    setFiles(arrayToFilelist(newFilesArray));
     !checkError(newFilesArray) &&
-
-      setFiles(arrayToFilelist(newFilesArray));
+    inputRef.current && (inputRef.current.value = '');
   }
 
 
@@ -68,7 +72,7 @@ export const ImageFileInput = (props: FileInputProps) => {
 
     !checkError(newFilesArray) &&
 
-      setFiles(arrayToFilelist(newFilesArray));
+    setFiles(arrayToFilelist(newFilesArray));
 
     setDrag(false)
   }
@@ -77,10 +81,12 @@ export const ImageFileInput = (props: FileInputProps) => {
     const filesArray = [...(files ?? [])];
     const newFiles = [...filesArray.slice(0, index), ...filesArray.slice(index + 1)]
     setFiles(arrayToFilelist(newFiles));
+    inputRef.current && (inputRef.current.value = '');
   }
 
   return (
     <div className={style.imageFileInput}>
+      {label && <label htmlFor={id} className={style.label}>{label}</label>}
       <div className={style.errorMessage}>
         {error?.message}
       </div>
@@ -90,20 +96,21 @@ export const ImageFileInput = (props: FileInputProps) => {
             key={index}
             className={style.imageWrapper}
           >
-            <CloseButton onClick={onFileDelete(index)} className={style.removeImage} />
-            <Image src={src} className={style.previewImage} alt='' fill />
+            <CloseButton onClick={onFileDelete(index)} className={style.removeImage}/>
+            <Image src={src} className={style.previewImage} alt='' fill/>
           </div>
         )}
       </div>
       <label
         htmlFor={id}
-        className={cn(style.label, { [style.isDrag]: isDrag })}
+        className={cn(style.labelArea, {[style.isDrag]: isDrag})}
         onDragStart={onDragStart}
         onDragOver={onDragStart}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
       >
         <input
+          ref={inputRef}
           className='hiddenInput'
           type="file"
           id={id}
@@ -112,7 +119,8 @@ export const ImageFileInput = (props: FileInputProps) => {
         />
         {
           isDrag ? 'Отпустите файл для загрузки' :
-            <><Image className='no-pointer-events' src={camera} alt="Камера" width={32} height={32} />Нажмите или перетащите сюда изображения</>
+            <><Image className='no-pointer-events' src={camera} alt="Камера" width={32} height={32}/>Нажмите или
+              перетащите сюда изображения</>
         }
       </label>
       <div className={style.loadInfo}>

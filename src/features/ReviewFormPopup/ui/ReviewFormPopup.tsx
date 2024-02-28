@@ -48,7 +48,7 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 			<form onSubmit={handleSubmit(onSubmit)} className={style.reviewFormPopup}>
 				<Title size={TitleSize.S}>Ваш отзыв о товаре</Title>
 				<div className={style.goodInfo}>
-					<Image src={goodInfo?.files?.[0].path ?? ''} className={style.goodImage} alt={''} fill />
+					<Image src={goodInfo?.files?.[0].path ?? ''} className={style.goodImage} alt={''} width={100} height={100} />
 					<div className={style.goodTitle}>{goodInfo?.title}</div>
 				</div>
 				<div className={style.rateGood}>

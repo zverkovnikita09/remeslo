@@ -25,7 +25,7 @@ export const GoodsGrid = ({ goods, isLoading = false, isArchived = false, title 
     <>
       {title && <Title as='h2' className={style.title}>{title}</Title>}
       <div className={style.goodsGrid}>
-        {goods?.map(({ price, published_at, title, id, overall_rating, files }, index) => {
+        {goods?.map(({ price, published_at, title, id, overall_rating, files, isFavorite }, index) => {
           const formattedDate = new Date(published_at ?? '').toLocaleString('ru', {
             day: 'numeric',
             month: 'long',
@@ -50,7 +50,7 @@ export const GoodsGrid = ({ goods, isLoading = false, isArchived = false, title 
               </Link>
               <p className={style.itemPrice}>{price} ₽</p>
               <p className={style.temDate}>{formattedDate}</p>
-              <GoodsFavorite className={style.favoriteButton} />
+              <GoodsFavorite className={style.favoriteButton} isFavorite={isFavorite} />
               <Rating className={style.rating} type={RatingType.Numeric} overall_rating={overall_rating} />
             </div>
           )

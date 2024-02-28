@@ -25,7 +25,7 @@ export const Header = ({ isAuthed: isServerAuthed, user }: HeaderProps) => {
         <Geolocation />
         <SearchInput />
         <Button
-          href={isAuthed ? '/user/new-post' : '/login'}
+          href={isAuthed ? '/profile/new-post' : '/login'}
           className={style.link}
           size={ButtonSize.M}
           theme={ButtonTheme.RED}

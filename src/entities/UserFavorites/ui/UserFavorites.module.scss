@@ -1,0 +1,10 @@
+.userFavorites{
+  width: 100%;
+  display: grid;
+  gap: 32px;
+  min-height: 500px;
+}
+
+.emptyFavorites{
+  justify-self: center;
+}

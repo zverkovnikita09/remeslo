@@ -38,7 +38,9 @@ export const authConfig: AuthOptions = {
   },
   callbacks: {
     async signIn({ user }) {
+      // @ts-ignore
       if (user?.error) {
+        // @ts-ignore
         throw new Error(user?.error)
       }
       return true

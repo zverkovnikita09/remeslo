@@ -1,1 +1,1 @@
-export { ReviewFormPopup } from './ui/ReviewFormPopup.tsx'
+export { ReviewFormPopup } from './ui/ReviewFormPopup'

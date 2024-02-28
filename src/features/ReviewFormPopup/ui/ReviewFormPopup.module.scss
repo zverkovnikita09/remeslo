@@ -1,62 +1,60 @@
 .reviewFormPopup {
-	width: 780px;
-	position: relative;
-	padding: 32px;
-	border-radius: 24px;
-	border: 1px solid #122533;
-	box-shadow: 0px 4px 6px -2px rgba(0, 0, 0, 0.03), 0px 12px 16px -4px rgba(0, 0, 0, 0.08);
-	background-color: #fff;
-	display: grid;
-	gap: 32px;
+  width: 780px;
+  position: relative;
+  padding: 32px;
+  border-radius: 24px;
+  border: 1px solid #122533;
+  box-shadow: 0px 4px 6px -2px rgba(0, 0, 0, 0.03), 0px 12px 16px -4px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+  display: grid;
+  gap: 32px;
 }
 
 .subtitle {
-	margin-bottom: 12px;
-	font-weight: 600;
+  margin-bottom: 12px;
+  font-weight: 600;
 }
 
 .goodInfo {
-	display: flex;
-	gap: 12px;
-	align-items: center;
-	position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  position: relative;
 }
 
 .goodImage {
-	width: 100px;
-	height: 100px;
-	object-fit: cover;
-	border-radius: 10px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .goodTitle {
-	font-size: 18px;
-	font-weight: 600;
-	max-width: 282px;
+  font-size: 18px;
+  font-weight: 600;
+  max-width: 282px;
 }
 
 .input {
-	margin-top: 8px;
+  margin-top: 8px;
 }
 
 .userData {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .userName {
-	color: var(--dark-grey-color);
-	font-size: 18px;
-	font-weight: 600;
-	line-height: 135%;
+  color: var(--dark-grey-color);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 135%;
 }
 
 .buttons {
-	display: flex;
-	gap: 12px;
-	margin-top: 32px;
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
 }
 
 .button {
-	width: 100%;
+  width: 100%;
 }
