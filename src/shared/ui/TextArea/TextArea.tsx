@@ -1,12 +1,19 @@
 "use client"
-import { ChangeEvent, TextareaHTMLAttributes, forwardRef } from "react";
+import {ChangeEvent, TextareaHTMLAttributes, forwardRef, useId} from "react";
 import style from "./TextArea.module.scss";
 import cn from "classnames";
 
-interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface TextAreaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "id"> {
   autosize?: boolean
   maxSize?: number | string
   defaultHeight?: number
+  label?: string
+  theme?: string
+}
+
+export enum TextAreaTheme {
+  PRIMARY = '',
+  INPUT_LIKE = 'inputLike'
 }
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
@@ -18,8 +25,12 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       maxSize,
       value,
       defaultHeight,
+      label,
+      theme = TextAreaTheme.PRIMARY,
       ...otherProps
     } = props
+
+    const id = useId();
 
     const onValueChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
       onChange?.(e)
@@ -32,10 +43,15 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 
     return (
       <div className={style.textarea}>
-        <textarea ref={ref}
-          className={cn(style.textField, className)}
+        {label &&
+            <label htmlFor={id} className={style.label}>{label}</label>
+        }
+        <textarea
+          ref={ref}
+          id={id}
+          className={cn(style.textField, className, style[theme])}
           onChange={onValueChange}
-          style={{ height: defaultHeight, maxHeight: maxSize }}
+          style={{height: defaultHeight, maxHeight: maxSize}}
           {...otherProps}
         />
       </div>

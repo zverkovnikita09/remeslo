@@ -8,9 +8,10 @@ import { useState } from 'react';
 import { useGalleryState } from '@shared/hooks/useGalleryState';
 import Image from 'next/image';
 import { ModalGallery } from '@entities/ModalGallery/ui/ModalGallery';
+import {FileWithPass} from "@shared/models/fileWithPass.model";
 
 interface SliderGalleryProps {
-  files?: { path: string }[]
+  files?: FileWithPass[]
   title?: string
 }
 

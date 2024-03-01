@@ -11,6 +11,10 @@ import { Input } from '@shared/ui/Input'
 import { ImageFileInput } from '@shared/ui/ImageFileInput'
 import { Toggler } from '@shared/ui/Toggler'
 import { Button, ButtonSize, ButtonTheme } from '@shared/ui/Button'
+import {TextArea, TextAreaTheme} from "@shared/ui/TextArea";
+import {useSendData} from "@shared/hooks/useSendData";
+import {useParams} from "next/navigation";
+import {useState} from "react";
 
 interface ReviewFormPopupProps {
 	goodInfo?: SingleGoods
@@ -24,24 +28,36 @@ interface ReviewForm {
 	user_id: string
 	estimation: number
 	review: string
+	advantages: string
+	disadvantages: string
 	files: FileList | null
 }
 
 export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, openReviewPopup }: ReviewFormPopupProps) => {
-	const { control, handleSubmit, setValue, setError, watch, formState: { errors, /* touchedFields */ }, clearErrors } = useForm<ReviewForm>({ defaultValues: { files: null } });
-
-	const onSubmit = (data: ReviewForm) => {
-		console.log(data);
-	}
-
-	const files: FileList | null = watch('files');
+	const { control, handleSubmit, setValue, setError, watch, formState: { errors, /* touchedFields */ }, clearErrors, register } = useForm<ReviewForm>({ defaultValues: { files: null } });
 
 	const { data: sessionData } = useSession();
+
+	const [isHideUserData, setIsHideUserData] = useState(false);
 
 	const closeFormPopup = () => {
 		closePopup();
 		backToReview && openReviewPopup?.();
 	}
+
+	const {slug} = useParams();
+	const {handleSendData, isSending } = useSendData({
+		url: `api/v1/good/rating/${slug}`,
+		onSuccess: closeFormPopup
+	});
+
+	const onSubmit = (data: ReviewForm) => {
+		const newData: Partial<ReviewForm> = !isHideUserData ? {...data, user_id: sessionData?.user.user?.id! } : data;
+		delete newData.files;
+		handleSendData(newData);
+	}
+
+	const files: FileList | null = watch('files');
 
 	return (
 		<Popup isActive={isActive} closePopup={closeFormPopup} >
@@ -63,9 +79,32 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 
 				<div className={style.review}>
 					<div className={style.subtitle}>Поделитесь впечатлениями</div>
-					<Input wrapperClassName={style.input} placeholder='Достоинства' />
-					<Input wrapperClassName={style.input} placeholder='Недостатки' />
-					<Input wrapperClassName={style.input} placeholder='Комментарий' />
+					<TextArea
+						defaultHeight={58}
+						maxSize={170} autosize
+						label='Достоинства'
+						placeholder='Достоинства'
+						theme={TextAreaTheme.INPUT_LIKE}
+						{...register('advantages', {required: false})}
+					/>
+					<TextArea
+						defaultHeight={58}
+						maxSize={170}
+						autosize
+						label='Недостатки'
+						placeholder='Недостатки'
+						theme={TextAreaTheme.INPUT_LIKE}
+						{...register('disadvantages', {required: false})}
+					/>
+					<TextArea
+						defaultHeight={58}
+						maxSize={170}
+						autosize
+						label='Комментарий'
+						placeholder='Комментарий'
+						theme={TextAreaTheme.INPUT_LIKE}
+						{...register('review', {required: 'Поле Комментарий обязательно для заполнения'})}
+					/>
 				</div>
 
 				<div className={style.addImage}>
@@ -86,7 +125,12 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 						<div className={style.subtitle}>Вы оставляете отзыв как:</div>
 						<div className={style.userName}>{sessionData?.user.user?.profile?.firstname}</div>
 					</div>
-					<Toggler>Скрыть мои данные</Toggler>
+					<Toggler
+						checked={isHideUserData}
+						onChange={(e) => setIsHideUserData(e.target.checked)}
+					>
+						Скрыть мои данные
+					</Toggler>
 				</div>
 
 
@@ -103,6 +147,7 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 						className={style.button}
 						theme={ButtonTheme.RED}
 						size={ButtonSize.M}
+						isLoading={isSending}
 						type='submit'
 					>
 						Оставить отзыв

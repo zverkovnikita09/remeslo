@@ -11,7 +11,7 @@
 }
 
 .subtitle {
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   font-weight: 600;
 }
 
@@ -33,13 +33,14 @@
   max-width: 282px;
 }
 
-.input {
-  margin-top: 8px;
-}
-
 .userData {
   display: flex;
   justify-content: space-between;
+}
+
+.review{
+  display: grid;
+  gap: 8px;
 }
 
 .userName {

@@ -16,7 +16,6 @@
 
   line-height: 135%;
 
-
   &::-webkit-input-placeholder {
     color: var(--dark-grey-color);
     font-weight: 400;
@@ -27,5 +26,19 @@
     opacity: 1;
   }
 
-
 }
+
+.label{
+  margin-bottom: 8px;
+  font-weight: 600;
+  display: block;
+}
+
+.inputLike{
+  padding: 17px 20px;
+
+  @media (max-width: 768px) {
+    padding: 15px 20px;
+  }
+}
+

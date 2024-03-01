@@ -5,6 +5,8 @@ import { Popup } from '@shared/ui/Popup'
 import { Title, TitleSize } from '@shared/ui/Title'
 import { OverallRating } from '@shared/ui/OverallRating'
 import { Button, ButtonSize, ButtonTheme } from '@shared/ui/Button'
+import {ReviewsCount} from "@features/ReviewsCount";
+import {ReviewsList} from "@entities/ReviewsList";
 
 interface ReviewsPopupProps {
   isActive: boolean
@@ -52,12 +54,12 @@ export const ReviewsPopup = ({
               Оставить отзыв
             </Button>}
         </div>
-        {/* <div className={style.reviewStats}>
+         <div className={style.reviewStats}>
           <ReviewsCount stats={dataEstimations} />
         </div>
         <div className={style.reviews}>
           <ReviewsList reviews={dataEstimations} />
-        </div> */}
+        </div>
       </div>
     </Popup>
   )

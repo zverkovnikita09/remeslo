@@ -1,0 +1,1 @@
+export {ReviewsCount} from './ui/ReviewsCount'
