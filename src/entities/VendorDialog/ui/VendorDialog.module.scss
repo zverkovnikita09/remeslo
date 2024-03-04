@@ -1,0 +1,29 @@
+.vendorDialog {
+  display: flex;
+  gap: 12px;
+}
+
+.media {
+  overflow: hidden;
+  border-radius: 10px;
+
+  img {
+    object-fit: cover;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.metaInfo {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.textPreview {
+  font-size: 18px;
+}

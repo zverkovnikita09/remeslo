@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react"
-import {useToggleDropdown} from "@shared/hooks/useToggleDropdown";
+import { useToggleDropdown } from "@shared/hooks/useToggleDropdown";
 import style from './Select.module.scss'
-import {SlArrowDown} from "react-icons/sl";
-import {Button} from "@shared/ui/Button";
-import {IoClose} from "react-icons/io5";
-import {Dropdown} from "@shared/ui/Dropdown";
+import { SlArrowDown } from "react-icons/sl";
+import { Button } from "@shared/ui/Button";
+import { IoClose } from "react-icons/io5";
+import { Dropdown } from "@shared/ui/Dropdown";
 import cn from 'classnames'
-import {FieldError} from "react-hook-form";
+import { FieldError } from "react-hook-form";
+import { ErrorBlock } from "../ErrorBlock";
 
 interface OptionType {
   name: string
@@ -84,7 +85,7 @@ export const Select = (props: SelectProps) => {
 
   return (
     <div className={style.select}>
-      {label && <p  className={style.label}>{label}</p>}
+      {label && <p className={style.label}>{label}</p>}
       <div
         className={style.toggler}
         tabIndex={0}
@@ -141,7 +142,7 @@ export const Select = (props: SelectProps) => {
           }
         </Dropdown>
       </div>
-        {error?.message && <p className={style.helpBlock}>{error?.message}</p>}
+      {error?.message && <ErrorBlock>{error?.message}</ErrorBlock>}
     </div>
   )
 }

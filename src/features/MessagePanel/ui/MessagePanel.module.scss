@@ -1,0 +1,12 @@
+.messagePanel {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  padding: 24px;
+
+  --itemsHeight: 56px;
+
+  &__sendButton {
+    height: var(--itemsHeight);
+  }
+}

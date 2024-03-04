@@ -21,7 +21,7 @@ export const authConfig: AuthOptions = {
         }
       },
       async authorize(credentials) {
-        const res = await sendData(credentials!, "api/v1/login")
+        const res = await sendData({ data: credentials!, url: "api/v1/login" })
         const dataJson = await res.json()
 
         if (res.ok) return dataJson.data;

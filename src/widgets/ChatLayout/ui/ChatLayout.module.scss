@@ -1,0 +1,44 @@
+.chatLayout {
+  padding-top: 72px;
+
+  display: flex;
+  height: calc(100vh - var(--header-height));
+
+}
+
+.dialogs {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  border-right: 1px solid var(--secondary-light-gray, #CCC);
+}
+
+.dialogsHeading {
+
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  justify-content: space-between;
+  padding: 0 24px 24px 24px;
+  border-bottom: 1px solid var(--secondary-light-gray, #CCC);
+  height: 67px;
+}
+
+.dialogsWrapper {
+  padding: 32px;
+  flex: 1;
+  overflow: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.chatCount {
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 135%;
+  color: #ccc;
+}

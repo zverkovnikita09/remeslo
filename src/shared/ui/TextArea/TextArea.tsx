@@ -1,7 +1,9 @@
 "use client"
-import {ChangeEvent, TextareaHTMLAttributes, forwardRef, useId} from "react";
+import { ChangeEvent, TextareaHTMLAttributes, forwardRef, useId } from "react";
 import style from "./TextArea.module.scss";
 import cn from "classnames";
+import { FieldError } from "react-hook-form";
+import { ErrorBlock } from "../ErrorBlock";
 
 interface TextAreaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "id"> {
   autosize?: boolean
@@ -9,6 +11,8 @@ interface TextAreaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>
   defaultHeight?: number
   label?: string
   theme?: string
+  error?: FieldError
+  touched?: boolean
 }
 
 export enum TextAreaTheme {
@@ -26,7 +30,9 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       value,
       defaultHeight,
       label,
+      touched,
       theme = TextAreaTheme.PRIMARY,
+      error,
       ...otherProps
     } = props
 
@@ -42,18 +48,19 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     }
 
     return (
-      <div className={style.textarea}>
+      <div className={style.textarea} data-status={error ? 'error' : touched ? 'success' : ''}>
         {label &&
-            <label htmlFor={id} className={style.label}>{label}</label>
+          <label htmlFor={id} className={style.label}>{label}</label>
         }
         <textarea
           ref={ref}
           id={id}
           className={cn(style.textField, className, style[theme])}
           onChange={onValueChange}
-          style={{height: defaultHeight, maxHeight: maxSize}}
+          style={{ height: defaultHeight, maxHeight: maxSize }}
           {...otherProps}
         />
+        {error?.message && <ErrorBlock>{error?.message}</ErrorBlock>}
       </div>
     )
   }

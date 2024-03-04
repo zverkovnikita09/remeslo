@@ -7,14 +7,14 @@ import { Popup } from '@shared/ui/Popup'
 import { Title, TitleSize } from '@shared/ui/Title'
 import Image from 'next/image'
 import { Rating, RatingType } from '@shared/ui/Rating'
-import { Input } from '@shared/ui/Input'
 import { ImageFileInput } from '@shared/ui/ImageFileInput'
 import { Toggler } from '@shared/ui/Toggler'
 import { Button, ButtonSize, ButtonTheme } from '@shared/ui/Button'
-import {TextArea, TextAreaTheme} from "@shared/ui/TextArea";
-import {useSendData} from "@shared/hooks/useSendData";
-import {useParams} from "next/navigation";
-import {useState} from "react";
+import { TextArea, TextAreaTheme } from "@shared/ui/TextArea";
+import { useSendData } from "@shared/hooks/useSendData";
+import { useParams } from "next/navigation";
+import { useState } from "react";
+import { NotificationType, useNotification } from '@providers/NotificationsProvider'
 
 interface ReviewFormPopupProps {
 	goodInfo?: SingleGoods
@@ -31,10 +31,23 @@ interface ReviewForm {
 	advantages: string
 	disadvantages: string
 	files: FileList | null
+	hide_user: boolean
 }
 
 export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, openReviewPopup }: ReviewFormPopupProps) => {
-	const { control, handleSubmit, setValue, setError, watch, formState: { errors, /* touchedFields */ }, clearErrors, register } = useForm<ReviewForm>({ defaultValues: { files: null } });
+	const {
+		control,
+		handleSubmit,
+		setValue,
+		setError,
+		watch,
+		formState: { errors, /* touchedFields */ },
+		clearErrors,
+		register,
+		reset,
+	} = useForm<ReviewForm>({ defaultValues: { files: null } });
+
+	const { addNotification } = useNotification()
 
 	const { data: sessionData } = useSession();
 
@@ -45,15 +58,22 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 		backToReview && openReviewPopup?.();
 	}
 
-	const {slug} = useParams();
-	const {handleSendData, isSending } = useSendData({
+	const onSendSuccess = () => {
+		closePopup();
+		addNotification("Комментарий успешно опубликован", NotificationType.Success, 5000)
+		reset();
+		setIsHideUserData(false)
+	}
+
+	const { slug } = useParams();
+	const { handleSendData, isSending } = useSendData({
 		url: `api/v1/good/rating/${slug}`,
-		onSuccess: closeFormPopup
+		onSuccess: onSendSuccess,
+		withAuthToken: true,
 	});
 
 	const onSubmit = (data: ReviewForm) => {
-		const newData: Partial<ReviewForm> = !isHideUserData ? {...data, user_id: sessionData?.user.user?.id! } : data;
-		delete newData.files;
+		const newData: Partial<ReviewForm> = { ...data, user_id: sessionData?.user.user?.id!, hide_user: isHideUserData };
 		handleSendData(newData);
 	}
 
@@ -72,8 +92,8 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 					<Controller
 						name="estimation"
 						control={control}
-						rules={{ required: true }}
-						render={(props) => <Rating type={RatingType.Editable} onChange={props.field.onChange} />}
+						rules={{ required: "Поле Рейтинг обязательно для заполнения" }}
+						render={(props) => <Rating type={RatingType.Editable} onChange={props.field.onChange} error={props.fieldState.error} />}
 					/>
 				</div>
 
@@ -85,7 +105,7 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 						label='Достоинства'
 						placeholder='Достоинства'
 						theme={TextAreaTheme.INPUT_LIKE}
-						{...register('advantages', {required: false})}
+						{...register('advantages', { required: false })}
 					/>
 					<TextArea
 						defaultHeight={58}
@@ -94,7 +114,7 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 						label='Недостатки'
 						placeholder='Недостатки'
 						theme={TextAreaTheme.INPUT_LIKE}
-						{...register('disadvantages', {required: false})}
+						{...register('disadvantages', { required: false })}
 					/>
 					<TextArea
 						defaultHeight={58}
@@ -103,7 +123,8 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 						label='Комментарий'
 						placeholder='Комментарий'
 						theme={TextAreaTheme.INPUT_LIKE}
-						{...register('review', {required: 'Поле Комментарий обязательно для заполнения'})}
+						error={errors.review}
+						{...register('review', { required: 'Поле Комментарий обязательно для заполнения' })}
 					/>
 				</div>
 
@@ -132,7 +153,6 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 						Скрыть мои данные
 					</Toggler>
 				</div>
-
 
 				<div className={style.buttons}>
 					<Button

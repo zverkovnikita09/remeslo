@@ -4,7 +4,7 @@ import { INotification, NotificationType } from ".";
 
 interface NotificationsContextProps {
     notifications: INotification[]
-    addNotification: (message: string, type: NotificationType) => void
+    addNotification: (message: string, type: NotificationType, timeout?: number) => void
     removeNotification: (id: string) => void
 }
 
@@ -13,10 +13,10 @@ export const NotificationsContext = createContext<NotificationsContextProps>({ n
 export const NotificationsProvider = ({ children }: PropsWithChildren) => {
     const [notifications, setNotifications] = useState<INotification[]>([]);
 
-    const addNotification = useCallback((message: string, type: NotificationType) => {
+    const addNotification = useCallback((message: string, type: NotificationType, timeout?: number) => {
         const id = performance.now().toString();
         setNotifications((prev) =>
-            ([...prev, { id, message, type }])
+            ([...prev, { id, message, type, timeout }])
         );
     }, []);
 

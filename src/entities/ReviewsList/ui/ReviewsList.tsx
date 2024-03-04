@@ -6,6 +6,7 @@ import {useGalleryState} from "@shared/hooks/useGalleryState";
 import {GoodEstimaions} from "@features/Reviews/ui/Reviews";
 import {ModalGallery} from "@entities/ModalGallery";
 import {ReviewSortDropdown} from "@features/ReviewSortDropdown";
+import Image from 'next/image';
 
 
 interface ReviewsListProps {
@@ -26,7 +27,6 @@ export const ReviewsList = ({reviews}: ReviewsListProps) => {
     galleryClose();
     setReviewFiles([]);
   }, [])
-
 
   return (
     <div className={style.reviewsList}>
@@ -80,7 +80,7 @@ export const ReviewsList = ({reviews}: ReviewsListProps) => {
                               <div className={style.imagesContainer}>
                                 {files.map((file, index) => (
                                   <div onClick={currentGalleryOpen(index, files)} key={index} className={style.imageItem}>
-                                    <img src={file.path} alt="Отзыв пользователя"/>
+                                    <Image src={file.path} alt="Отзыв пользователя" fill/>
                                   </div>
                                 ))}
 

@@ -40,7 +40,13 @@ export const getData = async <T extends object>({
   return dataFlag ? data.data : data;
 }
 
-export const sendData = async<DataType extends {}>(data: DataType, url: string) => {
+interface sendDataParams<T> {
+  data: T,
+  url: string,
+  headers?: Record<string, string>
+}
+
+export const sendData = async<DataType extends {}>({ data, url, headers = {} }: sendDataParams<DataType>) => {
   const formData = new FormData();
   Object.entries(data).forEach(([key, value]) => formData.append(key, String(value)))
   const status = await fetch(`${BASE_URL}/${url}`, {
@@ -48,6 +54,7 @@ export const sendData = async<DataType extends {}>(data: DataType, url: string) 
     method: 'post',
     headers: {
       'Accept': 'application/json',
+      ...headers
     }
   })
   return status;

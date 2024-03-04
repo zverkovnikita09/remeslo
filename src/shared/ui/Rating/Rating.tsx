@@ -2,6 +2,8 @@ import { Rating as MaterialRating } from "@mui/material";
 import style from './Rating.module.scss'
 import cn from "classnames";
 import { StarIcon } from "@shared/ui/StarIcon";
+import { FieldError } from "react-hook-form";
+import { ErrorBlock } from "../ErrorBlock";
 
 export enum RatingType {
   Numeric = 'numeric',
@@ -14,18 +16,22 @@ interface RatingProps {
   className?: string
   overall_rating?: number
   onChange?: (event: React.SyntheticEvent<Element, Event>, value: number | null) => void
+  error?: FieldError
 }
 
-export const Rating = ({ className, type = RatingType.Readonly, overall_rating, onChange }: RatingProps) => {
+export const Rating = ({ className, type = RatingType.Readonly, overall_rating, onChange, error }: RatingProps) => {
   if (type === RatingType.Editable) {
     return (
-      <MaterialRating
-        name="controlled"
-        value={overall_rating}
-        icon={<StarIcon fillColor="#FCAC38" />}
-        emptyIcon={<StarIcon fillColor="transparent" />}
-        onChange={onChange}
-      />
+      <div>
+        <MaterialRating
+          name="controlled"
+          value={overall_rating}
+          icon={<StarIcon fillColor="#FCAC38" />}
+          emptyIcon={<StarIcon fillColor="transparent" />}
+          onChange={onChange}
+        />
+        {error?.message && <ErrorBlock>{error.message}</ErrorBlock>}
+      </div>
     )
   }
 

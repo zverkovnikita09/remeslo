@@ -1,17 +1,15 @@
-import { useCallback, useRef } from "react"
+"use client"
+import { useCallback } from "react"
 import copyImg from '../images/copy.svg'
 import vkImg from '../images/vk.svg'
 import telegramImg from '../images/telegram.svg'
 import { TelegramShareButton, VKShareButton } from 'react-share'
-import cn from 'classnames'
-import style from './Share.module.scss'
-import { Button, ButtonTheme } from "@shared/ui/Button"
+import { Button } from "@shared/ui/Button"
 import { ShareIcon } from "@shared/ui/ShareIcon"
 import Image from "next/image"
 import { useCopyToClipboard } from "@shared/hooks/useCopyToClipboard"
-import { useToggleDropdown } from "@shared/hooks/useToggleDropdown"
-import { Dropdown } from "@shared/ui/Dropdown"
 import { useIsClient } from "@shared/hooks/useIsClient"
+import { DropDownMenu } from "@shared/ui/DropDownMenu"
 /* import FocusTrap from "@mui/material/Unstable_TrapFocus" */
 
 interface ShareProps {
@@ -20,60 +18,45 @@ interface ShareProps {
 }
 
 export const Share = ({ title, imagePath }: ShareProps) => {
-  const [isDropdownOpen, toggleDropdown] = useToggleDropdown()
   const [_, copy] = useCopyToClipboard()
-  const elementRef = useRef<HTMLButtonElement>(null)
-  const isClien = useIsClient()
+  const isClient = useIsClient()
 
-  const copyToClipboard = useCallback(() => {
+  const copyToClipboard = useCallback((toggleDropdown: () => void) => () => {
     copy(window.location.href, "Ссылка скопирована!")
     toggleDropdown();
-  }, [copy, toggleDropdown])
+  }, [copy])
 
   return (
-    <div className={style.share}>
-      <Button
-        className={cn(style.button, { [style.open]: isDropdownOpen })}
-        theme={ButtonTheme.GREY}
-        onClick={toggleDropdown}
-        buttonRef={elementRef}
-      >
-        <ShareIcon strokeColor="currentColor" />
-      </Button>
-      <Dropdown
-        className={style.dropdown}
-        isOpen={isDropdownOpen}
-        targetRef={elementRef}
-        onClose={toggleDropdown}
-      >
-        {/* <FocusTrap open={isDropdownOpen}> */}
-        <div>
-          <Button className={style.linkButton} onClick={copyToClipboard}>
+    <DropDownMenu
+      buttonImage={<ShareIcon strokeColor="currentColor" />}
+    >
+      {(toggleDropdown, itemClassName) => (
+        <>
+          <Button className={itemClassName} onClick={copyToClipboard(toggleDropdown)}>
             <Image src={copyImg} alt="Копирование" width={24} height={24} />
-            <span className={style.linkText}>Копировать ссылку</span>
+            <span>Копировать ссылку</span>
           </Button>
           <TelegramShareButton
-            url={isClien ? window.location.href : ""}
+            url={isClient ? window.location.href : ""}
             title={title}
-            className={style.linkButton}
+            className={itemClassName}
             onClick={toggleDropdown}
           >
             <Image src={telegramImg} alt="Телеграм" width={24} height={20} />
-            <span className={style.linkText}>Telegram</span>
+            <span>Telegram</span>
           </TelegramShareButton>
           <VKShareButton
-            url={isClien ? window.location.href : ""}
+            url={isClient ? window.location.href : ""}
             title={title}
             image={imagePath}
-            className={style.linkButton}
+            className={itemClassName}
             onClick={toggleDropdown}
           >
             <Image src={vkImg} alt="Вконтакте" width={25} height={14} />
-            <span className={style.linkText}>Вконтакте</span>
+            <span>Вконтакте</span>
           </VKShareButton>
-        </div>
-        {/* </FocusTrap> */}
-      </Dropdown>
-    </div>
+        </>
+      )}
+    </DropDownMenu>
   )
 }

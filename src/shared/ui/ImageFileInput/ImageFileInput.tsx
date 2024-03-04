@@ -1,13 +1,13 @@
 "use client"
-import {useId, useMemo, useRef, useState} from 'react'
+import { useId, useMemo, useRef, useState } from 'react'
 import style from './ImageFileInput.module.scss'
 import camera from '@images/camera.svg'
-import {CloseButton} from '../CloseButton/CloseButton';
-import {FieldError} from 'react-hook-form';
+import { CloseButton } from '../CloseButton/CloseButton';
+import { FieldError } from 'react-hook-form';
 import cn from 'classnames'
 import Image from 'next/image';
-import {checkFileInputError} from '@shared/lib/checkFileInputError';
-import {arrayToFilelist} from '@shared/lib/arrayToFileList';
+import { checkFileInputError } from '@shared/lib/checkFileInputError';
+import { arrayToFilelist } from '@shared/lib/arrayToFileList';
 
 export interface FileInputProps {
   files: FileList | null
@@ -34,7 +34,7 @@ export const ImageFileInput = (props: FileInputProps) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const checkError = (files: File[]) => checkFileInputError({files, setError, allowedFileTypes, clearErrors})
+  const checkError = (files: File[]) => checkFileInputError({ files, setError, allowedFileTypes, clearErrors })
 
   const previews = useMemo(() => (
     [...(files || [])].map(file => URL.createObjectURL(file))
@@ -50,7 +50,7 @@ export const ImageFileInput = (props: FileInputProps) => {
 
     setFiles(arrayToFilelist(newFilesArray));
     !checkError(newFilesArray) &&
-    inputRef.current && (inputRef.current.value = '');
+      inputRef.current && (inputRef.current.value = '');
   }
 
 
@@ -72,7 +72,7 @@ export const ImageFileInput = (props: FileInputProps) => {
 
     !checkError(newFilesArray) &&
 
-    setFiles(arrayToFilelist(newFilesArray));
+      setFiles(arrayToFilelist(newFilesArray));
 
     setDrag(false)
   }
@@ -96,14 +96,14 @@ export const ImageFileInput = (props: FileInputProps) => {
             key={index}
             className={style.imageWrapper}
           >
-            <CloseButton onClick={onFileDelete(index)} className={style.removeImage}/>
-            <Image src={src} className={style.previewImage} alt='' fill/>
+            <CloseButton onClick={onFileDelete(index)} className={style.removeImage} />
+            <Image src={src} className={style.previewImage} alt='' fill />
           </div>
         )}
       </div>
       <label
         htmlFor={id}
-        className={cn(style.labelArea, {[style.isDrag]: isDrag})}
+        className={cn(style.labelArea, { [style.isDrag]: isDrag })}
         onDragStart={onDragStart}
         onDragOver={onDragStart}
         onDragLeave={onDragLeave}
@@ -119,7 +119,7 @@ export const ImageFileInput = (props: FileInputProps) => {
         />
         {
           isDrag ? 'Отпустите файл для загрузки' :
-            <><Image className='no-pointer-events' src={camera} alt="Камера" width={32} height={32}/>Нажмите или
+            <><Image className='no-pointer-events' src={camera} alt="Камера" width={32} height={32} />Нажмите или
               перетащите сюда изображения</>
         }
       </label>

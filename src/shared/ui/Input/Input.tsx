@@ -2,6 +2,7 @@ import { InputHTMLAttributes, forwardRef, useId } from 'react'
 import cn from 'classnames';
 import style from './Input.module.scss'
 import { FieldError } from 'react-hook-form';
+import { ErrorBlock } from '../ErrorBlock';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string
@@ -32,7 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         ref={ref}
         {...otherProps}
       />
-      {error?.message && <p className={style.helpBlock}>{error?.message}</p>}
+      {error?.message && <ErrorBlock>{error?.message}</ErrorBlock>}
     </div>
   )
 })

@@ -92,7 +92,7 @@ export const ViewPageRightBlock = ({ goodInfo, store, estimations }: ViewPageRig
       <p className={cn(style.greyText, 'greyText')}>Опубликовано</p>
       <p className={style.date}>{formattedDate}</p>
       <Link href={`/main/store/${store?.id}`} className={style.vendor}>
-        <VendorProfile profile={store?.user?.profile} />
+        <VendorProfile profile={store?.user?.profile} registered_at={store?.user.email_verified}/>
       </Link>
       <Button
         className={style.phoneButton}
