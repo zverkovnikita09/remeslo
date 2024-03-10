@@ -18,7 +18,7 @@ export const CategoriesPage = ({ category, goods }: CategoriesPageProps) => {
       {/* <div className={style.breadcrubms}>
         <Breadcrumbs links={pathArray} />
       </div> */}
-      {subcategories?.length &&
+      {!!subcategories?.length &&
         <Title className={style.title}>{category?.name}</Title>
       }
       <Categories categories={subcategories} />

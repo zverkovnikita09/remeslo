@@ -14,7 +14,6 @@ import { TextArea, TextAreaTheme } from "@shared/ui/TextArea";
 import { useSendData } from "@shared/hooks/useSendData";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { NotificationType, useNotification } from '@providers/NotificationsProvider'
 
 interface ReviewFormPopupProps {
 	goodInfo?: SingleGoods
@@ -47,8 +46,6 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 		reset,
 	} = useForm<ReviewForm>({ defaultValues: { files: null } });
 
-	const { addNotification } = useNotification()
-
 	const { data: sessionData } = useSession();
 
 	const [isHideUserData, setIsHideUserData] = useState(false);
@@ -60,15 +57,15 @@ export const ReviewFormPopup = ({ goodInfo, isActive, closePopup, backToReview, 
 
 	const onSendSuccess = () => {
 		closePopup();
-		addNotification("Комментарий успешно опубликован", NotificationType.Success, 5000)
 		reset();
 		setIsHideUserData(false)
 	}
 
 	const { slug } = useParams();
 	const { handleSendData, isSending } = useSendData({
-		url: `api/v1/good/rating/${slug}`,
+		url: `/api/v1/good/rating/${slug}`,
 		onSuccess: onSendSuccess,
+		successNotification: "Комментарий успешно опубликован",
 		withAuthToken: true,
 	});
 

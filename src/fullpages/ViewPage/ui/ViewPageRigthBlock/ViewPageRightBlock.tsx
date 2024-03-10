@@ -18,9 +18,10 @@ interface ViewPageRightBlockProps {
   goodInfo?: SingleGoods;
   store?: Store;
   estimations?: GoodEstimaions[]
+  scrollToMessage: () => void
 }
 
-export const ViewPageRightBlock = ({ goodInfo, store, estimations }: ViewPageRightBlockProps) => {
+export const ViewPageRightBlock = ({ goodInfo, store, estimations, scrollToMessage }: ViewPageRightBlockProps) => {
   const {
     title,
     files,
@@ -65,10 +66,6 @@ export const ViewPageRightBlock = ({ goodInfo, store, estimations }: ViewPageRig
     }
   }
 
-  const sendMessage = () => {
-
-  }
-
   return (
     <div className={style.viewPageRightBlock}>
       <div className={style.heading}>
@@ -106,7 +103,7 @@ export const ViewPageRightBlock = ({ goodInfo, store, estimations }: ViewPageRig
         className={style.messageButton}
         theme={ButtonTheme.OUTLINE}
         size={ButtonSize.M}
-        onClick={sendMessage}
+        onClick={scrollToMessage}
       >
         Написать сообщение
       </Button>

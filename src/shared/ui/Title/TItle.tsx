@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import style from './Title.module.scss'
-import { FC, ReactNode } from 'react'
+import {FC, ReactNode, RefObject} from 'react'
 
 export enum TitleSize {
   S = 'size_s',
@@ -13,9 +13,10 @@ interface TitleProps {
   className?: string
   children?: ReactNode
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+  titleRef?: RefObject<HTMLHeadingElement>
 }
 
-export const Title: FC<TitleProps> = ({ children, className, size = TitleSize.M, as = "h1" }) => {
+export const Title = ({ children, className, size = TitleSize.M, as = "h1", titleRef }: TitleProps) => {
   const additionalClasses = [
     className,
     style[size],
@@ -23,5 +24,5 @@ export const Title: FC<TitleProps> = ({ children, className, size = TitleSize.M,
 
   const Component = as;
 
-  return <Component className={cn(style.title, additionalClasses)}>{children}</Component>
+  return <Component className={cn(style.title, additionalClasses)} ref={titleRef}>{children}</Component>
 }

@@ -25,7 +25,7 @@ export const RecoveryPassword = ({ tokenQuery, emailQuery }: RecoveryPasswordPro
   const token = tokenQuery || '';
   const email = emailQuery || '';
 
-  const { isSending, handleSendData } = useSendData({ url: 'api/v1/password/reset', onSuccess: () => redirect("/main") })
+  const { isSending, handleSendData } = useSendData({ url: '/api/v1/password/reset', onSuccess: () => redirect("/main") })
 
   return (
     <div className={style.resetPassword}>
