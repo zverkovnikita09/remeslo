@@ -8,6 +8,7 @@ import {Input} from "@shared/ui/Input";
 import {useSendData} from "@shared/hooks/useSendData";
 import {SingleGoods} from "@fullpages/ViewPage";
 import {Button, ButtonSize, ButtonTheme} from "@shared/ui/Button";
+import {AddProperty} from "@features/AddProperty";
 
 
 interface NewGoodsProps {
@@ -70,6 +71,10 @@ export const NewGoods = ({goods}: NewGoodsProps) => {
         label='Цена ₽'
         {...register("price", {required: 'Поле Цена обязательное для заполнения'})}
         error={errors.price}
+      />
+
+      <AddProperty
+        title={'Создайте уникальные характеристики для своего товара (не более 5). Перечислите значения опции, отделяя их переносом строки. '}
       />
 
       <Button className={style.button} theme={ButtonTheme.RED} type={"submit"} size={ButtonSize.M}>Опубликовать</Button>
