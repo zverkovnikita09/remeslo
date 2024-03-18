@@ -3,4 +3,5 @@ export interface EditUser {
   lastname: string;
   email: string;
   avatar: File | null;
+  phone: string;
 }

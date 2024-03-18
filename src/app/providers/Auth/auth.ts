@@ -21,12 +21,14 @@ export const authConfig: AuthOptions = {
         }
       },
       async authorize(credentials) {
-        const res = await sendData({ data: credentials!, url: "api/v1/login" })
-        const dataJson = await res.json()
-
-        if (res.ok) return dataJson.data;
-        const error = dataJson.message || "Произошла ошибка при отправке данных"
-        return { error }
+        try {
+          const res = await sendData({ data: credentials!, url: "/api/v1/login" })
+          return res?.data;
+        }
+        catch (error) {
+          const errorObj = (error as Error).message || "Произошла ошибка при отправке данных"
+          return { errorObj }
+        }
       },
     })
   ],
@@ -39,9 +41,9 @@ export const authConfig: AuthOptions = {
   callbacks: {
     async signIn({ user }) {
       // @ts-ignore
-      if (user?.error) {
+      if (user?.errorObj) {
         // @ts-ignore
-        throw new Error(user?.error)
+        throw new Error(user?.errorObj)
       }
       return true
     },

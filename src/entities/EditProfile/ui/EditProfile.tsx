@@ -1,32 +1,33 @@
 "use client"
-import {Title} from '@shared/ui/Title'
+import { Title } from '@shared/ui/Title'
 import style from './EditProfile.module.scss'
-import {UserPhoto, UserPhotoSize} from '@shared/ui/UserPhoto'
-import {User} from '@shared/models/user.model'
-import {Button, ButtonSize, ButtonTheme} from '@shared/ui/Button'
+import { UserPhoto, UserPhotoSize } from '@shared/ui/UserPhoto'
+import { User } from '@shared/models/user.model'
+import { Button, ButtonSize, ButtonTheme } from '@shared/ui/Button'
 import Image from 'next/image'
 import camera from '@images/camera.svg'
-import {Input} from '@shared/ui/Input'
-import {useForm} from 'react-hook-form'
-import {EditUser} from '../model/editUser.model'
-import {useSendData} from '@shared/hooks/useSendData'
-import {NotificationType, useNotification} from '@providers/NotificationsProvider'
-import {FileInput} from "@shared/ui/FileInput";
+import { Input } from '@shared/ui/Input'
+import { useForm } from 'react-hook-form'
+import { EditUser } from '../model/editUser.model'
+import { useSendData } from '@shared/hooks/useSendData'
+import { NotificationType, useNotification } from '@providers/NotificationsProvider'
+import { FileInput } from "@shared/ui/FileInput";
 
 interface EditProfileProps {
   user?: User
 }
 
-export const EditProfile = ({user}: EditProfileProps) => {
+export const EditProfile = ({ user }: EditProfileProps) => {
   const {
     register,
     handleSubmit,
-    formState: {errors, touchedFields},
+    formState: { errors, touchedFields },
     setValue,
     setError,
     watch,
   } = useForm<EditUser>(
-    {mode: 'onBlur',
+    {
+      mode: 'onBlur',
       defaultValues: {
         email: user?.email ?? '',
         firstname: user?.profile?.firstname ?? '',
@@ -38,9 +39,9 @@ export const EditProfile = ({user}: EditProfileProps) => {
 
   const avatar: File | null = watch('avatar');
 
-  const {addNotification} = useNotification();
+  const { addNotification } = useNotification();
 
-  const {isSending, handleSendData} = useSendData({
+  const { isSending, handleSendData } = useSendData({
     url: '', onSuccess: () => {
       addNotification("Данные успешно сохранены", NotificationType.Success);
     }
@@ -73,10 +74,10 @@ export const EditProfile = ({user}: EditProfileProps) => {
           className={style.userPhotoButton}
           file={avatar}
           setFile={(avatar) => setValue('avatar', avatar)}
-          setError={(message) => setError('avatar', {type: 'custom', message})}
+          setError={(message) => setError('avatar', { type: 'custom', message })}
         >
-          <Image src={camera} className={style.cameraImage} width={26} height={26} alt='Иконка камеры'/>
-          <UserPhoto imageSize={UserPhotoSize.L} avatar={avatar ? URL.createObjectURL(avatar) : user?.profile?.avatar}/>
+          <Image src={camera} className={style.cameraImage} width={26} height={26} alt='Иконка камеры' />
+          <UserPhoto imageSize={UserPhotoSize.L} avatar={avatar ? URL.createObjectURL(avatar) : user?.profile?.avatar} />
         </FileInput>
         <div>
           <p>Изменить аватар</p>
@@ -86,13 +87,19 @@ export const EditProfile = ({user}: EditProfileProps) => {
       <Input
         placeholder='Введите имя'
         label='Изменить имя'
-        {...register("firstname", {required: 'Поле Имя обязательное для заполнения'})}
+        {...register("firstname", { required: 'Поле Имя обязательное для заполнения' })}
         error={errors.firstname}
       />
       <Input
         placeholder='Введите фамилию'
         label='Изменить фамилию'
-        {...register("lastname", {required: 'Поле Фамилия обязательное для заполнения'})}
+        {...register("lastname", { required: 'Поле Фамилия обязательное для заполнения' })}
+        error={errors.lastname}
+      />
+      <Input
+        placeholder='Введите номер телефона'
+        label='Изменить номер телефона'
+        {...register("phone", { required: 'Поле Телефон обязательное для заполнения' })}
         error={errors.lastname}
       />
       <Input
@@ -114,6 +121,8 @@ export const EditProfile = ({user}: EditProfileProps) => {
           size={ButtonSize.M}
           className={style.button}
           onClick={onCancellChanges}
+          withAlert
+          alertPopupProps={{ confirmText: "Вы уверены, что хотите отменить изменения?" }}
         >
           Отменить
         </Button>

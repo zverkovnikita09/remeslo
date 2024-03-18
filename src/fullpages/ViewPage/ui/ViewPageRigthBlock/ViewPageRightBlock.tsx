@@ -2,7 +2,7 @@
 import { SingleGoods } from "@fullpages/ViewPage"
 import { Store } from "@shared/models/store.model";
 import { Title } from "@shared/ui/Title";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import cn from 'classnames'
 import { Button, ButtonSize, ButtonTheme } from "@shared/ui/Button";
 import { phoneFormatter } from "@shared/lib/phoneFormatter";
@@ -13,6 +13,7 @@ import { VendorProfile } from "@entities/VendorProfile";
 import { Rating } from "@shared/ui/Rating";
 import { Reviews } from "@features/Reviews";
 import { GoodEstimaions } from "@features/Reviews/ui/Reviews";
+import { usePopupState } from "@shared/hooks/usePopupState";
 
 interface ViewPageRightBlockProps {
   goodInfo?: SingleGoods;
@@ -36,15 +37,7 @@ export const ViewPageRightBlock = ({ goodInfo, store, estimations, scrollToMessa
 
   const [isPhoneShown, setIsPhoneShown] = useState(false);
 
-  const [isReviewFormActive, setIsReviewFormActive] = useState(false);
-
-  const openReviewForm = () => {
-    setIsReviewFormActive(true)
-  }
-
-  const closeReviewForm = () => {
-    setIsReviewFormActive(false)
-  }
+  const { isOpen: isReviewFormActive, closePopup: closeReviewForm, openPopup: openReviewForm } = usePopupState();
 
   const formattedDate = new Date(published_at ?? '').toLocaleString('ru', {
     day: 'numeric',
@@ -53,8 +46,8 @@ export const ViewPageRightBlock = ({ goodInfo, store, estimations, scrollToMessa
     minute: 'numeric'
   }).replace(' в ', ' ');
 
-  const handlePhoneClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handlePhoneClick = (e?: MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e?.preventDefault();
     if (!isPhoneShown) {
       setIsPhoneShown(true);
     }
@@ -89,7 +82,7 @@ export const ViewPageRightBlock = ({ goodInfo, store, estimations, scrollToMessa
       <p className={cn(style.greyText, 'greyText')}>Опубликовано</p>
       <p className={style.date}>{formattedDate}</p>
       <Link href={`/main/store/${store?.id}`} className={style.vendor}>
-        <VendorProfile profile={store?.user?.profile} registered_at={store?.user.email_verified}/>
+        <VendorProfile profile={store?.user?.profile} registered_at={store?.user.email_verified} />
       </Link>
       <Button
         className={style.phoneButton}

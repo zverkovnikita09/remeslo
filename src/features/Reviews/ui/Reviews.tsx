@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react'
 import { Button } from '@shared/ui/Button'
 import { labelsCounterFormatter } from '@shared/lib/labelsCounterFormatter'
 import { ReviewFormPopup } from '@features/ReviewFormPopup'
+import { usePopupState } from '@shared/hooks/usePopupState'
 
 interface ReviewsProps {
   good?: SingleGoods
@@ -27,16 +28,12 @@ export interface GoodEstimaions {
 }
 
 export const Reviews = ({ good, closeReviewForm, openReviewForm, reviewFormState, estimations }: ReviewsProps) => {
-  const [isPopupActive, setIsPopupActive] = useState(false)
+  const { isOpen: isPopupActive, openPopup: openReviewPopup, closePopup } = usePopupState();
   const { status } = useSession();
   const [needPreviousPopup, setNeedPreviousPopup] = useState(false);
 
-  const openReviewPopup = () => {
-    setIsPopupActive(true)
-  }
-
   const closeReviewPopup = () => {
-    setIsPopupActive(false)
+    closePopup()
     setNeedPreviousPopup(false)
   }
 

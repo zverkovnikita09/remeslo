@@ -5,4 +5,5 @@ export interface Goods {
   published_at: string
   id: string
   overall_rating: number
+  isFavorite?: boolean
 }

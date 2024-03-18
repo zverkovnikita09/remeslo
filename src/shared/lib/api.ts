@@ -1,4 +1,4 @@
-import {generateUrlParams} from "./generateUrlParams"
+import { generateUrlParams } from "./generateUrlParams"
 
 interface GetDataParams {
   url?: string
@@ -20,16 +20,16 @@ export interface DataResponse<T> {
 }
 
 export const getData = async <T extends {}>
-({
-   baseUrl = BASE_URL,
-   dataFlag,
-   url,
-   headers = {},
-   params = {},
-   next = {},
-   cache,
-   defaultErrorMessage = "Произошла ошибка при получении данных",
- }: GetDataParams): Promise<T> => {
+  ({
+    baseUrl = BASE_URL,
+    dataFlag,
+    url,
+    headers = {},
+    params = {},
+    next = {},
+    cache,
+    defaultErrorMessage = "Произошла ошибка при получении данных",
+  }: GetDataParams): Promise<T> => {
   const queryParams = JSON.stringify(params) === '{}' ? '' : '?' + generateUrlParams(params);
   const response = await fetch(`${baseUrl}${url}${queryParams}`, {
     headers,
@@ -38,7 +38,7 @@ export const getData = async <T extends {}>
   })
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data?.message ? data.message : defaultErrorMessage)
+    throw new Error(data?.message ?? defaultErrorMessage)
   }
   return dataFlag ? data.data : data;
 }
@@ -54,15 +54,15 @@ interface sendDataParams<T> {
 }
 
 export const sendData = async <DataType extends {}>
-({
-   baseUrl = BASE_URL,
-   data,
-   url,
-   headers = {},
-   method = 'post',
-   params = {},
-   defaultErrorMessage = "Произошла ошибка при отправке данных",
- }: sendDataParams<DataType>) => {
+  ({
+    baseUrl = BASE_URL,
+    data,
+    url,
+    headers = {},
+    method = 'post',
+    params = {},
+    defaultErrorMessage = "Произошла ошибка при отправке данных",
+  }: sendDataParams<DataType>) => {
   const formData = new FormData();
   Object.entries(data).forEach(([key, value]) => formData.append(key, String(value)))
   const queryParams = JSON.stringify(params) === '{}' ? '' : '?' + generateUrlParams(params);
@@ -76,7 +76,7 @@ export const sendData = async <DataType extends {}>
   })
   const dataJson = await response.json();
   if (!response.ok) {
-    throw new Error(dataJson?.message ? dataJson.message : defaultErrorMessage)
+    throw new Error(dataJson?.message ?? defaultErrorMessage)
   }
   return dataJson;
 }

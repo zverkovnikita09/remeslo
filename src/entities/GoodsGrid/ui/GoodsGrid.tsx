@@ -5,7 +5,6 @@ import { GoodsImage } from './GoodsImage/GoodsImage'
 import { Goods } from '..'
 import Link from 'next/link'
 import { GoodsFavorite } from './GoodsFavorite'
-import { IBreadcrumb } from '@entities/Breadcrumbs'
 import { Title } from '@shared/ui/Title'
 import { Rating, RatingType } from '@shared/ui/Rating'
 
@@ -37,14 +36,12 @@ export const GoodsGrid = ({ goods, isLoading = false, isArchived = false, title 
               <Link
                 href={`/main/view/${id}`}
                 className={style.itemImage}
-              /* state={categoryState} */
               >
                 <GoodsImage title={title} files={files} />
               </Link>
               <Link
                 href={`/main/view/${id}`}
                 className={style.itemTitle}
-              /* state={categoryState} */
               >
                 {title}
               </Link>

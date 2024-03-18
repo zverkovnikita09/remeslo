@@ -1,32 +1,32 @@
 'use client'
 import style from './NewGoods.module.scss'
-import {Title} from "@shared/ui/Title";
-import {ImageFileInput} from "@shared/ui/ImageFileInput";
-import {useForm} from "react-hook-form";
-import {NewGoodsForm} from "@features/NewGoods";
-import {Input} from "@shared/ui/Input";
-import {useSendData} from "@shared/hooks/useSendData";
-import {SingleGoods} from "@fullpages/ViewPage";
-import {Button, ButtonSize, ButtonTheme} from "@shared/ui/Button";
-import {AddProperty} from "@features/AddProperty";
+import { Title } from "@shared/ui/Title";
+import { ImageFileInput } from "@shared/ui/ImageFileInput";
+import { useForm } from "react-hook-form";
+import { NewGoodsForm } from "@features/NewGoods";
+import { Input } from "@shared/ui/Input";
+import { useSendData } from "@shared/hooks/useSendData";
+import { SingleGoods } from "@fullpages/ViewPage";
+import { Button, ButtonSize, ButtonTheme } from "@shared/ui/Button";
+import { AddProperty } from "@features/AddProperty";
 
 
 interface NewGoodsProps {
   goods?: SingleGoods
 }
 
-export const NewGoods = ({goods}: NewGoodsProps) => {
+export const NewGoods = ({ goods }: NewGoodsProps) => {
   const {
     handleSubmit,
     setValue,
     setError,
     watch,
     register,
-    formState: {errors, /* touchedFields */},
+    formState: { errors, /* touchedFields */ },
     clearErrors
-  } = useForm<NewGoodsForm>({defaultValues: {files: null}});
+  } = useForm<NewGoodsForm>({ defaultValues: { files: null } });
 
-  const {} = useSendData({
+  const { } = useSendData({
     url: '',
     onSuccess: () => {
     }
@@ -42,7 +42,7 @@ export const NewGoods = ({goods}: NewGoodsProps) => {
         setFiles={(files) =>
           setValue('files', files)
         }
-        setError={(message) => setError('files', {type: 'custom', message})}
+        setError={(message) => setError('files', { type: 'custom', message })}
         error={errors.files}
         clearErrors={() => clearErrors('files')}
         label='Добавьте фотографии'
@@ -50,13 +50,13 @@ export const NewGoods = ({goods}: NewGoodsProps) => {
       <Input
         placeholder='Введите название'
         label='Название обьявления'
-        {...register("title", {required: 'Поле Название обязательное для заполнения'})}
+        {...register("title", { required: 'Поле Название обязательное для заполнения' })}
         error={errors.title}
       />
       <Input
         placeholder='Кратко опишите свой товар'
         label='Описание товара'
-        {...register("description", {required: 'Поле Описание обязательное для заполнения'})}
+        {...register("description", { required: 'Поле Описание обязательное для заполнения' })}
         error={errors.description}
       />
       {/*      <Select
@@ -69,12 +69,12 @@ export const NewGoods = ({goods}: NewGoodsProps) => {
       <Input
         placeholder='Укажите цену'
         label='Цена ₽'
-        {...register("price", {required: 'Поле Цена обязательное для заполнения'})}
+        {...register("price", { required: 'Поле Цена обязательное для заполнения' })}
         error={errors.price}
       />
 
       <AddProperty
-        title={'Создайте уникальные характеристики для своего товара (не более 5). Перечислите значения опции, отделяя их переносом строки. '}
+        title={'Создайте уникальные характеристики для своего товара (не более 5). Перечислите значения опции, отделяя их переносом строки. '}
       />
 
       <Button className={style.button} theme={ButtonTheme.RED} type={"submit"} size={ButtonSize.M}>Опубликовать</Button>

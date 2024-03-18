@@ -19,6 +19,5 @@ export default async function Category({params: {categories: categoriesList}}: {
       params: {[categoriesList.length > 1 ? 'subcategory' : 'category']: category!.id}
     });
 
-  console.log(goods)
   return <CategoriesPage category={category as (ICategory & ISubcategory)} goods={goods}/>
 }

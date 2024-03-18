@@ -7,13 +7,14 @@ import { GeolocationPopup } from './GeolocationPopup/GeolocationPopup'
 import { Button } from '@shared/ui/Button'
 import { GeoIcon } from '@shared/ui/GeoIcon'
 import { useCookies } from 'next-client-cookies'
+import { usePopupState } from '@shared/hooks/usePopupState'
 
 export const Geolocation = () => {
   const { get: getCookie } = useCookies();
   const city = getCookie("city");
   const [proposedCity, setProposedCity] = useState('');
   const [isCityPopover, setCityPopover] = useState(false);
-  const [isCityPopup, setCityPopup] = useState(false);
+  const { isOpen: isCityPopup, closePopup, openPopup } = usePopupState();
 
   useEffect(() => {
     async function getCityWrapper() {
@@ -37,19 +38,15 @@ export const Geolocation = () => {
     setCityPopover(pr => !pr);
   }
 
-  const togglePopup = () => {
-    setCityPopup(pr => !pr);
-  }
-
   return (
     <div className={style.geolocation}>
       <GeolocationPopup
         isActive={isCityPopup}
-        closePopup={togglePopup}
+        closePopup={closePopup}
       />
       <Button
         className={style.button}
-        onClick={togglePopup}
+        onClick={closePopup}
       >
         {
           city ?
@@ -66,7 +63,7 @@ export const Geolocation = () => {
           city={proposedCity}
           className={style.popover}
           onClose={togglePopover}
-          openPopup={togglePopup}
+          openPopup={openPopup}
         />
       }
     </div>
